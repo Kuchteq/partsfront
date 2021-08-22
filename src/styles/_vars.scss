@@ -1,0 +1,34 @@
+:root {
+	//colors
+	--gray: #d1d1d1;
+	--black: #000;
+	--white: #fff;
+
+	--mBlue: #006ae5;
+	--mLightBlue: #4da0ff;
+	--mPurple: #8a00e5;
+
+	//main ones gradients
+	--graBlue: linear-gradient(90deg, #006ae5 0%, #1b83fb 100%);
+	--graRed: linear-gradient(255deg, #ff5151 0%, #ff5b5b 100%);
+	--graGreen: linear-gradient(246deg, #33cc30 0%, #4dde49 100%);
+	--graPurple: linear-gradient(252deg, #d663ff 0%, #c46bff);
+	--graGold: linear-gradient(90deg, #cea738 0%, #edb413 100%);
+	--graOrange: linear-gradient(90deg, #ff742c 0%, #ff742c 100%);
+	--graClients: linear-gradient(90deg, #00ae9c 0%, #00d2bd 100%);
+	--graSuppliers: linear-gradient(90deg, #00a4d8 0%, #008ca2 100%);
+	--graHistory: linear-gradient(90deg, #929292 0%, #9d9d9d 100%);
+
+	//rounds
+	--modalRounding: 36px;
+
+	//shadows
+	--nShadow: 0px 1px 12px #0000002e;
+	--popupShadow: 0px 3px 18px #00000033;
+	--btnShadow: 0px 2px 16px #00000033;
+	--txtShadow: 0px 3px 6px #00000029;
+	--modalShadow: 0px 0px 28px #0000001f;
+
+	//misc
+	--crossBg: url('static/icons/Close.svg') center no-repeat #d5d5d5;
+}

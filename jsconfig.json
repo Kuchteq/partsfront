@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"$shared": ["src/shared"],
+			"$shared/*": ["src/shared/*"],
+			"$lib": ["src/lib"],
+			"$lib/*": ["src/lib/*"],
+			"$icons": ["src/icons"],
+			"$icons/*": ["src/icons/*"],
+			"$functions": ["src/functions"],
+			"$functions/*": ["src/functions/*"]
+		}
+	},
+	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte"]
+}
