@@ -1,35 +1,51 @@
 <script>
+	import { onMount } from 'svelte';
+	import back from '$axios';
+	import { openModal } from '$functions/modalManager.js';
 	import Select from 'svelte-select';
+	export let id;
 	export let label;
+	export let update;
+	export let initValue = '';
 	export let themeColor = '#505050';
-	export let addHandler = '';
-	let value = { value: 'cake', label: 'Cake' };
-	let items = [
-		{ value: 'chocolate', label: 'Chocolate' },
-		{ value: 'pizza', label: 'Pizza' },
-		{ value: 'cake', label: 'Cake' },
-		{ value: 'chips', label: 'Chips' },
-		{ value: 'ice-cream', label: 'Ice Cream' }
-	];
+	export let addHandlerModal = '';
+	export let fetchString;
+	export let error = undefined;
+	export let required = true;
+	let items;
 
 	function handleSelect(event) {
-		console.log('selected item', event.detail);
-		// .. do something here 🙂
+		update(id, event.detail);
 	}
+
+	onMount(() => {
+		back
+			.get(fetchString)
+			.then((res) => {
+				items = res.data;
+			})
+			.catch((err) => {});
+	});
 </script>
 
-<div class={'uniField'} style="--themeColor:{themeColor}">
+<div
+	class="uniField {required && 'reqField'} {error && 'fieldFillError'}"
+	style="--selectFieldColor:{themeColor}"
+>
 	<label>{label}</label>
-	<div class="inputsWrap">
+	<div class="inputsWrap" data-field-id={id}>
 		<Select
 			{items}
 			placeholder={'Wybierz...'}
-			{value}
 			containerClasses={'customContainer'}
+			on:clear={handleSelect}
 			on:select={handleSelect}
+			value={initValue}
 		/>
-		{#if addHandler != ''}
-			<button class="add"> Lub stwórz nowego + </button>
+		{#if addHandlerModal}
+			<button type="button" on:click={() => openModal(addHandlerModal)} class="add">
+				Lub stwórz nowego +
+			</button>
 		{/if}
 	</div>
 </div>
@@ -40,8 +56,9 @@
 		display: flex;
 		align-items: center;
 		:global(.customContainer) {
-			border-color: var(--themeColor);
-			--borderFocusColor: var(--themeColor);
+			border-color: #505050;
+			--borderFocusColor: var(--selectFieldColor);
+			--itemIsActiveBG: var(--selectFieldColor);
 			padding: 15px;
 			width: 500px;
 			margin-left: 20px;
@@ -54,7 +71,7 @@
 		margin-left: 20px;
 		padding: 8px 14px;
 		border: 1px solid #505050;
-		background-color: var(--themeColor);
+		background-color: var(--selectFieldColor);
 		color: #fff;
 		font-size: 17px;
 		border-radius: 3px;

@@ -1,16 +1,29 @@
 <script>
-	let date;
-	let time;
+	import { onMount } from 'svelte';
+
+	let date = '';
+	let time = '';
 	export let id;
 	export let label;
 	export let update;
+	export let required = true;
+	export let error = undefined;
+	export let initValue = '';
 
 	$: {
-		update(id, date + time);
+		if (date && time) {
+			update(id, `${date} ${time}`);
+		}
 	}
+	onMount(() => {
+		if (initValue) {
+			date = initValue.split(' ')[0];
+			time = initValue.split(' ')[1];
+		}
+	});
 </script>
 
-<div class={'uniField'}>
+<div class="uniField {required && 'reqField'} {error && 'fieldFillError'}" data-field-id={id}>
 	<label>{label}</label>
 	<div class="inputsWrap">
 		<input class="date" bind:value={date} type="date" />
@@ -19,14 +32,15 @@
 </div>
 
 <style lang="scss">
+	.time,
 	.date {
 		width: fit-content;
-		display: flex;
+		cursor: text;
 		&::-webkit-calendar-picker-indicator {
+			border: 1px solid #000;
+			background-color: rgb(243, 243, 243);
+			cursor: pointer;
 		}
-	}
-	.time {
-		width: fit-content;
 	}
 	.inputsWrap {
 		display: flex;

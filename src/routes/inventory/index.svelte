@@ -14,10 +14,6 @@
 
 	$: results = client.results;
 	$: labels = client.labels;
-
-	onDestroy(() => {
-		client.resetResults();
-	});
 </script>
 
 <div class="mainHolder">

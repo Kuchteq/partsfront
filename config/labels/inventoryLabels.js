@@ -38,7 +38,7 @@ let inventoryLabels = [
 		id: 5,
 		name: 'Notatka',
 		queryName: 'short_note',
-		shown: true,
+		shown: false,
 		sortedBy: 'asc',
 		widthClass: 'w10'
 	},

@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 const pushStack = writable([]);
 
 let id = 0;
-
+const waitTime = 3000;
 const waitToHide = (arr, curId) => {
 	if (arr[arr.findIndex((obj) => obj.id === curId)].visible === false) {
 		pushStack.update((afterGoneArray) => {
@@ -13,19 +13,21 @@ const waitToHide = (arr, curId) => {
 	}
 };
 
-function addNotif(type, header, desc) {
+function addNotif(type, header, desc, clickAction) {
 	pushStack.update((ogArray) => {
-		let arr = ogArray.concat([{ id, type, header: header, desc, visible: true, display: true }]);
+		let arr = ogArray.concat([
+			{ id, type, header: header, desc, clickAction, visible: true, display: true }
+		]);
 		const curId = id;
 		setTimeout(() => {
 			pushStack.update((setToHideArray) => {
 				setToHideArray[setToHideArray.findIndex((obj) => obj.id === curId)].visible = false;
 				setTimeout(() => {
 					waitToHide(setToHideArray, curId);
-				}, 3000);
+				}, waitTime);
 				return setToHideArray;
 			});
-		}, 3000);
+		}, waitTime);
 
 		return arr;
 	});
@@ -44,10 +46,10 @@ function resumeKilling(id) {
 			arr[arr.findIndex((obj) => obj.id === id)].visible = false;
 			setTimeout(() => {
 				waitToHide(arr, id);
-			}, 3000);
+			}, waitTime);
 			return arr;
 		});
-	}, 3000);
+	}, waitTime);
 }
 function killInstantly(id) {
 	pushStack.update((arr) => {

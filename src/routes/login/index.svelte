@@ -5,7 +5,7 @@
 	import PassCircle from '$lib/compIcons/pass_key.svelte';
 	import LoginArrow from '$lib/compIcons//for_login_arrow.svelte';
 	import back from '$axios';
-	import { addNotif } from '$shared/statusPopup/PopupClient';
+	import { addNotif } from '$functions/PopupClient';
 	import { goto } from '$app/navigation';
 
 	let usernameCred = '';

@@ -6,13 +6,14 @@
 	export let id;
 	export let label;
 	export let update;
-
+	export let required = true;
+	export let error = undefined;
 	$: {
 		update(id, countryCode + number.replace(/\s/g, ''));
 	}
 </script>
 
-<div class={'uniField'}>
+<div class="uniField {required && 'reqField'} {error && 'fieldFillError'}" data-field-id={id}>
 	<label>{label}</label>
 	<input bind:value={number} type="tel" />
 	<select

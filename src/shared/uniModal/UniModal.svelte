@@ -1,71 +1,43 @@
 <script>
-	import DatetimeField from '$shared/fields/DatetimeField.svelte';
-	import inventoryForm from '/config/forms/inventoryForm.js';
-	import EmailField from '$shared/fields/EmailField.svelte';
-	import createPostClient from '$functions/postClient';
-	import IntegerField from '$shared/fields/IntegerField.svelte';
-	import PhoneField from '$shared/fields/PhoneField.svelte';
-	import PriceField from '$shared/fields/PriceField.svelte';
-	import SelectField from '$shared/fields/SelectField.svelte';
-
-	import StringField from '$shared/fields/StringField.svelte';
 	import TabName from '$shared/tabName/TabName.svelte';
-	let actionButton = {
-		do: () => {
-			console.log('asgf');
-		},
-		text: 'Sprzedaj',
-		icon: 'static/icons/SellCircle.svg',
-		class: 'sellBut'
-	};
-	let resetButton = {
-		do: () => {
-			console.log('asgf');
-		}
-	};
-	let tabClickHandler = () => {
-		console.log('zami');
-	};
-	let val;
-	let val2;
-	let val3;
-	let val4;
-	let val5;
-	let val6;
-	let val7;
-	let client = createPostClient(inventoryForm);
+	import { closeModal } from '$functions/modalManager';
+	export let modalName;
+	export let tabName = '';
 
-	$: console.log($client);
+	export let actionButton = {
+		do: () => {},
+		text: '',
+		icon: ''
+	};
+	export let resetAction = () => {};
+	let closeModalHandler = () => {
+		closeModal(modalName);
+	};
+	// pass css variables such as themeGradient
+	export let theme;
 </script>
 
 <div class="dimmedBg" />
-<section class="uniModal absCenter">
-	<TabName text="przykładowyModal" clickHandler={tabClickHandler} />
+<section class="uniModal absCenter {theme}" id="modal-{modalName}">
+	<TabName text={tabName} clickHandler={closeModalHandler} />
 	<div class="upButtons">
-		<button class={`resetButton`}><img src={'static/icons/ResetCircle.svg'} /></button>
-		<button class={`doButton ${actionButton.class}`}
+		<button class={`resetButton`}
+			><img src={'static/icons/ResetCircle.svg'} on:click={() => resetAction()} /></button
+		>
+		<button class="actionButton" type="submit" on:click={() => actionButton.do()}
 			><img src={actionButton.icon} />{actionButton.text}</button
 		>
 	</div>
 	<div class="mainSlot">
-		<form>
-			<StringField id={0} label={'Segment'} update={client.updateVal} />
-			<IntegerField id={1} label={'Quantity'} update={client.updateVal} />
-			<PriceField id={2} label={'Cena'} update={client.updateVal} quantity={2} />
-			<EmailField id={3} label={'Email'} update={client.updateVal} />
-			<PhoneField id={4} label={'Phone'} update={client.updateVal} />
-			<DatetimeField id={5} label={'Phone'} update={client.updateVal} />
-			<SelectField id={6} label={'Select'} update={client.updateVal} />
-			<button class="submit" type="submit" />
-		</form>
+		<slot />
 	</div>
 </section>
 
 <style lang="scss">
-	.submit {
-		width: 100px;
-		background-color: #000;
-		height: 100px;
+	.mainSlot {
+		height: 85%;
+		overflow-y: auto;
+		padding: 10px;
 	}
 	.uniModal {
 		z-index: 120;
@@ -76,14 +48,17 @@
 		height: 80vh;
 		box-shadow: var(--modalShadow);
 		border-radius: var(--modalRounding);
+		animation: fadeIn 0.1s;
 	}
-	.doButton {
+	.actionButton {
 		font-size: 25px;
 		font-weight: 600;
 		display: flex;
 		align-items: center;
 		box-shadow: var(--btnShadow);
-		padding: 13px 34px 13px 20px;
+		background: var(--actionColor);
+		color: #fff;
+		padding: 13px 44px 13px 30px;
 		border-radius: 24px;
 		img {
 			margin-right: 15px;
@@ -95,9 +70,16 @@
 		padding: 13px;
 		border-radius: 24px;
 		margin-right: 20px;
+		background-color: #686868;
 		img {
 			width: 36px;
 			display: block;
+			transition: 0.4s all;
+		}
+		&:hover {
+			img {
+				transform: rotate(-360deg);
+			}
 		}
 	}
 	.upButtons {
@@ -112,5 +94,6 @@
 		width: 100vw;
 		height: 100vh;
 		top: 0;
+		animation: fadeIn 0.1s;
 	}
 </style>

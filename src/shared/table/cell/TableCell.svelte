@@ -1,19 +1,3 @@
-<!-- import React from 'react'
-
-export default function TableCell({result,labels, onSingleClick, onDoubleClick}) {
-
-    Object.keys(result).map((column, index) => {
-        console.log(result[key])
-      });
-
-    return (
-        <div>
-            { Object.keys(result).map((column, index) =>
-             <div className = {`${labels[index].widthClass} ${labels[index].shown && "shown"}`}>{result[column]}</div>)}
-
-        </div>
-    )
-} -->
 <script>
 	export let result;
 	export let labels;

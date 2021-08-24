@@ -4,11 +4,12 @@
 	import '../styles/globals.scss';
 	import PopupPanel from '$shared/statusPopup/PopupPanel.svelte';
 	import UniModal from '$shared/uniModal/UniModal.svelte';
+	import ModalManager from '$shared/modalManager/ModalManager.svelte';
 	//import { getStores, navigating, page, session } from '$app/stores';
 </script>
 
 <main>
 	<PopupPanel />
-	<UniModal />
+	<ModalManager />
 	<slot />
 </main>
