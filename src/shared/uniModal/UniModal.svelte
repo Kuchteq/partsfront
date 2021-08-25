@@ -10,9 +10,11 @@
 		icon: ''
 	};
 	export let resetAction = () => {};
+
 	let closeModalHandler = () => {
 		closeModal(modalName);
 	};
+
 	// pass css variables such as themeGradient
 	export let theme;
 </script>
@@ -21,8 +23,8 @@
 <section class="uniModal absCenter {theme}" id="modal-{modalName}">
 	<TabName text={tabName} clickHandler={closeModalHandler} />
 	<div class="upButtons">
-		<button class={`resetButton`}
-			><img src={'static/icons/ResetCircle.svg'} on:click={() => resetAction()} /></button
+		<button class={`resetButton`} on:click={resetAction()}
+			><img src={'static/icons/ResetCircle.svg'} /></button
 		>
 		<button class="actionButton" type="submit" on:click={() => actionButton.do()}
 			><img src={actionButton.icon} />{actionButton.text}</button

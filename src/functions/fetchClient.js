@@ -1,13 +1,15 @@
 import { writable, derived, get } from 'svelte/store';
 
 import back from '$axios';
+import { refetch } from './triggerRefetch';
 
 function createFetchClient(labelsToCreate, fetchSource) {
 	const labels = writable(labelsToCreate);
 	const results = writable([]);
+
 	const sortValue = writable({
-		by: 'part_id',
-		dir: 'asc'
+		by: labelsToCreate.find((labelsToCreate) => labelsToCreate.default == true).queryName,
+		dir: 'desc'
 	});
 
 	const fetchInventory = (page) => {
@@ -48,8 +50,7 @@ function createFetchClient(labelsToCreate, fetchSource) {
 					dir: by !== cur.by ? 'asc' : cur.dir == 'asc' ? 'desc' : 'asc'
 				};
 			});
-			results.set([]);
-			fetchInventory(1);
+			refetch();
 		},
 		handleHide: (id) => {
 			labels.update((before) => {

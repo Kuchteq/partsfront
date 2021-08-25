@@ -1,0 +1,38 @@
+.moduleMainHolder {
+	width: 88%;
+	margin: 40px auto;
+}
+.upTools {
+	display: flex;
+	margin-bottom: 25px;
+	.uniModalOpenButton {
+		margin-right: 25px;
+	}
+}
+.innerTools {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.w5 {
+	flex: 5;
+}
+.w8 {
+	flex: 8;
+}
+.w15 {
+	flex: 15;
+}
+.w30 {
+	flex: 30;
+}
+.w35 {
+	flex: 35;
+}
+.w40 {
+	flex: 40;
+}
+.w10 {
+	flex: 10;
+}

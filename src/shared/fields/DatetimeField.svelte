@@ -9,7 +9,6 @@
 	export let required = true;
 	export let error = undefined;
 	export let initValue = '';
-
 	$: {
 		if (date && time) {
 			update(id, `${date} ${time}`);
@@ -23,7 +22,7 @@
 	});
 </script>
 
-<div class="uniField {required && 'reqField'} {error && 'fieldFillError'}" data-field-id={id}>
+<div class="uniField {required && 'reqField'} {error ? 'fieldFillError' : ''}" data-field-id={id}>
 	<label>{label}</label>
 	<div class="inputsWrap">
 		<input class="date" bind:value={date} type="date" />

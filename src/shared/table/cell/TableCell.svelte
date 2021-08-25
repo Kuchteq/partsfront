@@ -5,7 +5,9 @@
 
 <ul>
 	{#each Object.values(result) as column, i}
-		<li class={`${labels[i].widthClass} ${labels[i].shown ? '' : 'hiddenDisplay'}`}>{column}</li>
+		<li class={`${labels[i].widthClass} ${labels[i].shown ? '' : 'hiddenDisplay'}`}>
+			{!column ? '' : labels[i].format ? labels[i].format(column) : column}
+		</li>
 	{/each}
 </ul>
 

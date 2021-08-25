@@ -3,7 +3,7 @@ import IntegerField from '$shared/fields/IntegerField.svelte';
 import PriceField from '$shared/fields/PriceField.svelte';
 import SelectField from '$shared/fields/SelectField.svelte';
 import StringField from '$shared/fields/StringField.svelte';
-import { getCurrentTime } from './formHelpers.js';
+import { getCurrentTime } from '../formatHelpers.js';
 // import EmailField from '$shared/fields/EmailField.svelte';
 // import PhoneField from '$shared/fields/PhoneField.svelte';
 let inventoryForm = [
@@ -65,6 +65,7 @@ let inventoryForm = [
 		queryName: 'purchase_date',
 		component: DatetimeField,
 		value: getCurrentTime(),
+		default: getCurrentTime(),
 		required: true
 	}
 ];

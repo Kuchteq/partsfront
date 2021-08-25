@@ -8,9 +8,10 @@
 	export let sortValue;
 	export let results;
 	export let fetcherFunc;
+	export let resetFunc;
 </script>
 
 <section>
 	<TableTopPart {labels} {sortHandler} {sortValue} />
-	<TableBody {labels} {results} {fetcherFunc} />
+	<TableBody {labels} {results} {fetcherFunc} {resetFunc} />
 </section>

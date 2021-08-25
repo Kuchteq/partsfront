@@ -1,30 +1,35 @@
 <script>
 	import TableUniversal from '$shared/table/TableUniversal.svelte';
 	import createFetchClient from '$functions/fetchClient.js';
-	import inventoryLabels from '/config/labels/inventoryLabels.js';
-	import { onDestroy } from 'svelte';
-	import AddInventoryButton from '$shared/buttons/add/AddInventoryButton.svelte';
-	import SellInventoryButton from '$shared/buttons/sell/SellInventoryButton.svelte';
-	import AssembleComputerButton from '$shared/buttons/assemble/AssembleComputerButton.svelte';
+	import clientsLabels from '/config/labels/clientsLabels.js';
+	import UniModalOpenButton from '$shared/buttons/uni/UniModalOpenButton.svelte';
 	import ShowFields from '$shared/showFields/ShowFields.svelte';
 	import SearchField from '$shared/searchField/SearchField.svelte';
 
-	const client = createFetchClient(inventoryLabels, '/inventory');
+	const moduleName = 'clients';
+	const showIcons = [
+		'id',
+		'name',
+		'join_date',
+		'email',
+		'phone',
+		'address',
+		'nip',
+		'note',
+		'purchase',
+		'last_purchase'
+	];
+	const client = createFetchClient(clientsLabels, '/clients');
 
 	$: results = client.results;
 	$: labels = client.labels;
-
-	onDestroy(() => {
-		client.resetResults();
-	});
 </script>
 
-<div class="mainHolder">
+<div class="moduleMainHolder">
 	<section class="upTools">
-		<AddInventoryButton />
-		<SellInventoryButton />
-		<AssembleComputerButton />
+		<UniModalOpenButton theme={moduleName} text={'Dodaj klienta'} modal="clients" />
 		<div class="innerTools">
+			<ShowFields icons={showIcons} {labels} handleHide={client.handleHide} />
 			<SearchField />
 		</div>
 	</section>
@@ -34,25 +39,24 @@
 		sortHandler={client.sortBy}
 		results={$results}
 		fetcherFunc={client.fetchInventory}
+		resetFunc={client.resetResults}
 	/>
 </div>
 
 <style lang="scss">
-	.mainHolder {
-		width: 88%;
-		margin: 40px auto;
-		--loaderColor: var(--mBlue);
+	.moduleMainHolder {
+		//theme color customization
+		--moduleThemeColor: var(--mClients);
+		--loaderColor: var(--moduleThemeColor);
+		--moduleThemeLighter: #00d2bd;
+		--moduleThemeGradient: var(--graClients);
+		//optional for table top part
+
+		--topPartBg: #00ebd3;
+		--topPartTurnedOff: #00d2bd;
 	}
-	.upTools {
-		display: flex;
-		margin-bottom: 25px;
-		:global(.uniModalOpenButton) {
-			margin-right: 25px;
-		}
-	}
-	.innerTools {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
+	:global(.clients-open-button) {
+		--buttonBg: linear-gradient(231deg, #00bb88 0%, #00b259 100%);
+		--buttonIcon: url('static/icons/AddClient.svg');
 	}
 </style>

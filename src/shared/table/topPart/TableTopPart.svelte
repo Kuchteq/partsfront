@@ -26,7 +26,7 @@
 		margin-bottom: 20px;
 		color: #fff;
 		font-weight: 600;
-		background: var(--graBlue);
+		background: var(--moduleThemeGradient);
 	}
 	button {
 		padding: 13px 18px;
@@ -38,7 +38,7 @@
 			border-right: none;
 		}
 		&:hover {
-			background: #268bff;
+			background: var(--moduleThemeLighter);
 		}
 		&::after {
 			content: '';

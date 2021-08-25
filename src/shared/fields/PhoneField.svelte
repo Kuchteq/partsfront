@@ -1,25 +1,41 @@
 <script>
-	import { derived } from 'svelte/store';
+	import { onMount } from 'svelte';
 
-	let countryCode;
 	let number = '';
+	export let initValue = {
+		countryCode: '48',
+		number: ''
+	};
+	let countryCode = initValue.countryCode;
 	export let id;
 	export let label;
 	export let update;
 	export let required = true;
 	export let error = undefined;
-	$: {
-		update(id, countryCode + number.replace(/\s/g, ''));
-	}
+
+	console.log(initValue);
+
+	const handleInput = (type, e) => {
+		if (type == 'num') {
+			number = e;
+		} else {
+			countryCode = e;
+		}
+		update(id, {
+			countryCode: countryCode,
+			number: number
+		});
+	};
 </script>
 
 <div class="uniField {required && 'reqField'} {error && 'fieldFillError'}" data-field-id={id}>
 	<label>{label}</label>
-	<input bind:value={number} type="tel" />
+	<input on:input={(e) => handleInput('num', e.target.value)} value={initValue.number} type="tel" />
 	<select
 		class={`countrySelect ${countryCode == 48 ? 'poland' : ''}`}
 		name="countryCode"
-		bind:value={countryCode}
+		on:input={(e) => handleInput('code', e.target.value)}
+		value={initValue.countryCode}
 	>
 		<option data-countryCode="PL" value="48" selected>Polska (+48)</option>
 		<option data-countryCode="DE" value="49">Niemcy (+49)</option>

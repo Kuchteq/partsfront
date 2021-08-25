@@ -4,11 +4,13 @@
 	export let update;
 	export let initValue = 0;
 	export let error = undefined;
-	export let boundries = {
-		min: 1,
+	export const boundries = {
+		min: 0,
 		max: Number.MAX_SAFE_INTEGER
 	};
+
 	export let required = true;
+
 	const blockRange = (e) => {
 		if (e.target.value >= boundries.max) {
 			e.target.value = boundries.max;

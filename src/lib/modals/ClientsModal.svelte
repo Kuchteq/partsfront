@@ -1,23 +1,22 @@
 <script>
 	import UniModal from '$shared/uniModal/UniModal.svelte';
-	import inventoryForm from '/config/forms/inventoryForm.js';
+	import clientsForm from '/config/forms/clientsForm.js';
 	import createPostClient from '$functions/postClient';
 	import { refetch } from '$functions/triggerRefetch';
-
-	let modalName = 'add';
+	let modalName = 'clients';
 	let formRef;
-	let client = createPostClient(inventoryForm);
+	let client = createPostClient(clientsForm);
 
 	let actionButton = {
 		do: () => {
 			let successMessage = {
 				title: `Sukces!`,
-				desc: `${$client[1].value} została dodana`
+				desc: `${$client[0].value} została dodana`
 			};
 			//pass name to
 			let valid = client.checkValidity(modalName);
 			if (valid) {
-				client.post('/inventory', successMessage);
+				client.post('/clients', successMessage);
 				refetch();
 			}
 		},
@@ -30,7 +29,7 @@
 	};
 </script>
 
-<UniModal {modalName} theme="addModal" {actionButton} {resetAction} tabName="Dodaj inwentarz">
+<UniModal {modalName} theme="clientsModal" {actionButton} {resetAction} tabName="Dodaj klienta">
 	<form bind:this={formRef}>
 		{#each $client as field, id}
 			<svelte:component
@@ -45,7 +44,7 @@
 				fetchString={field.fetchString && field.fetchString}
 				themeColor={field.themeColor && field.themeColor}
 				addHandlerModal={field.addHandlerModal && field.addHandlerModal}
-				boundries={field.boundries || undefined}
+				boundries={field.boundries && field.boundries}
 				error={field.error || undefined}
 			/>
 		{/each}
@@ -53,9 +52,9 @@
 </UniModal>
 
 <style>
-	:global(.uniModal.addModal) {
-		--themeGradient: var(--graBlue);
-		--themeColor: var(--mBlue);
-		--actionColor: var(--graGreen);
+	:global(.uniModal.clientsModal) {
+		--themeGradient: var(--graClients);
+		--themeColor: var(--mClients);
+		--actionColor: var(--graClients);
 	}
 </style>

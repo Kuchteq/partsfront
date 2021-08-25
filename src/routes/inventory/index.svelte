@@ -2,7 +2,6 @@
 	import TableUniversal from '$shared/table/TableUniversal.svelte';
 	import createFetchClient from '$functions/fetchClient.js';
 	import inventoryLabels from '/config/labels/inventoryLabels.js';
-	import { onDestroy } from 'svelte';
 	import AddInventoryButton from '$shared/buttons/add/AddInventoryButton.svelte';
 	import SellInventoryButton from '$shared/buttons/sell/SellInventoryButton.svelte';
 	import AssembleComputerButton from '$shared/buttons/assemble/AssembleComputerButton.svelte';
@@ -16,7 +15,7 @@
 	$: labels = client.labels;
 </script>
 
-<div class="mainHolder">
+<div class="moduleMainHolder">
 	<section class="upTools">
 		<AddInventoryButton />
 		<SellInventoryButton />
@@ -32,25 +31,20 @@
 		sortHandler={client.sortBy}
 		results={$results}
 		fetcherFunc={client.fetchInventory}
+		resetFunc={client.resetResults}
 	/>
 </div>
 
 <style lang="scss">
-	.mainHolder {
-		width: 88%;
-		margin: 40px auto;
+	.moduleMainHolder {
+		//theme color customization
+		--moduleThemeColor: var(--mBlue);
 		--loaderColor: var(--mBlue);
-	}
-	.upTools {
-		display: flex;
-		margin-bottom: 25px;
-		:global(.uniModalOpenButton) {
-			margin-right: 25px;
-		}
-	}
-	.innerTools {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
+		--moduleThemeLighter: #268bff;
+		--moduleThemeGradient: var(--graBlue);
+		//optional for table top part
+
+		--topPartBg: #6db1ff;
+		--topPartTurnedOff: var(--mLightBlue);
 	}
 </style>

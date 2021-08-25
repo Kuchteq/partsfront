@@ -17,7 +17,7 @@
 	.showFields {
 		display: flex;
 		align-items: center;
-		background-color: #4da0ff;
+		background-color: var(--topPartBg);
 		width: fit-content;
 		border-radius: 12px;
 		box-shadow: 0px 2px 12px #00000033;
@@ -26,15 +26,17 @@
 		font-weight: 600;
 		color: #fff;
 		padding: 7px 15px 7px 22px;
-		background-color: #6db1ff;
+		background-color: var(--topPartBg);
 		border-radius: 12px 0px 0px 12px;
 	}
 	button {
 		padding: 7px;
-		background-color: var(--mBlue);
+		background-color: var(--moduleThemeColor);
 		transition: 0.15s all;
 		img {
 			display: block;
+			width: 24px;
+			height: 24px;
 		}
 		&:last-child {
 			border-radius: 0px 12px 12px 0px;
@@ -42,6 +44,6 @@
 		}
 	}
 	.turnedOff {
-		background-color: var(--mLightBlue);
+		background-color: var(--topPartTurnedOff);
 	}
 </style>

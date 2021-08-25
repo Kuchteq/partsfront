@@ -4,7 +4,7 @@
 	import AddInventoryButton from '$shared/buttons/add/AddInventoryButton.svelte';
 	import SellInventoryButton from '$shared/buttons/sell/SellInventoryButton.svelte';
 	import AssembleComputerButton from '$shared/buttons/assemble/AssembleComputerButton.svelte';
-	import UniModuleLink from '$shared/buttons/uniButton/UniModuleLink.svelte';
+	import UniModuleLink from '$shared/buttons/UniModuleLink/UniModuleLink.svelte';
 	import SearchField from '$shared/searchField/SearchField.svelte';
 
 	const baseIconFolder = 'static/icons/';

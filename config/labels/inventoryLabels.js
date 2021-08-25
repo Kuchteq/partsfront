@@ -4,7 +4,8 @@ let inventoryLabels = [
 		name: 'id',
 		queryName: 'part_id',
 		shown: true,
-		widthClass: 'w5'
+		widthClass: 'w5',
+		default: true
 	},
 	{
 		id: 1,
