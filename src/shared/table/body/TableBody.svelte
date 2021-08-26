@@ -11,6 +11,11 @@
 	export let results = [];
 	export let labels = [];
 	export let fetcherFunc;
+	export let highlightedCell;
+	export let onCellSingleClick;
+	export let onCellDoubleClick;
+	export let selectedCells;
+
 	export let resetFunc = () => {};
 	let currentPage = 1;
 
@@ -64,7 +69,14 @@
 <div class="mainTable">
 	{#if (results.length !== 0 || undefined) && !noLabels}
 		{#each results as result}
-			<TableCell {result} {labels} />
+			<TableCell
+				{result}
+				{labels}
+				highlighted={highlightedCell}
+				onDoubleClick={onCellDoubleClick}
+				onSingleClick={onCellSingleClick}
+				{selectedCells}
+			/>
 		{/each}
 	{:else}
 		<div class="noResultsLoadWrap absCenter">

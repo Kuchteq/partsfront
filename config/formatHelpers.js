@@ -17,13 +17,12 @@ const getCurrentTime = () => {
 };
 
 const formatPhone = (value) => {
+	value = value.toString();
 	return `+${value.slice(0, 2)} ${value.slice(2, 5)} ${value.slice(5, 8)} ${value.slice(8, 11)}`;
 };
 
 //checkers
 const checkLength = (val, dest, ignoreSpaces) => {
-	console.log(val.replace(/\s/g, '').length);
-	console.log(ignoreSpaces);
 	if (ignoreSpaces) {
 		return val.replace(/\s/g, '').length == dest ? true : false;
 	}

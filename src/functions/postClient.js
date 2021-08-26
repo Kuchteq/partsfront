@@ -3,6 +3,9 @@ import { addNotif } from '$functions/PopupClient';
 import clone from 'just-clone';
 import back from '$axios';
 
+const SERVER_ERROR_STRING =
+	'Serwer nie mógł przetworzyć tej operacji, możliwy błąd w uzupełnionych danych';
+
 const checkForConstraints = (field) => {
 	let valid;
 	field.constraints.every((con, errFunc) => {
@@ -17,9 +20,22 @@ const checkForConstraints = (field) => {
 	return valid;
 };
 
-function createPostClient(formStructure) {
-	const { subscribe, set, update } = writable(formStructure);
+const createReqJson = (formStructure) => {
+	let json = {};
 
+	formStructure.forEach(({ queryName, value, type }) => {
+		if (type == 'phone') {
+			json[queryName] = value.number ? value.countryCode + value.number.replace(/\s/g, '') : null;
+		} else if (typeof value == 'object') {
+			json[queryName] = value.value ? value.value : null;
+		} else {
+			json[queryName] = value ? value : null;
+		}
+	});
+	return json;
+};
+
+function createPostClient(formStructure, getPath = undefined, updateId = undefined) {
 	const resetValues = () => {
 		update((arr) => {
 			arr.forEach((val, i) => {
@@ -29,6 +45,36 @@ function createPostClient(formStructure) {
 			return arr;
 		});
 	};
+	const fillFromGet = (data) => {
+		update((arr) => {
+			Object.keys(data).forEach((val, i) => {
+				arr[arr.findIndex((obj) => obj.queryName === val)].value = data[val];
+			});
+			return arr;
+		});
+	};
+
+	const { subscribe, set, update } = writable(formStructure);
+	let getData;
+
+	if (updateId && getPath) {
+		resetValues();
+
+		back
+			.get(`${getPath}${updateId}`)
+			.then((res) => {
+				getData = res.data[0];
+				fillFromGet(getData);
+			})
+			.catch((err) => {
+				addNotif('error', 'Problem z pobieraniem po stronie serwera', SERVER_ERROR_STRING);
+			});
+	}
+
+	const resetFromGet = () => {
+		if (getData) fillFromGet(getData);
+	};
+
 	return {
 		subscribe,
 		updateVal: (id, val) => {
@@ -64,37 +110,44 @@ function createPostClient(formStructure) {
 			return valid;
 		},
 		post: (path, successMessage) => {
-			let postJson = {};
+			return new Promise((resolve, reject) => {
+				let postJson = createReqJson(formStructure);
 
-			formStructure.forEach(({ queryName, value, type }) => {
-				if (type == 'phone') {
-					postJson[queryName] = value.number
-						? value.countryCode + value.number.replace(/\s/g, '')
-						: null;
-				} else if (typeof value == 'object') {
-					postJson[queryName] = value.value ? value.value : null;
-				} else {
-					postJson[queryName] = value ? value : null;
-				}
+				back
+					.post(path, postJson)
+					.then(() => {
+						//Notif template
+						//let successMessage = {title: ``, desc: ``}
+						addNotif('success', successMessage.title, successMessage.desc);
+						resetValues();
+						resolve();
+					})
+					.catch((err) => {
+						addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
+						reject();
+					});
 			});
-			console.log(postJson);
-			back
-				.post(path, postJson)
-				.then(() => {
-					//Notif template
-					//let successMessage = {title: ``, desc: ``}
-					addNotif('success', successMessage.title, successMessage.desc);
-					resetValues();
-				})
-				.catch((err) => {
-					addNotif(
-						'error',
-						'Problem po stronie serwera',
-						`Serwer nie mógł przetworzyć tej operacji, możliwy błąd w uzupełnionych danych`
-					);
-				});
 		},
-		resetValues
+		resetValues,
+		put: (path, updateId, successMessage) => {
+			return new Promise((resolve, reject) => {
+				let updateJson = createReqJson(formStructure);
+				console.log(updateJson);
+				back
+					.put(`${path}${updateId}`, updateJson)
+					.then(() => {
+						//Notif template
+						//let successMessage = {title: ``, desc: ``}
+						addNotif('success', successMessage.title, successMessage.desc);
+						resolve();
+					})
+					.catch((err) => {
+						addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
+						reject();
+					});
+			});
+		},
+		resetFromGet
 	};
 }
 

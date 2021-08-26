@@ -1,26 +1,28 @@
 <script>
 	import TableUniversal from '$shared/table/TableUniversal.svelte';
 	import createFetchClient from '$functions/fetchClient.js';
-	import clientsLabels from '/config/labels/clientsLabels.js';
+	import suppliersLabels from '/config/labels/suppliersLabels.js';
 	import UniModalOpenButton from '$shared/buttons/uni/UniModalOpenButton.svelte';
 	import ShowFields from '$shared/showFields/ShowFields.svelte';
 	import SearchField from '$shared/searchField/SearchField.svelte';
 
-	const moduleName = 'clients';
+	const moduleName = 'suppliers';
 	const showIcons = [
 		'id',
 		'name',
 		'join_date',
-		'email',
+		'website',
 		'phone',
+		'email',
 		'address',
 		'nip',
 		'note',
 		'purchase',
 		'last_purchase'
 	];
-	const client = createFetchClient(clientsLabels, '/clients');
 
+	//some boilerplate
+	const client = createFetchClient(suppliersLabels, '/suppliers');
 	$: results = client.results;
 	$: labels = client.labels;
 	$: highlightedCell = client.highlighted;
@@ -28,7 +30,7 @@
 
 <div class="moduleMainHolder">
 	<section class="upTools">
-		<UniModalOpenButton theme={moduleName} text={'Dodaj klienta'} modal="clients" />
+		<UniModalOpenButton theme={moduleName} text={'Dodaj klienta'} modal="suppliers" />
 		<div class="innerTools">
 			<ShowFields icons={showIcons} {labels} handleHide={client.handleHide} />
 			<SearchField />
@@ -48,16 +50,16 @@
 <style lang="scss">
 	.moduleMainHolder {
 		//theme color customization
-		--moduleThemeColor: var(--mClients);
+		--moduleThemeColor: var(--mSuppliers);
 		--loaderColor: var(--moduleThemeColor);
 		--moduleThemeLighter: #00d2bd;
-		--moduleThemeGradient: var(--graClients);
+		--moduleThemeGradient: var(--graSuppliers);
 		//optional for table top part
 
-		--topPartBg: #00ebd3;
-		--topPartTurnedOff: #00d2bd;
+		--topPartBg: #32cfff;
+		--topPartTurnedOff: #53d7ff;
 	}
-	:global(.clients-open-button) {
+	:global(.suppliers-open-button) {
 		--buttonBg: linear-gradient(231deg, #00bb88 0%, #00b259 100%);
 		--buttonIcon: url('static/icons/AddClient.svg');
 	}

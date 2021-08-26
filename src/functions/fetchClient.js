@@ -6,6 +6,7 @@ import { refetch } from './triggerRefetch';
 function createFetchClient(labelsToCreate, fetchSource) {
 	const labels = writable(labelsToCreate);
 	const results = writable([]);
+	let highlighted = writable(-1);
 
 	const sortValue = writable({
 		by: labelsToCreate.find((labelsToCreate) => labelsToCreate.default == true).queryName,
@@ -37,6 +38,7 @@ function createFetchClient(labelsToCreate, fetchSource) {
 		results: derived(results, (bs) => bs),
 		labels: derived(labels, (bs) => bs),
 		sortValue: derived(sortValue, (bs) => bs),
+		highlighted: derived(highlighted, (bs) => bs),
 		addResults: () => {
 			results.update((old) => {
 				return old.concat([{ tenresult: 'ruudas' }]);
@@ -55,6 +57,8 @@ function createFetchClient(labelsToCreate, fetchSource) {
 		handleHide: (id) => {
 			labels.update((before) => {
 				before[id].shown = !before[id].shown;
+				highlighted.set(id);
+
 				return before;
 			});
 		},

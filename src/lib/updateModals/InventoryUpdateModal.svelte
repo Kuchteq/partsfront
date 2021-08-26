@@ -1,34 +1,46 @@
 <script>
 	import UniModal from '$shared/uniModal/UniModal.svelte';
-	import clientsForm from '/config/forms/clientsForm.js';
+	import inventoryForm from '/config/forms/inventoryForm.js';
 	import createPostClient from '$functions/postClient';
 	import { refetch } from '$functions/triggerRefetch';
-	let modalName = 'clients';
+	import clone from 'just-clone';
+	import modalsState from '$functions/modalManager';
+
+	let modalName = 'inventoryUpdate';
 	let formRef;
-	let client = createPostClient(clientsForm);
+	let id = $modalsState.inventoryUpdate;
+	let client = createPostClient(clone(inventoryForm), '/inventory/', id);
 
 	let actionButton = {
 		do: () => {
 			let successMessage = {
 				title: `Sukces!`,
-				desc: `${$client[0].value} została dodana`
+				desc: `${$client[1].value} została zaktualizowana`
 			};
 			//pass name to
 			let valid = client.checkValidity(modalName);
+
 			if (valid) {
-				client.post('/clients', successMessage).then(() => refetch());
+				client.put('/inventory/', id, successMessage).then(() => refetch());
 			}
 		},
-		text: 'Dodaj',
-		icon: 'static/icons/AddCircle.svg'
+		text: 'Aktualizuj',
+		icon: 'static/icons/Update.svg'
 	};
 
 	let resetAction = () => {
-		client.resetValues();
+		client.resetFromGet();
 	};
+	console.log($client);
 </script>
 
-<UniModal {modalName} theme="clientsModal" {actionButton} {resetAction} tabName="Dodaj klienta">
+<UniModal
+	{modalName}
+	theme="addModal"
+	{actionButton}
+	{resetAction}
+	tabName="Przejrzyj/aktualizuj część {$client[1].value} o id {id}"
+>
 	<form bind:this={formRef}>
 		{#each $client as field, id}
 			<svelte:component
@@ -43,7 +55,7 @@
 				fetchString={field.fetchString && field.fetchString}
 				themeColor={field.themeColor && field.themeColor}
 				addHandlerModal={field.addHandlerModal && field.addHandlerModal}
-				boundries={field.boundries && field.boundries}
+				boundries={field.boundries || undefined}
 				error={field.error || undefined}
 			/>
 		{/each}
@@ -51,9 +63,9 @@
 </UniModal>
 
 <style>
-	:global(.uniModal.clientsModal) {
-		--themeGradient: var(--graClients);
-		--themeColor: var(--mClients);
-		--actionColor: var(--graClients);
+	:global(.uniModal.addModal) {
+		--themeGradient: var(--graBlue);
+		--themeColor: var(--mBlue);
+		--actionColor: var(--graGreen);
 	}
 </style>

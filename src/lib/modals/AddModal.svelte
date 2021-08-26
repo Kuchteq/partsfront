@@ -17,8 +17,7 @@
 			//pass name to
 			let valid = client.checkValidity(modalName);
 			if (valid) {
-				client.post('/inventory', successMessage);
-				refetch();
+				client.post('/inventory', successMessage).then(() => refetch());
 			}
 		},
 		text: 'Dodaj',

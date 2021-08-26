@@ -1,26 +1,29 @@
-import { writable, derived, get } from 'svelte/store';
+import { writable } from 'svelte/store';
 
-const modalsOpenState = new writable({
+const modalsState = new writable({
+	//normal modals
 	add: false,
 	sell: false,
 	assemble: false,
 	raports: false,
 	clients: false,
 	suppliers: false,
-	problems: false
+	problems: false,
+	//modals to preview and update data
+	inventoryUpdate: false
 });
 
-function openModal(modal) {
-	modalsOpenState.update((old) => {
-		old[modal] = true;
+function openModal(modal, val = true) {
+	modalsState.update((old) => {
+		old[modal] = val;
 		return old;
 	});
 }
 function closeModal(modal) {
-	modalsOpenState.update((old) => {
+	modalsState.update((old) => {
 		old[modal] = false;
 		return old;
 	});
 }
-
-export { modalsOpenState, openModal, closeModal };
+export default modalsState;
+export { openModal, closeModal };

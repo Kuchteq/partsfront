@@ -1,13 +1,21 @@
 <script>
+	//normal modal imports
 	import AddModal from '$lib/modals/AddModal.svelte';
 	import ClientsModal from '$lib/modals/ClientsModal.svelte';
-	import { modalsOpenState } from '$functions/modalManager';
+
+	//update modal imports
+	import InventoryUpdateModal from '$lib/updateModals/InventoryUpdateModal.svelte';
+	import modalsState from '$functions/modalManager';
 </script>
 
-{#if $modalsOpenState.add}
+{#if $modalsState.add}
 	<AddModal />
 {/if}
 
-{#if $modalsOpenState.clients}
+{#if $modalsState.clients}
 	<ClientsModal />
+{/if}
+
+{#if $modalsState.inventoryUpdate}
+	<InventoryUpdateModal />
 {/if}
