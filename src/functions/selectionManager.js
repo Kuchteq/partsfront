@@ -1,6 +1,8 @@
 import { writable } from 'svelte/store';
 
 const selectedParts = new writable([]);
+let lastDesellection = new writable(undefined);
+let lastSelection = new writable(undefined);
 
 function setSelection(id) {
 	selectedParts.update((old) => {
@@ -8,14 +10,19 @@ function setSelection(id) {
 
 		if (arrIdx != -1) {
 			old.splice(arrIdx, 1);
+			lastDesellection.set(id);
 		} else {
 			old.push(id);
+			lastSelection.set(id);
 		}
 		return old;
 	});
 }
+
 function deselectAll() {
+	lastDesellection.set(undefined);
 	selectedParts.set([]);
 }
+
 export default selectedParts;
-export { selectedParts, setSelection, deselectAll };
+export { setSelection, deselectAll, lastDesellection, lastSelection };

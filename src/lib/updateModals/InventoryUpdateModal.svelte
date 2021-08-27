@@ -51,7 +51,8 @@
 				update={client.updateVal}
 				required={field.required}
 				initValue={field.value}
-				quantity={field.quantity && $client[2].value}
+				multiplier={field.quantity && $client[2].value}
+				multiText={'Wartość'}
 				fetchString={field.fetchString && field.fetchString}
 				themeColor={field.themeColor && field.themeColor}
 				addHandlerModal={field.addHandlerModal && field.addHandlerModal}

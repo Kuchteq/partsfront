@@ -3,8 +3,12 @@
 	import inventoryForm from '/config/forms/inventoryForm.js';
 	import createPostClient from '$functions/postClient';
 	import { refetch } from '$functions/triggerRefetch';
-
-	let modalName = 'add';
+	import { writable } from 'svelte/store';
+	import selectedParts, { lastDesellection, lastSelection } from '$functions/selectionManager';
+	import createSeller from '$functions/sellClient.js';
+	import { onMount } from 'svelte';
+	import SellPartChunk from '$lib/SellChunks/SellPartChunk.svelte';
+	let modalName = 'sell';
 	let formRef;
 	let client = createPostClient(inventoryForm);
 
@@ -20,22 +24,38 @@
 				client.post('/inventory', successMessage).then(() => refetch());
 			}
 		},
-		text: 'Dodaj',
-		icon: 'static/icons/AddCircle.svg'
+		text: 'Sprzedaj',
+		icon: 'static/icons/SellCircle.svg'
 	};
+	let seller = createSeller();
 
 	let resetAction = () => {
 		client.resetValues();
 	};
+	let mounted = false;
+	onMount(() => {
+		$selectedParts.forEach((part_id) => {
+			seller.addPart(part_id);
+		});
+		mounted = true;
+	});
+	$: {
+		seller.removePart($lastDesellection);
+	}
+	$: {
+		seller.addPart($lastSelection);
+	}
+	$: {
+		console.log($seller);
+	}
 </script>
 
-<UniModal {modalName} theme="addModal" {actionButton} {resetAction} tabName="Dodaj inwentarz">
+<UniModal {modalName} theme="sellModal" {actionButton} {resetAction} tabName="Sprzedaj">
 	<form bind:this={formRef}>
 		{#each $client as field, id}
 			<svelte:component
 				this={field.component}
 				{id}
-				{field}
 				label={field.label}
 				update={client.updateVal}
 				required={field.required}
@@ -50,12 +70,17 @@
 			/>
 		{/each}
 	</form>
+	<form class="sellChunksContainer">
+		{#each $seller as item, id}
+			<SellPartChunk chunkId={id} sellData={item} sellFunc={seller.updateVal} />
+		{/each}
+	</form>
 </UniModal>
 
 <style>
-	:global(.uniModal.addModal) {
-		--themeGradient: var(--graBlue);
-		--themeColor: var(--mBlue);
-		--actionColor: var(--graGreen);
+	:global(.uniModal.sellModal) {
+		--themeGradient: var(--graRed);
+		--themeColor: var(--ff5151);
+		--actionColor: var(--graRed);
 	}
 </style>

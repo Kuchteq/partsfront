@@ -2,13 +2,14 @@
 	import { onMount } from 'svelte';
 	import { init } from 'svelte/internal';
 
-	export let quantity = 0;
+	export let multiplier = 0;
 	export let id;
 	export let label;
 	export let update;
 	export let required = true;
 	export let initValue = 0;
 	export let error = undefined;
+	export let multiText = '';
 	let value = 0;
 	let currency = 'PLN ';
 
@@ -86,8 +87,8 @@
 		placeholder="0,00"
 		value={'PLN ' + (initValue == 0 ? '' : initValue)}
 	/>
-	{#if quantity && value != ''}
-		<p>Wartość {value * quantity} zł</p>
+	{#if multiplier && value != ''}
+		<p>{multiText} {value * multiplier} zł</p>
 	{/if}
 </div>
 

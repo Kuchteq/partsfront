@@ -48,7 +48,10 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 	const fillFromGet = (data) => {
 		update((arr) => {
 			Object.keys(data).forEach((val, i) => {
-				arr[arr.findIndex((obj) => obj.queryName === val)].value = data[val];
+				let idx = arr.findIndex((obj) => obj.queryName === val);
+				if (idx != -1) {
+					arr[idx].value = data[val];
+				}
 			});
 			return arr;
 		});
@@ -67,6 +70,7 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 				fillFromGet(getData);
 			})
 			.catch((err) => {
+				console.log(err);
 				addNotif('error', 'Problem z pobieraniem po stronie serwera', SERVER_ERROR_STRING);
 			});
 	}
@@ -132,7 +136,6 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 		put: (path, updateId, successMessage) => {
 			return new Promise((resolve, reject) => {
 				let updateJson = createReqJson(formStructure);
-				console.log(updateJson);
 				back
 					.put(`${path}${updateId}`, updateJson)
 					.then(() => {

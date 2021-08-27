@@ -2,6 +2,7 @@
 	//normal modal imports
 	import AddModal from '$lib/modals/AddModal.svelte';
 	import ClientsModal from '$lib/modals/ClientsModal.svelte';
+	import SellModal from '$lib/modals/SellModal.svelte';
 
 	//update modal imports
 	import InventoryUpdateModal from '$lib/updateModals/InventoryUpdateModal.svelte';
@@ -18,4 +19,8 @@
 
 {#if $modalsState.inventoryUpdate}
 	<InventoryUpdateModal />
+{/if}
+
+{#if $modalsState.sell}
+	<SellModal />
 {/if}

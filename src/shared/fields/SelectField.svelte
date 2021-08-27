@@ -31,7 +31,7 @@
 			.catch((err) => {});
 	});
 	$: {
-		if (innerInitValue && initValue.label === initValue.value) {
+		if (innerInitValue && initValue && initValue.label === initValue.value) {
 			update(id, innerInitValue);
 		}
 	}

@@ -1,8 +1,11 @@
 <script>
+	import { openModal } from '$functions/modalManager';
 	export let larger = false;
 </script>
 
-<button class={larger ? 'uniLongButton' : 'uniModalOpenButton'}>Sprzedaj inwentarz </button>
+<button on:click={() => openModal('sell')} class={larger ? 'uniLongButton' : 'uniModalOpenButton'}
+	>Sprzedaj inwentarz
+</button>
 
 <style lang="scss">
 	button {
