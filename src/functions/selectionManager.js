@@ -21,6 +21,7 @@ function setSelection(id) {
 
 function deselectAll() {
 	lastDesellection.set(undefined);
+	lastSelection.set(undefined);
 	selectedParts.set([]);
 }
 

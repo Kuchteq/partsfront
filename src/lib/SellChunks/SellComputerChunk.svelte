@@ -6,28 +6,31 @@
 	import PriceField from '$shared/fields/PriceField.svelte';
 	import IntegerField from '$shared/fields/IntegerField.svelte';
 	import accordion from '$functions/accordion';
+	import { onMount } from 'svelte';
 	export let chunkId;
 
 	const SERVER_ERROR_STRING =
 		'Serwer nie mógł przetworzyć tej operacji, możliwy błąd w uzupełnionych danych';
 
-	let itemInfo = {};
+	let computerInfo = {};
+	let parts = [];
+	let isOpen = true;
 
 	back
-		.get(`/inventory/${sellData.part_id}`)
+		.get(`/computers/${sellData.computer_id}`)
 		.then((res) => {
-			itemInfo = res.data[0];
+			computerInfo = res.data;
+			parts = res.data.parts;
 		})
 		.catch((err) => {
 			console.log(err);
 			addNotif('error', 'Problem z pobieraniem po stronie serwera', SERVER_ERROR_STRING);
 		});
+
 	let totalValue = 0;
 	$: {
 		totalValue = parseInt(sellData.sell_price) * parseInt(sellData.quantity);
 	}
-
-	let isOpen = true;
 </script>
 
 <article class="sellChunk" class:closedDetails={!isOpen}>
@@ -38,7 +41,7 @@
 			{:else}
 				<img src="/static/icons/NotYetToSell.svg" />
 			{/if}
-			{itemInfo.part_name}
+			{computerInfo.computer_name}
 		</h1>
 		<div class="rightSideTop">
 			<h2 class="totalValue" class:visible={totalValue}>
@@ -61,36 +64,24 @@
 				multiText={'Wartość brutto: '}
 				error={sellData.error == 1 || undefined}
 			/>
-			<IntegerField
-				label={'Ilość do sprzedania'}
-				update={(id, val) => sellFunc(chunkId, val, 'quantity')}
-				initValue={sellData.quantity}
-				required={true}
-				boundries={{ min: 1, max: 12 } || undefined}
-				error={sellData.error == 2 || undefined}
-			/>
 		</div>
 
 		<div class="sellnPartInfo">
 			<div>
 				<h3>Dane o sprzedaży</h3>
 				<ul>
-					<li>- Zysk na jednej części: <b>{sellData.sell_price - itemInfo.price}</b> PLN</li>
+					<li>- Łączna wartość komputera: <b>{computerInfo.computer_value}</b> PLN</li>
 					<li>
-						- Zysk na wszystkich: <b>{(sellData.sell_price - itemInfo.price) * sellData.quantity}</b
-						> PLN
+						- Zysk ze sprzedaży: <b>{sellData.sell_price - computerInfo.computer_value}</b> PLN
 					</li>
 				</ul>
 			</div>
 			<div>
-				<h3>Dane o części</h3>
+				<h3>Dane o komputerze</h3>
 				<ul>
-					<li>- Dostępna ilość: <span>{itemInfo.stock}</span></li>
-					<li>- Cena zakupu: <b>{itemInfo.price}</b> PLN</li>
-					<li>- Dostawca: <span>{itemInfo.supplier_name}</span></li>
-					<li>- Data zakupu: <span>{itemInfo.part_name}</span></li>
-					<li>- Segment: <span>{itemInfo.segment_name}</span></li>
-					<li>- Id: <span>{itemInfo.part_id}</span></li>
+					{#each parts as part}
+						<li>- {part.segment_name}: <span>{part.part_name}</span> / <b>{part.price}</b> PLN</li>
+					{/each}
 				</ul>
 			</div>
 		</div>
@@ -144,9 +135,10 @@
 
 	.fillPartSellData {
 		padding: 0 25px;
+		margin-bottom: 28px;
 	}
 	.sellnPartInfo {
-		margin: 28px 28px 0;
+		margin: 0 28px;
 		background: #f3f3f3;
 		border-radius: 0px 0 10px 10px;
 		padding: 15px 26px;
@@ -155,19 +147,19 @@
 		h3 {
 			font-size: 22px;
 			font-weight: 700;
-			color: #e20808;
+			color: #c625ff;
 			margin-bottom: 5px;
 		}
 		& > div {
 			width: 47.5%;
 			&:nth-child(1) {
 				margin-right: 5%;
-				border-right: 2px solid #e20808;
+				border-right: 2px solid #c625ff;
 			}
 		}
 		li {
 			span {
-				color: rgb(133, 2, 2);
+				color: #7b00a6;
 			}
 			b {
 				font-weight: 700;

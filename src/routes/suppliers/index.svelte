@@ -30,7 +30,7 @@
 
 <div class="moduleMainHolder">
 	<section class="upTools">
-		<UniModalOpenButton theme={moduleName} text={'Dodaj klienta'} modal="suppliers" />
+		<UniModalOpenButton theme={moduleName} text={'Dodaj dostawcę'} modal="suppliers" />
 		<div class="innerTools">
 			<ShowFields icons={showIcons} {labels} handleHide={client.handleHide} />
 			<SearchField />
@@ -60,7 +60,7 @@
 		--topPartTurnedOff: #53d7ff;
 	}
 	:global(.suppliers-open-button) {
-		--buttonBg: linear-gradient(231deg, #00bb88 0%, #00b259 100%);
+		--buttonBg: var(--graSuppliers);
 		--buttonIcon: url('static/icons/AddClient.svg');
 	}
 </style>

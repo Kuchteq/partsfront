@@ -132,6 +132,7 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 					});
 			});
 		},
+		createReqJson,
 		resetValues,
 		put: (path, updateId, successMessage) => {
 			return new Promise((resolve, reject) => {

@@ -26,6 +26,14 @@
 </ul>
 
 <style lang="scss">
+	@keyframes highlightCell {
+		from {
+			background-color: var(--moduleThemeColor);
+		}
+		to {
+			background-color: transparent;
+		}
+	}
 	ul {
 		display: flex;
 		border: 1px solid #cfcfcf;
@@ -48,7 +56,7 @@
 				background-color: var(--selectedCellColor);
 			}
 		}
-		&.highlighted {
+		li.highlighted {
 			animation: highlightCell 2.5s;
 		}
 	}
@@ -61,14 +69,7 @@
 			opacity: 1;
 		}
 	}
-	@keyframes highlightCell {
-		from {
-			background-color: var(--moduleThemeColor);
-		}
-		to {
-			background-color: transparent;
-		}
-	}
+
 	li {
 		padding: 12px 18px;
 	}
