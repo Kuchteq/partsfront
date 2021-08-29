@@ -3,6 +3,7 @@
 	import AddModal from '$lib/modals/AddModal.svelte';
 	import ClientsModal from '$lib/modals/ClientsModal.svelte';
 	import SellModal from '$lib/modals/SellModal.svelte';
+	import SuppliersModal from '$lib/modals/SuppliersModal.svelte';
 
 	//update modal imports
 	import InventoryUpdateModal from '$lib/updateModals/InventoryUpdateModal.svelte';
@@ -23,4 +24,8 @@
 
 {#if $modalsState.sell}
 	<SellModal />
+{/if}
+
+{#if $modalsState.suppliers}
+	<SuppliersModal />
 {/if}

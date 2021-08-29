@@ -8,7 +8,7 @@ import PhoneField from '$shared/fields/PhoneField.svelte';
 let inventoryForm = [
 	{
 		label: 'Nazwa',
-		queryName: 'client_name',
+		queryName: 'supplier_name',
 		component: StringField,
 		value: '',
 		required: true
@@ -40,6 +40,13 @@ let inventoryForm = [
 		label: 'Email',
 		queryName: 'email',
 		component: EmailField,
+		value: '',
+		required: false
+	},
+	{
+		label: 'Strona Internetowa',
+		queryName: 'website',
+		component: StringField,
 		value: '',
 		required: false
 	},
