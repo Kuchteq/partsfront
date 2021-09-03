@@ -1,29 +1,29 @@
 <script>
 	import UniModal from '$shared/uniModal/UniModal.svelte';
-	import inventoryForm from '/config/forms/inventoryForm.js';
+	import suppliersForm from '/config/forms/suppliersForm.js';
 	import createPostClient from '$functions/postClient';
 	import { refetch } from '$functions/triggerRefetch';
 	import clone from 'just-clone';
 	import modalsState, { closeModal } from '$functions/modalManager';
-	import { writable } from 'svelte/store';
 	import WarningPopup from '$shared/warningPopup/WarningPopup.svelte';
+	import { writable } from 'svelte/store';
 
-	let modalName = 'inventoryUpdate';
+	let modalName = 'suppliersUpdate';
 	let formRef;
-	let id = $modalsState.inventoryUpdate;
-	let client = createPostClient(clone(inventoryForm), '/inventory/', id);
+	let id = $modalsState.suppliersUpdate;
+	let client = createPostClient(clone(suppliersForm), '/suppliers/', id);
 
 	let actionButton = {
 		do: () => {
 			let successMessage = {
 				title: `Sukces!`,
-				desc: `${$client[1].value} została zaktualizowana`
+				desc: `${$client[0].value} została zaktualizowana`
 			};
 			//pass name to
 			let valid = client.checkValidity(modalName);
 
 			if (valid) {
-				client.put('/inventory/', id, successMessage).then(() => refetch());
+				client.put('/suppliers/', id, successMessage).then(() => refetch());
 			}
 		},
 		text: 'Aktualizuj',
@@ -39,10 +39,10 @@
 	let onDeleteConfirm = () => {
 		let successMessage = {
 			title: `Sukces!`,
-			desc: `Część ${$client[0].value} została usunięty`
+			desc: `Dostawca ${$client[0].value} został usunięty`
 		};
 
-		client.delete('/inventory/', id, successMessage).then(() => {
+		client.delete('/suppliers/', id, successMessage).then(() => {
 			refetch();
 			closeModal(modalName);
 		});
@@ -51,15 +51,16 @@
 	let resetAction = () => {
 		client.resetFromGet();
 	};
+	console.log($client);
 </script>
 
 <UniModal
 	{modalName}
-	theme="addModal"
+	theme="suppliersUpdate"
 	{actionButton}
-	{resetAction}
 	{deleteAction}
-	tabName="Przejrzyj/aktualizuj część {$client[1].value} o id {id}"
+	{resetAction}
+	tabName="Przejrzyj/aktualizuj dostawcę {$client[0].value} o id {id}"
 >
 	<form bind:this={formRef}>
 		{#each $client as field, id}
@@ -90,9 +91,9 @@
 </UniModal>
 
 <style>
-	:global(.uniModal.addModal) {
-		--themeGradient: var(--graBlue);
-		--themeColor: var(--mBlue);
-		--actionColor: var(--graGreen);
+	:global(.uniModal.suppliersUpdate) {
+		--themeGradient: var(--graSuppliers);
+		--themeColor: var(--mSuppliers);
+		--actionColor: var(--graSuppliers);
 	}
 </style>

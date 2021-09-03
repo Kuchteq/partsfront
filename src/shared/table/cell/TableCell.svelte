@@ -3,8 +3,8 @@
 	export let labels;
 	export let highlighted;
 	export let selectedCells;
-	export let onDoubleClick;
-	export let onSingleClick;
+	export let onDoubleClick = () => {};
+	export let onSingleClick = () => {};
 
 	let id = Object.values(result)[0];
 </script>
@@ -71,7 +71,8 @@
 	}
 
 	li {
-		padding: 12px 18px;
+		padding: 12px 16px;
+		word-break: break-word;
 	}
 
 	.hiddenDisplay {

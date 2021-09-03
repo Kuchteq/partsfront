@@ -26,7 +26,7 @@ const createReqJson = (formStructure) => {
 	formStructure.forEach(({ queryName, value, type }) => {
 		if (type == 'phone') {
 			json[queryName] = value.number ? value.countryCode + value.number.replace(/\s/g, '') : null;
-		} else if (typeof value == 'object') {
+		} else if (typeof value == 'object' && value) {
 			json[queryName] = value.value ? value.value : null;
 		} else {
 			json[queryName] = value ? value : null;
@@ -49,10 +49,18 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 		update((arr) => {
 			Object.keys(data).forEach((val, i) => {
 				let idx = arr.findIndex((obj) => obj.queryName === val);
-				if (idx != -1) {
-					arr[idx].value = data[val];
+
+				if (idx != -1 && data[val]) {
+					if (val == 'phone') {
+						let ph = {
+							number: data[val].toString().slice(-9),
+							countryCode: data[val].toString().slice(0, -9)
+						};
+						arr[idx].value = ph;
+					} else arr[idx].value = data[val];
 				}
 			});
+
 			return arr;
 		});
 	};
@@ -66,11 +74,10 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 		back
 			.get(`${getPath}${updateId}`)
 			.then((res) => {
-				getData = res.data[0];
+				getData = res.data;
 				fillFromGet(getData);
 			})
 			.catch((err) => {
-				console.log(err);
 				addNotif('error', 'Problem z pobieraniem po stronie serwera', SERVER_ERROR_STRING);
 			});
 	}
@@ -137,6 +144,7 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 		put: (path, updateId, successMessage) => {
 			return new Promise((resolve, reject) => {
 				let updateJson = createReqJson(formStructure);
+
 				back
 					.put(`${path}${updateId}`, updateJson)
 					.then(() => {
@@ -151,7 +159,25 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 					});
 			});
 		},
-		resetFromGet
+		resetFromGet,
+		delete: (path, deleteId, successMessage) => {
+			return new Promise((resolve, reject) => {
+				let updateJson = createReqJson(formStructure);
+
+				back
+					.delete(`${path}${deleteId}`, updateJson)
+					.then(() => {
+						//Notif template
+						//let successMessage = {title: ``, desc: ``}
+						addNotif('success', successMessage.title, successMessage.desc);
+						resolve();
+					})
+					.catch((err) => {
+						addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
+						reject();
+					});
+			});
+		}
 	};
 }
 

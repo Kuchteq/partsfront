@@ -29,7 +29,7 @@
 		background: var(--moduleThemeGradient);
 	}
 	button {
-		padding: 13px 18px;
+		padding: 12px 16px;
 		display: flex;
 		align-items: center;
 		border-right: 2px solid #fff;

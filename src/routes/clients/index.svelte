@@ -5,6 +5,7 @@
 	import UniModalOpenButton from '$shared/buttons/uni/UniModalOpenButton.svelte';
 	import ShowFields from '$shared/showFields/ShowFields.svelte';
 	import SearchField from '$shared/searchField/SearchField.svelte';
+	import { openModal } from '$functions/modalManager';
 
 	const moduleName = 'clients';
 	const showIcons = [
@@ -19,6 +20,10 @@
 		'purchase',
 		'last_purchase'
 	];
+	let onCellDoubleClick = (val) => {
+		openModal('clientsUpdate', val);
+	};
+
 	const client = createFetchClient(clientsLabels, '/clients');
 
 	$: results = client.results;
@@ -42,6 +47,7 @@
 		fetcherFunc={client.fetchInventory}
 		resetFunc={client.resetResults}
 		highlightedCell={$highlightedCell}
+		{onCellDoubleClick}
 	/>
 </div>
 

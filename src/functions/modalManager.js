@@ -10,7 +10,10 @@ const modalsState = new writable({
 	suppliers: false,
 	problems: false,
 	//modals to preview and update data
-	inventoryUpdate: false
+	inventoryUpdate: false,
+	clientsUpdate: false,
+	suppliersUpdate: false,
+	computersUpdate: false
 });
 
 function openModal(modal, val = true) {

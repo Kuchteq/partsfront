@@ -9,6 +9,8 @@
 		text: '',
 		icon: ''
 	};
+	export let deleteAction;
+
 	export let resetAction = () => {};
 
 	let closeModalHandler = () => {
@@ -23,7 +25,12 @@
 <section class="uniModal absCenter {theme}" id="modal-{modalName}">
 	<TabName text={tabName} clickHandler={closeModalHandler} />
 	<div class="upButtons">
-		<button class={`resetButton`} on:click={resetAction()}
+		{#if deleteAction}
+			<button class={`otherActionBtn deleteBtn`} on:click={deleteAction()}
+				><img src={'static/icons/DeleteForever.svg'} /></button
+			>
+		{/if}
+		<button class={`otherActionBtn`} on:click={resetAction()}
 			><img src={'static/icons/ResetCircle.svg'} /></button
 		>
 		<button class="actionButton" type="submit" on:click={() => actionButton.do()}
@@ -43,6 +50,7 @@
 	}
 	.uniModal {
 		z-index: 120;
+
 		background-color: #fff;
 		position: fixed;
 		width: 71%;
@@ -67,7 +75,7 @@
 			width: 36px;
 		}
 	}
-	.resetButton {
+	.otherActionBtn {
 		box-shadow: var(--btnShadow);
 		padding: 13px;
 		border-radius: 24px;
@@ -83,6 +91,9 @@
 				transform: rotate(-360deg);
 			}
 		}
+	}
+	.deleteBtn {
+		background-color: #000;
 	}
 	.upButtons {
 		display: flex;

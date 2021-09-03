@@ -16,6 +16,11 @@ const getCurrentTime = () => {
 	);
 };
 
+const formatDateOnly = (value) => {
+	var d = new Date(value);
+	return d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+};
+
 const formatPhone = (value) => {
 	value = value.toString();
 	return `+${value.slice(0, 2)} ${value.slice(2, 5)} ${value.slice(5, 8)} ${value.slice(8, 11)}`;
@@ -29,4 +34,4 @@ const checkLength = (val, dest, ignoreSpaces) => {
 	return val.length == dest ? true : false;
 };
 
-export { getCurrentTime, formatPhone, checkLength };
+export { getCurrentTime, formatPhone, checkLength, formatDateOnly };

@@ -1,8 +1,13 @@
 <script>
+	import { openModal } from '$functions/modalManager';
+
 	export let larger = false;
 </script>
 
-<button class={larger ? 'uniLongButton' : 'uniModalOpenButton'}>Złóż komputer</button>
+<button
+	on:click={() => openModal('assemble')}
+	class={larger ? 'uniLongButton' : 'uniModalOpenButton'}>Złóż komputer</button
+>
 
 <style lang="scss">
 	button {
