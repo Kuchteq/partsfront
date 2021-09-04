@@ -10,7 +10,7 @@
 		box-shadow: var(--nShadow);
 		border-radius: 26px;
 		position: relative;
-		background-image: url('static/icons/Search.svg');
+		background-image: url('/icons/Search.svg');
 		background-position: 15px;
 		background-size: 30px;
 		background-repeat: no-repeat;

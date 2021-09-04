@@ -34,9 +34,9 @@
 	<div class="topPart">
 		<h1>
 			{#if sellData.sell_price && sellData.quantity}
-				<img src="/static/icons/ReadyToSell.svg" />
+				<img src="/icons/ReadyToSell.svg" />
 			{:else}
-				<img src="/static/icons/NotYetToSell.svg" />
+				<img src="/icons/NotYetToSell.svg" />
 			{/if}
 			{itemInfo.part_name}
 		</h1>
@@ -45,7 +45,7 @@
 				Wartość sprzedaży {totalValue} PLN
 			</h2>
 			<button type="button" class:rotatedButton={isOpen} on:click={() => (isOpen = !isOpen)}>
-				<img src="/static/icons/UnravelTriangle.svg" />
+				<img src="/icons/UnravelTriangle.svg" />
 			</button>
 		</div>
 		<button class="topDeselectBtn" type="button" />

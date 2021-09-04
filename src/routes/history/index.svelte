@@ -1,0 +1,56 @@
+<script>
+	import TableUniversal from '$shared/table/TableUniversal.svelte';
+	import createFetchClient from '$functions/fetchClient.js';
+	import historyLabels from '/config/labels/historyLabels.js';
+	import UniModalOpenButton from '$shared/buttons/uni/UniModalOpenButton.svelte';
+	import ShowFields from '$shared/showFields/ShowFields.svelte';
+	import SearchField from '$shared/searchField/SearchField.svelte';
+	import { openModal } from '$functions/modalManager';
+
+	const moduleName = 'history';
+	const showIcons = ['id', 'segment', 'note', 'date'];
+	const client = createFetchClient(historyLabels, '/history');
+
+	$: results = client.results;
+	$: labels = client.labels;
+	$: highlightedCell = client.highlighted;
+</script>
+
+<div class="moduleMainHolder">
+	<section class="upTools">
+		<div class="innerTools">
+			<ShowFields icons={showIcons} {labels} handleHide={client.handleHide} />
+			<SearchField />
+		</div>
+	</section>
+	<TableUniversal
+		labels={$labels}
+		sortValue={client.sortValue}
+		sortHandler={client.sortBy}
+		results={$results}
+		fetcherFunc={client.fetchInventory}
+		resetFunc={client.resetResults}
+		highlightedCell={$highlightedCell}
+	/>
+</div>
+
+<style lang="scss">
+	.moduleMainHolder {
+		//theme color customization
+		--moduleThemeColor: var(--mGray);
+		--loaderColor: var(--moduleThemeColor);
+		--moduleThemeLighter: rgb(180, 180, 180);
+		--moduleThemeGradient: var(--graHistory);
+		//optional for table top part
+
+		--topPartBg: rgb(170, 170, 170);
+		--topPartTurnedOff: rgb(189, 189, 189);
+	}
+	:global(.clients-open-button) {
+		--buttonBg: linear-gradient(231deg, #00bb88 0%, #00b259 100%);
+		--buttonIcon: url('/icons/AddClient.svg');
+	}
+	.innerTools {
+		gap: 10px;
+	}
+</style>

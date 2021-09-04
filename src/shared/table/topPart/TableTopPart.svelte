@@ -42,7 +42,7 @@
 		}
 		&::after {
 			content: '';
-			background: url('static/icons/SortTriangle.svg') no-repeat center / cover;
+			background: url('/icons/SortTriangle.svg') no-repeat center / cover;
 			display: block;
 			width: 12px;
 			height: 12px;

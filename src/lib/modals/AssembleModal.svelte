@@ -47,7 +47,7 @@
 			// }
 		},
 		text: 'Złóż',
-		icon: 'static/icons/AddCircle.svg'
+		icon: '/icons/AddCircle.svg'
 	};
 
 	const createConfirm = () => {

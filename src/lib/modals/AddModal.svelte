@@ -21,7 +21,7 @@
 			}
 		},
 		text: 'Dodaj',
-		icon: 'static/icons/AddCircle.svg'
+		icon: '/icons/AddCircle.svg'
 	};
 
 	let resetAction = () => {

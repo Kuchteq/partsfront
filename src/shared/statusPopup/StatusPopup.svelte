@@ -17,11 +17,11 @@
 	<div class="top">
 		<div>
 			{#if type === 'success'}
-				<img src="static/icons/Done.svg" />
+				<img src="/icons/Done.svg" />
 			{:else if type === 'assembled'}
-				<img src="static/icons/Done.svg" />
+				<img src="/icons/Done.svg" />
 			{:else}
-				<img src="static/icons/Error.svg" />
+				<img src="/icons/Error.svg" />
 			{/if}
 		</div>
 		<h3>{header}</h3>
@@ -29,7 +29,7 @@
 	{#if desc}<p>{desc}</p>{/if}
 	{#if clickAction}
 		<button on:click={clickAction()} class="popupClickAction"
-			><img src="static/icons/PopupActionArrow.svg" /></button
+			><img src="/icons/PopupActionArrow.svg" /></button
 		>
 	{/if}
 	<button class="closePopup" on:click={() => killInstantly(id)} />

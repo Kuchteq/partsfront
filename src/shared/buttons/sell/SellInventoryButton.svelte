@@ -11,7 +11,7 @@
 	button {
 		background: var(--graRed);
 		&::before {
-			background-image: url('static/icons/RemoveCircle.svg');
+			background-image: url('/icons/RemoveCircle.svg');
 		}
 	}
 </style>

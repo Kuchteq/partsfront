@@ -1,22 +1,23 @@
 <script>
 	import UniModal from '$shared/uniModal/UniModal.svelte';
-	import suppliersForm from '/config/forms/suppliersForm.js';
+	import problemsForm from '/config/forms/problemsForm.js';
 	import createPostClient from '$functions/postClient';
 	import { refetch } from '$functions/triggerRefetch';
-	let modalName = 'suppliers';
+
+	let modalName = 'problems';
 	let formRef;
-	let client = createPostClient(suppliersForm);
+	let client = createPostClient(problemsForm);
 
 	let actionButton = {
 		do: () => {
 			let successMessage = {
 				title: `Sukces!`,
-				desc: `${$client[0].value} został dodany`
+				desc: `Problem związany z komputerem ${$client[0].value.label} został dodany`
 			};
 			//pass name to
 			let valid = client.checkValidity(modalName);
 			if (valid) {
-				client.post('/suppliers', successMessage).then(() => refetch());
+				client.post('/problems', successMessage).then(() => refetch());
 			}
 		},
 		text: 'Dodaj',
@@ -28,7 +29,7 @@
 	};
 </script>
 
-<UniModal {modalName} theme="suppliersModal" {actionButton} {resetAction} tabName="Dodaj dostawcę">
+<UniModal {modalName} theme="problemsModal" {actionButton} {resetAction} tabName="Dodaj problem">
 	<form bind:this={formRef}>
 		{#each $client as field, id}
 			<svelte:component
@@ -39,11 +40,12 @@
 				update={client.updateVal}
 				required={field.required}
 				initValue={field.value}
-				quantity={field.quantity && $client[2].value}
+				multiplier={field.quantity && $client[2].value}
+				multiText={'Wartość'}
 				fetchString={field.fetchString && field.fetchString}
 				themeColor={field.themeColor && field.themeColor}
 				addHandlerModal={field.addHandlerModal && field.addHandlerModal}
-				boundries={field.boundries && field.boundries}
+				boundries={field.boundries || undefined}
 				error={field.error || undefined}
 			/>
 		{/each}
@@ -51,9 +53,9 @@
 </UniModal>
 
 <style>
-	:global(.uniModal.suppliersModal) {
-		--themeGradient: var(--graSuppliers);
-		--themeColor: var(--mSuppliers);
-		--actionColor: var(--graSuppliers);
+	:global(.uniModal.problemsModal) {
+		--themeGradient: var(--graOrange);
+		--themeColor: var(--mOrange);
+		--actionColor: var(--graOrange);
 	}
 </style>

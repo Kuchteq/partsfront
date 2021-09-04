@@ -7,7 +7,7 @@
 	import UniModuleLink from '$shared/buttons/UniModuleLink/UniModuleLink.svelte';
 	import SearchField from '$shared/searchField/SearchField.svelte';
 
-	const baseIconFolder = 'static/icons/';
+	const baseIconFolder = '/icons/';
 
 	const moduleDirections = [
 		{

@@ -1,6 +1,6 @@
 <script>
 	import UniModal from '$shared/uniModal/UniModal.svelte';
-	import inventoryForm from '/config/forms/inventoryForm.js';
+	import problemsForm from '/config/forms/problemsForm.js';
 	import createPostClient from '$functions/postClient';
 	import { refetch } from '$functions/triggerRefetch';
 	import clone from 'just-clone';
@@ -8,10 +8,10 @@
 	import { writable } from 'svelte/store';
 	import WarningPopup from '$shared/warningPopup/WarningPopup.svelte';
 
-	let modalName = 'inventoryUpdate';
+	let modalName = 'problemsUpdate';
 	let formRef;
-	let id = $modalsState.inventoryUpdate;
-	let client = createPostClient(clone(inventoryForm), '/inventory/', id);
+	let id = $modalsState.problemsUpdate;
+	let client = createPostClient(clone(problemsForm), '/problems/', id);
 
 	let actionButton = {
 		do: () => {
@@ -23,7 +23,7 @@
 			let valid = client.checkValidity(modalName);
 
 			if (valid) {
-				client.put('/inventory/', id, successMessage).then(() => refetch());
+				client.put('/problems/', id, successMessage).then(() => refetch());
 			}
 		},
 		text: 'Aktualizuj',
@@ -42,7 +42,7 @@
 			desc: `Część ${$client[0].value} została usunięty`
 		};
 
-		client.delete('/inventory/', id, successMessage).then(() => {
+		client.delete('/problems/', id, successMessage).then(() => {
 			refetch();
 			closeModal(modalName);
 		});
@@ -55,11 +55,11 @@
 
 <UniModal
 	{modalName}
-	theme="addModal"
+	theme="problemsModal"
 	{actionButton}
 	{resetAction}
 	{deleteAction}
-	tabName="Przejrzyj/aktualizuj część {$client[1].value} o id {id}"
+	tabName="Przejrzyj"
 >
 	<form bind:this={formRef}>
 		{#each $client as field, id}
@@ -71,8 +71,6 @@
 				update={client.updateVal}
 				required={field.required}
 				initValue={field.value}
-				multiplier={field.quantity && $client[2].value}
-				multiText={'Wartość'}
 				fetchString={field.fetchString && field.fetchString}
 				themeColor={field.themeColor && field.themeColor}
 				addHandlerModal={field.addHandlerModal && field.addHandlerModal}
@@ -90,9 +88,9 @@
 </UniModal>
 
 <style>
-	:global(.uniModal.addModal) {
-		--themeGradient: var(--graBlue);
-		--themeColor: var(--mBlue);
-		--actionColor: var(--graGreen);
+	:global(.uniModal.problemsModal) {
+		--themeGradient: var(--graOrange);
+		--themeColor: var(--mOrange);
+		--actionColor: var(--graOrange);
 	}
 </style>

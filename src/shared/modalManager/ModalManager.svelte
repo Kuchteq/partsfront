@@ -5,6 +5,7 @@
 	import ClientsModal from '$lib/modals/ClientsModal.svelte';
 	import SellModal from '$lib/modals/SellModal.svelte';
 	import SuppliersModal from '$lib/modals/SuppliersModal.svelte';
+	import ProblemsModal from '$lib/modals/ProblemsModal.svelte';
 
 	//update modal imports
 	import InventoryUpdateModal from '$lib/updateModals/InventoryUpdateModal.svelte';
@@ -12,6 +13,7 @@
 	import ClientsUpdateModal from '$lib/updateModals/ClientsUpdateModal.svelte';
 	import AssembleModal from '$lib/modals/AssembleModal.svelte';
 	import ComputersUpdateModal from '$lib/updateModals/ComputersUpdateModal.svelte';
+	import ProblemsUpdateModal from '$lib/updateModals/ProblemsUpdateModal.svelte';
 </script>
 
 {#if $modalsState.add}
@@ -34,6 +36,10 @@
 	<AssembleModal />
 {/if}
 
+{#if $modalsState.problems}
+	<ProblemsModal />
+{/if}
+
 {#if $modalsState.inventoryUpdate}
 	<InventoryUpdateModal />
 {/if}
@@ -47,4 +53,8 @@
 {/if}
 {#if $modalsState.computersUpdate}
 	<ComputersUpdateModal />
+{/if}
+
+{#if $modalsState.problemsUpdate}
+	<ProblemsUpdateModal />
 {/if}

@@ -65,6 +65,6 @@
 	}
 	:global(.clients-open-button) {
 		--buttonBg: linear-gradient(231deg, #00bb88 0%, #00b259 100%);
-		--buttonIcon: url('static/icons/AddClient.svg');
+		--buttonIcon: url('/icons/AddClient.svg');
 	}
 </style>

@@ -13,7 +13,8 @@ const modalsState = new writable({
 	inventoryUpdate: false,
 	clientsUpdate: false,
 	suppliersUpdate: false,
-	computersUpdate: false
+	computersUpdate: false,
+	problemsUpdate: false
 });
 
 function openModal(modal, val = true) {

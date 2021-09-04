@@ -115,7 +115,7 @@
 		height: 28px;
 		position: absolute;
 		background-color: rgb(46, 46, 46);
-		background-image: url('static/icons/DeleteFromOrder.svg');
+		background-image: url('/icons/DeleteFromOrder.svg');
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: 20px;

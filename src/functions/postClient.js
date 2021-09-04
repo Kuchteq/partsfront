@@ -49,7 +49,8 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 		update((arr) => {
 			Object.keys(data).forEach((val, i) => {
 				let idx = arr.findIndex((obj) => obj.queryName === val);
-
+				// console.log(arr.find((obj) => obj.queryName === val));
+				// console.log(data[val]);
 				if (idx != -1 && data[val]) {
 					if (val == 'phone') {
 						let ph = {
@@ -75,6 +76,7 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 			.get(`${getPath}${updateId}`)
 			.then((res) => {
 				getData = res.data;
+
 				fillFromGet(getData);
 			})
 			.catch((err) => {

@@ -11,7 +11,7 @@
 	button {
 		background: var(--graGreen);
 		&::before {
-			background-image: url('static/icons/AddCircle.svg');
+			background-image: url('/icons/AddCircle.svg');
 		}
 	}
 </style>

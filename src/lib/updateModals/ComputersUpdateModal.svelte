@@ -53,7 +53,7 @@
 			// }
 		},
 		text: 'Przemontuj',
-		icon: 'static/icons/Update.svg'
+		icon: '/icons/Update.svg'
 	};
 
 	const createConfirm = () => {

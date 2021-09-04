@@ -6,19 +6,28 @@
 	export let onDoubleClick = () => {};
 	export let onSingleClick = () => {};
 
-	let id = Object.values(result)[0];
+	let row = Object.values(result);
+	let id = row[0];
+	let grayedOut = false;
+	let isDetermining = labels.slice(-1)[0].determining;
+
+	if (isDetermining && row.slice(-1)[0]) {
+		grayedOut = true;
+	}
 </script>
 
 <ul
-	class={$selectedCells && $selectedCells.findIndex((idx) => idx == id) != -1 ? 'selected' : ''}
+	class="{selectedCells && $selectedCells.findIndex((idx) => idx == id) != -1
+		? 'selected'
+		: ''} {grayedOut ? 'grr' : ''}"
 	on:dblclick={onDoubleClick(id)}
 	on:click={onSingleClick(id)}
 >
-	{#each Object.values(result) as column, i}
+	{#each row as column, i}
 		<li
-			class={`${labels[i].widthClass} ${labels[i].shown ? '' : 'hiddenDisplay'} ${
-				highlighted == i ? 'highlighted' : ''
-			}`}
+			class="{labels[i].widthClass} 
+			{!labels[i].shown || (isDetermining && i == row.length - 1) ? 'hiddenDisplay' : ''} 
+			{highlighted == i ? 'highlighted' : ''}"
 		>
 			{!column ? '' : labels[i].format ? labels[i].format(column) : column}
 		</li>
@@ -50,12 +59,17 @@
 		&:hover {
 			background-color: var(--hoverCell, #e1e1e1);
 		}
+		&.grr {
+			background-color: #fff;
+			color: rgb(199, 199, 199);
+		}
 		&.selected {
 			background-color: var(--selectedCellColor);
 			&:hover {
 				background-color: var(--selectedCellColor);
 			}
 		}
+
 		li.highlighted {
 			animation: highlightCell 2.5s;
 		}

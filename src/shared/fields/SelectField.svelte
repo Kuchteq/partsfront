@@ -18,6 +18,7 @@
 	function handleSelect(event) {
 		update(id, event.detail);
 	}
+
 	onMount(() => {
 		back
 			.get(fetchString)

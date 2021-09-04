@@ -2,14 +2,17 @@
 	export let icons;
 	export let labels;
 	export let handleHide;
+	let determining = $labels.slice(-1)[0].determining;
 </script>
 
 <div class="showFields">
 	<h5>Pola widoku</h5>
 	{#each $labels as field, i}
-		<button class:turnedOff={!field.shown} on:click={() => handleHide(i)}
-			><img src={`static/icons/showFieldsIcons/${icons[i]}.svg`} /></button
-		>
+		{#if !(determining && i == $labels.length - 1)}
+			<button class:turnedOff={!field.shown} on:click={() => handleHide(i)}
+				><img src={`/icons/showFieldsIcons/${icons[i]}.svg`} /></button
+			>
+		{/if}
 	{/each}
 </div>
 

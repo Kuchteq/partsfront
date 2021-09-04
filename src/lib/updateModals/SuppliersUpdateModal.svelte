@@ -27,7 +27,7 @@
 			}
 		},
 		text: 'Aktualizuj',
-		icon: 'static/icons/Update.svg'
+		icon: '/icons/Update.svg'
 	};
 
 	let isWarningPopupOpen = writable(false);

@@ -9,6 +9,8 @@
 	--mPurple: #8a00e5;
 	--mClients: #00ae9c;
 	--mSuppliers: #00a4d8;
+	--mOrange: #ff742c;
+	--mGray: #929292;
 
 	//main ones gradients
 	--graBlue: linear-gradient(90deg, #006ae5 0%, #1b83fb 100%);
@@ -32,5 +34,5 @@
 	--modalShadow: 0px 0px 28px #0000001f;
 
 	//misc
-	--crossBg: url('static/icons/Close.svg') center no-repeat #d5d5d5;
+	--crossBg: url('/icons/Close.svg') center no-repeat #d5d5d5;
 }

@@ -65,6 +65,6 @@
 	}
 	:global(.suppliers-open-button) {
 		--buttonBg: var(--graSuppliers);
-		--buttonIcon: url('static/icons/AddClient.svg');
+		--buttonIcon: url('/icons/AddClient.svg');
 	}
 </style>

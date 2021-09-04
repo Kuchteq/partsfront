@@ -13,7 +13,7 @@
 	button {
 		background: var(--graPurple);
 		&::before {
-			background-image: url('static/icons/Computer.svg');
+			background-image: url('/icons/Computer.svg');
 		}
 	}
 </style>

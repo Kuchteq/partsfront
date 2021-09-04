@@ -47,7 +47,7 @@
 			}
 		},
 		text: 'Sprzedaj',
-		icon: 'static/icons/SellCircle.svg'
+		icon: '/icons/SellCircle.svg'
 	};
 
 	let resetAction = () => {
