@@ -13,7 +13,6 @@
 	export let error = undefined;
 	export let required = true;
 	let items;
-	let innerInitValue;
 
 	function handleSelect(event) {
 		update(id, event.detail);
@@ -24,18 +23,9 @@
 			.get(fetchString)
 			.then((res) => {
 				items = res.data;
-				if (initValue.label === initValue.value) {
-					innerInitValue = items.find((item) => initValue.value == item.value);
-					update(id, innerInitValue);
-				}
 			})
 			.catch((err) => {});
 	});
-	$: {
-		if (innerInitValue && initValue && initValue.label === initValue.value) {
-			update(id, innerInitValue);
-		}
-	}
 </script>
 
 <div

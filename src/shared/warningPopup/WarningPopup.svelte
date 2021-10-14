@@ -50,11 +50,15 @@
 			border-radius: 10px;
 			color: #fff;
 			font-weight: 700;
+			transition: var(--sTrans);
+			&:hover {
+				box-shadow: var(--btnShadow), inset 0px 0px 17px #ffffff8a;
+			}
 			&:nth-child(1) {
-				background: var(--graRed);
+				background: var(--graGreen);
 			}
 			&:nth-child(2) {
-				background: var(--graGreen);
+				background: var(--graRed);
 			}
 		}
 	}

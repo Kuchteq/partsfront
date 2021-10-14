@@ -47,6 +47,7 @@ body {
 	box-shadow: var(--btnShadow);
 	text-shadow: var(--txtShadow);
 	border-radius: 15px;
+	transition: var(--sTrans);
 	&::before {
 		width: 30px;
 		height: 30px;
@@ -56,6 +57,9 @@ body {
 		background-size: cover;
 		background-position: center;
 		margin: auto;
+	}
+	&:hover {
+		box-shadow: var(--btnShadow), inset 0px 0px 17px #ffffff8a;
 	}
 }
 .uniField {
@@ -90,6 +94,21 @@ body {
 		padding: 6px;
 		border: 1px solid #000;
 	}
+}
+.generalGarbageButton {
+	width: 28px;
+	height: 28px;
+	position: absolute;
+	background-color: rgb(46, 46, 46);
+	background-image: url('/icons/DeleteFromOrder.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 20px;
+	border-radius: 8px;
+	&:hover {
+		background-color: #ff5151;
+	}
+	transition: 0.15s;
 }
 .fieldFillError {
 	box-shadow: 0px 2px 5px #ff00009c;

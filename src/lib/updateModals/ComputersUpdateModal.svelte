@@ -18,7 +18,7 @@
 	import { onMount } from 'svelte';
 	import WarningPopup from '$shared/warningPopup/WarningPopup.svelte';
 	import { writable } from 'svelte/store';
-	import { deselectAll } from '$functions/selectionManager';
+	import { deselectAllParts } from '$functions/selectionManager';
 	import { addNotif } from '$functions/PopupClient';
 	import clone from 'just-clone';
 
@@ -60,7 +60,7 @@
 		updateComputer(client.createReqJson($client), id)
 			.then(() => {
 				closeModal('assemble');
-				deselectAll();
+				deselectAllParts();
 				refetch();
 			})
 			.catch((err) => console.log(err));

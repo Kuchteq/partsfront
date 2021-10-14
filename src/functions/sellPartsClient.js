@@ -11,19 +11,24 @@ function createPartSeller() {
 	const synchronize = (itemsIds) => {
 		update((arr) => {
 			if (itemsIds.length == 0) return [];
-			itemsIds.forEach((id) => {
-				let found = arr.findIndex((elem) => elem.part_id == id);
-
-				if (found == -1 && arr.length < itemsIds.length) {
+			let only_arr = arr.map(({ part_id }) => part_id);
+			if (arr.length < itemsIds.length) {
+				let diff = itemsIds.filter((x) => !only_arr.includes(x));
+				diff.forEach((n) => {
 					arr.push({
-						part_id: id,
+						part_id: n,
 						sell_price: 0,
 						quantity: 1
 					});
-				} else if (found != -1 && arr.length > itemsIds.length) {
-					arr.splice(found, 1);
-				}
-			});
+				});
+
+				//let found = arr.findIndex((elem) => elem.part_id == diff[0]);
+				//arr.splice(found, 1);
+			} else if (arr.length > itemsIds.length) {
+				let diff = only_arr.filter((x) => !itemsIds.includes(x));
+				let found = arr.findIndex((elem) => elem.part_id == diff[0]);
+				arr.splice(found, 1);
+			}
 
 			return arr;
 		});

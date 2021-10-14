@@ -4,7 +4,7 @@ const selectedParts = new writable([]);
 let lastDesellection = new writable(undefined);
 let lastSelection = new writable(undefined);
 
-function setSelection(id) {
+function setPartSelection(id) {
 	selectedParts.update((old) => {
 		let arrIdx = old.findIndex((idx) => idx == id);
 
@@ -15,15 +15,16 @@ function setSelection(id) {
 			old.push(id);
 			lastSelection.set(id);
 		}
+
 		return old;
 	});
 }
 
-function deselectAll() {
+function deselectAllParts() {
 	lastDesellection.set(undefined);
 	lastSelection.set(undefined);
 	selectedParts.set([]);
 }
 
 export default selectedParts;
-export { setSelection, deselectAll, lastDesellection, lastSelection };
+export { setPartSelection, deselectAllParts, lastDesellection, lastSelection };

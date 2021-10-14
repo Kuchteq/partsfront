@@ -9,7 +9,7 @@ import { getCurrentTime } from '../formatHelpers.js';
 let inventoryForm = [
 	{
 		label: 'Segment',
-		queryName: 'segment_id',
+		queryName: 'segment_obj',
 		component: SelectField,
 		fetchString: '/segment-list',
 		value: '',
@@ -44,7 +44,7 @@ let inventoryForm = [
 	},
 	{
 		label: 'Dostawca',
-		queryName: 'supplier_id',
+		queryName: 'supplier_obj',
 		component: SelectField,
 		fetchString: '/supplier-list',
 		addHandlerModal: 'suppliersModal',

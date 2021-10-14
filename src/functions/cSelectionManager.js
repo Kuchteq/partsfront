@@ -4,7 +4,7 @@ const selectedComputers = new writable([]);
 let lastcDesellection = new writable(undefined);
 let lastcSelection = new writable(undefined);
 
-function setSelection(id) {
+function setComputerSelection(id) {
 	selectedComputers.update((old) => {
 		let arrIdx = old.findIndex((idx) => idx == id);
 
@@ -19,7 +19,7 @@ function setSelection(id) {
 	});
 }
 
-function deselectAll() {
+function deselectAllComputers() {
 	lastcDesellection.set(undefined);
 	lastcSelection.set(undefined);
 
@@ -27,4 +27,4 @@ function deselectAll() {
 }
 
 export default selectedComputers;
-export { setSelection, deselectAll, lastcDesellection, lastcSelection };
+export { setComputerSelection, deselectAllComputers, lastcDesellection, lastcSelection };

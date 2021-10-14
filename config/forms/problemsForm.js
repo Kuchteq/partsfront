@@ -7,7 +7,7 @@ import { getCurrentTime } from '../formatHelpers.js';
 let problemsForm = [
 	{
 		label: 'Komputer',
-		queryName: 'computer_id',
+		queryName: 'computer_obj',
 		component: SelectField,
 		fetchString: '/computer-list',
 		value: '',

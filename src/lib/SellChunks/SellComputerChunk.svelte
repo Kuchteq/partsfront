@@ -34,6 +34,7 @@
 </script>
 
 <article class="sellChunk" class:closedDetails={!isOpen}>
+	<button class="generalGarbageButton removeFromOrder" />
 	<div class="topPart">
 		<h1>
 			{#if sellData.sell_price && sellData.quantity}
@@ -51,7 +52,6 @@
 				<img src="/icons/UnravelTriangle.svg" />
 			</button>
 		</div>
-		<button class="topDeselectBtn" type="button" />
 	</div>
 	<div use:accordion={isOpen}>
 		<div class="fillPartSellData">
@@ -89,21 +89,24 @@
 </article>
 
 <style lang="scss">
-	.topDeselectBtn {
-		position: absolute;
-		left: 50%;
-		transform: translate(-50%, 0);
-		top: 0;
-		width: 20px;
-		height: 20px;
-		background-color: #f3f3f3;
-	}
 	.sellChunk {
 		background-color: #fff;
 		border-radius: 14px;
 		margin-top: 25px;
 		padding-bottom: 25px;
 		transition: 0.1s padding;
+		box-shadow: 0px 0px 7px rgb(0 0 0 / 10%);
+		&:hover {
+			.removeFromOrder {
+				opacity: 1;
+			}
+		}
+	}
+	.removeFromOrder {
+		top: 0%;
+		left: 50%;
+		transform: translate(0, -50%);
+		opacity: 0;
 	}
 	.topPart {
 		font-size: 20px;
@@ -167,7 +170,7 @@
 		}
 	}
 	.totalValue {
-		background-color: #f3f3f3;
+		background-color: #f5f5f5;
 		padding: 18px 20px;
 		border-radius: 0 0 9px 16px;
 	}
@@ -182,6 +185,12 @@
 			transition: 0.15s all;
 			transform-origin: center;
 			height: 70px;
+			img {
+				width: 19px;
+			}
+			&:hover {
+				filter: brightness(1.5);
+			}
 		}
 	}
 </style>

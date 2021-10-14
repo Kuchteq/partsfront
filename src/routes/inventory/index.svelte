@@ -8,7 +8,7 @@
 	import ShowFields from '$shared/showFields/ShowFields.svelte';
 	import SearchField from '$shared/searchField/SearchField.svelte';
 	import { openModal } from '$functions/modalManager';
-	import selectedParts, { setSelection, deselectAll } from '$functions/selectionManager';
+	import selectedParts, { setPartSelection, deselectAllParts } from '$functions/selectionManager';
 	import DeselectAllButton from '$shared/deselectAllButton/DeselectAllButton.svelte';
 
 	const showIcons = ['id', 'segment', 'name', 'stock', 'price', 'note', 'supplier', 'date'];
@@ -22,7 +22,7 @@
 		openModal('inventoryUpdate', val);
 	};
 	let onCellSingleClick = (val) => {
-		setSelection(val);
+		setPartSelection(val);
 	};
 </script>
 
@@ -49,7 +49,10 @@
 		selectedCells={selectedParts}
 	/>
 	{#if $selectedParts.length != 0}
-		<DeselectAllButton text="Odznacz: {$selectedParts.length} przedmiotów" onClick={deselectAll} />
+		<DeselectAllButton
+			text="Odznacz: {$selectedParts.length} przedmiotów"
+			onClick={deselectAllParts}
+		/>
 	{/if}
 </div>
 

@@ -51,6 +51,7 @@
 	let resetAction = () => {
 		client.resetFromGet();
 	};
+	console.log($client);
 </script>
 
 <UniModal

@@ -19,7 +19,7 @@
 	import { onMount } from 'svelte';
 	import WarningPopup from '$shared/warningPopup/WarningPopup.svelte';
 	import { writable } from 'svelte/store';
-	import { deselectAll } from '$functions/selectionManager';
+	import { deselectAllParts } from '$functions/selectionManager';
 	import { addNotif } from '$functions/PopupClient';
 
 	let modalName = 'assemble';
@@ -40,6 +40,7 @@
 			} else if (problem == 3) {
 				isWarningPopupOpen.set(true);
 			}
+
 			//pass name to
 			// let valid = client.checkValidity(modalName);
 			// if (valid) {
@@ -54,7 +55,7 @@
 		makeComputer(client.createReqJson($client))
 			.then(() => {
 				closeModal('assemble');
-				deselectAll();
+				deselectAllParts();
 				refetch();
 			})
 			.catch((err) => console.log(err));

@@ -14,7 +14,7 @@ let orderForm = [
 	},
 	{
 		label: 'Klient',
-		queryName: 'client_id',
+		queryName: 'client_obj',
 		component: SelectField,
 		fetchString: '/client-list',
 		addHandlerModal: 'clientsModal',

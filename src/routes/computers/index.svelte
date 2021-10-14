@@ -6,7 +6,10 @@
 	import ShowFields from '$shared/showFields/ShowFields.svelte';
 	import SearchField from '$shared/searchField/SearchField.svelte';
 	import { openModal } from '$functions/modalManager';
-	import selectedComputers, { setSelection, deselectAll } from '$functions/cSelectionManager';
+	import selectedComputers, {
+		setComputerSelection,
+		deselectAllComputers
+	} from '$functions/cSelectionManager';
 	import DeselectAllButton from '$shared/deselectAllButton/DeselectAllButton.svelte';
 
 	const showIcons = ['id', 'name', 'cpu', 'motherboard', 'gpu', 'price', 'note', 'date'];
@@ -20,7 +23,7 @@
 		openModal('computersUpdate', val);
 	};
 	let onCellSingleClick = (val) => {
-		setSelection(val);
+		setComputerSelection(val);
 	};
 </script>
 
@@ -47,7 +50,7 @@
 	{#if $selectedComputers.length != 0}
 		<DeselectAllButton
 			text="Odznacz: {$selectedComputers.length} przedmiotów"
-			onClick={deselectAll}
+			onClick={deselectAllComputers}
 		/>
 	{/if}
 </div>

@@ -23,15 +23,17 @@
 	on:dblclick={onDoubleClick(id)}
 	on:click={onSingleClick(id)}
 >
-	{#each row as column, i}
-		<li
-			class="{labels[i].widthClass} 
+	<button>
+		{#each row as column, i}
+			<li
+				class="{labels[i].widthClass} 
 			{!labels[i].shown || (isDetermining && i == row.length - 1) ? 'hiddenDisplay' : ''} 
 			{highlighted == i ? 'highlighted' : ''}"
-		>
-			{!column ? '' : labels[i].format ? labels[i].format(column) : column}
-		</li>
-	{/each}
+			>
+				{!column ? '' : labels[i].format ? labels[i].format(column) : column}
+			</li>
+		{/each}
+	</button>
 </ul>
 
 <style lang="scss">
@@ -42,6 +44,11 @@
 		to {
 			background-color: transparent;
 		}
+	}
+	button {
+		width: 100%;
+		display: flex;
+		text-align: left;
 	}
 	ul {
 		display: flex;

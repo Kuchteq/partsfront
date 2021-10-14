@@ -3,8 +3,8 @@
 	import orderForm from '/config/forms/orderForm.js';
 	import createPostClient from '$functions/postClient';
 	import { refetch } from '$functions/triggerRefetch';
+	import selectedParts, { setPartSelection } from '$functions/selectionManager';
 
-	import selectedParts from '$functions/selectionManager';
 	import selectedComputers from '$functions/cSelectionManager';
 	import createPartSeller from '$functions/sellPartsClient.js';
 	import createComputerSeller from '$functions/sellComputersClient.js';
@@ -54,7 +54,9 @@
 		client.resetValues();
 	};
 
-	$: seller.synchronize($selectedParts);
+	$: {
+		seller.synchronize($selectedParts);
+	}
 
 	$: coSeller.synchronize($selectedComputers);
 </script>
@@ -104,17 +106,21 @@
 	}
 	.sellPartChunks,
 	.sellComputerChunks {
-		background: var(--graRed);
+		background: #f2f2f2;
 		padding: 30px 40px;
 		margin-top: 30px;
+		--themeGradient: var(--graBlue);
 		h1 {
 			font-size: 22px;
-			color: #fff;
+			color: var(--mBlue);
 			font-weight: 700;
 		}
 	}
 	.sellComputerChunks {
-		background: var(--graPurple);
+		background: #f2f2f2;
 		--themeGradient: var(--graPurple);
+		h1 {
+			color: var(--mPurple);
+		}
 	}
 </style>

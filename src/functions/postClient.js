@@ -26,8 +26,8 @@ const createReqJson = (formStructure) => {
 	formStructure.forEach(({ queryName, value, type }) => {
 		if (type == 'phone') {
 			json[queryName] = value.number ? value.countryCode + value.number.replace(/\s/g, '') : null;
-		} else if (typeof value == 'object' && value) {
-			json[queryName] = value.value ? value.value : null;
+		} else if (queryName.endsWith('_obj') && value) {
+			json[queryName.replace('_obj', '_id')] = value.value ? value.value : null;
 		} else {
 			json[queryName] = value ? value : null;
 		}
@@ -47,18 +47,18 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 	};
 	const fillFromGet = (data) => {
 		update((arr) => {
-			Object.keys(data).forEach((val, i) => {
-				let idx = arr.findIndex((obj) => obj.queryName === val);
-				// console.log(arr.find((obj) => obj.queryName === val));
-				// console.log(data[val]);
-				if (idx != -1 && data[val]) {
-					if (val == 'phone') {
+			Object.keys(data).forEach((key, i) => {
+				let idx = arr.findIndex((obj) => obj.queryName === key);
+
+				// console.log(arr.find((obj) => obj.queryName === key));
+				if (idx != -1 && data[key]) {
+					if (key == 'phone') {
 						let ph = {
-							number: data[val].toString().slice(-9),
-							countryCode: data[val].toString().slice(0, -9)
+							number: data[key].toString().slice(-9),
+							countryCode: data[key].toString().slice(0, -9)
 						};
 						arr[idx].value = ph;
-					} else arr[idx].value = data[val];
+					} else arr[idx].value = data[key];
 				}
 			});
 

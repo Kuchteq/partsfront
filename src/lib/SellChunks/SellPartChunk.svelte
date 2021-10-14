@@ -1,36 +1,44 @@
 <script>
-	export let sellData;
-	export let sellFunc;
-	import back from '$axios';
 	import { addNotif } from '$functions/PopupClient.js';
 	import PriceField from '$shared/fields/PriceField.svelte';
 	import IntegerField from '$shared/fields/IntegerField.svelte';
 	import accordion from '$functions/accordion';
+	import back from '$axios';
+	import { setPartSelection } from '$functions/selectionManager';
+	import { onDestroy, onMount } from 'svelte';
+
+	export let sellData;
+	export let sellFunc;
 	export let chunkId;
 
 	const SERVER_ERROR_STRING =
 		'Serwer nie mógł przetworzyć tej operacji, możliwy błąd w uzupełnionych danych';
 
-	let itemInfo = {};
-
 	back
 		.get(`/inventory/${sellData.part_id}`)
 		.then((res) => {
-			itemInfo = res.data[0];
+			itemInfo = res.data;
 		})
 		.catch((err) => {
 			console.log(err);
 			addNotif('error', 'Problem z pobieraniem po stronie serwera', SERVER_ERROR_STRING);
 		});
+
+	let itemInfo = {};
+
 	let totalValue = 0;
 	$: {
 		totalValue = parseInt(sellData.sell_price) * parseInt(sellData.quantity);
 	}
+	onDestroy(() => {
+		console.log(sellData.part_id, itemInfo.part_id);
+	});
 
 	let isOpen = true;
 </script>
 
 <article class="sellChunk" class:closedDetails={!isOpen}>
+	<button type="button" class="generalGarbageButton removeFromOrder" />
 	<div class="topPart">
 		<h1>
 			{#if sellData.sell_price && sellData.quantity}
@@ -48,7 +56,6 @@
 				<img src="/icons/UnravelTriangle.svg" />
 			</button>
 		</div>
-		<button class="topDeselectBtn" type="button" />
 	</div>
 	<div use:accordion={isOpen}>
 		<div class="fillPartSellData">
@@ -98,21 +105,19 @@
 </article>
 
 <style lang="scss">
-	.topDeselectBtn {
-		position: absolute;
-		left: 50%;
-		transform: translate(-50%, 0);
-		top: 0;
-		width: 20px;
-		height: 20px;
-		background-color: #f3f3f3;
-	}
 	.sellChunk {
 		background-color: #fff;
 		border-radius: 14px;
 		margin-top: 25px;
 		padding-bottom: 25px;
 		transition: 0.1s padding;
+		position: relative;
+		box-shadow: 0px 0px 7px rgb(0 0 0 / 10%);
+		&:hover {
+			.removeFromOrder {
+				opacity: 1;
+			}
+		}
 	}
 	.topPart {
 		font-size: 20px;
@@ -141,7 +146,12 @@
 			padding-bottom: 0;
 		}
 	}
-
+	.removeFromOrder {
+		top: 0%;
+		left: 50%;
+		transform: translate(0, -50%);
+		opacity: 0;
+	}
 	.fillPartSellData {
 		padding: 0 25px;
 	}
@@ -155,19 +165,19 @@
 		h3 {
 			font-size: 22px;
 			font-weight: 700;
-			color: #e20808;
+			color: var(--mBlue);
 			margin-bottom: 5px;
 		}
 		& > div {
 			width: 47.5%;
 			&:nth-child(1) {
 				margin-right: 5%;
-				border-right: 2px solid #e20808;
+				border-right: 2px solid var(--mBlue);
 			}
 		}
 		li {
 			span {
-				color: rgb(133, 2, 2);
+				color: #0054b6;
 			}
 			b {
 				font-weight: 700;
@@ -175,7 +185,7 @@
 		}
 	}
 	.totalValue {
-		background-color: #f3f3f3;
+		background-color: #f5f5f5;
 		padding: 18px 20px;
 		border-radius: 0 0 9px 16px;
 	}
@@ -190,6 +200,13 @@
 			transition: 0.15s all;
 			transform-origin: center;
 			height: 70px;
+			transition: var(--sTrans);
+			img {
+				width: 19px;
+			}
+			&:hover {
+				filter: brightness(1.8);
+			}
 		}
 	}
 </style>
