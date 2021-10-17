@@ -5,7 +5,7 @@
 	import SellInventoryButton from '$shared/buttons/sell/SellInventoryButton.svelte';
 	import AssembleComputerButton from '$shared/buttons/assemble/AssembleComputerButton.svelte';
 	import UniModuleLink from '$shared/buttons/UniModuleLink/UniModuleLink.svelte';
-	import SearchField from '$shared/searchField/SearchField.svelte';
+	import MasterSearchField from '$shared/searchField/MasterSearchField.svelte';
 
 	const baseIconFolder = '/icons/';
 
@@ -61,7 +61,7 @@
 		<SellInventoryButton larger />
 		<AssembleComputerButton larger />
 	</div>
-	<SearchField larger />
+	<MasterSearchField />
 	<h3>Moduły</h3>
 	<div class="toModules">
 		{#each moduleDirections as direction}

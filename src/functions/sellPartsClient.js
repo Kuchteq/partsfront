@@ -34,6 +34,14 @@ function createPartSeller() {
 		});
 	};
 
+	const addInfo = (part_id, info) => {
+		update((arr) => {
+			let arr_id = arr.findIndex((elem) => elem.part_id == part_id);
+			arr[arr_id].info = info;
+			return arr;
+		});
+	};
+
 	const updateVal = (id, val, dest) => {
 		update((arr) => {
 			arr[id][dest] = val;
@@ -89,6 +97,6 @@ function createPartSeller() {
 		return valid;
 	};
 	const resetValues = () => set([]);
-	return { synchronize, subscribe, updateVal, sell, checkValidity, resetValues };
+	return { synchronize, addInfo, subscribe, updateVal, sell, checkValidity, resetValues };
 }
 export default createPartSeller;

@@ -4,13 +4,18 @@
 	import createPostClient from '$functions/postClient';
 	import { refetch } from '$functions/triggerRefetch';
 	import selectedParts, { setPartSelection } from '$functions/selectionManager';
-
+	import back from '$axios';
+	import { addNotif } from '$functions/PopupClient';
 	import selectedComputers from '$functions/cSelectionManager';
 	import createPartSeller from '$functions/sellPartsClient.js';
 	import createComputerSeller from '$functions/sellComputersClient.js';
-	import { onMount } from 'svelte';
+
 	import SellPartChunk from '$lib/SellChunks/SellPartChunk.svelte';
 	import SellComputerChunk from '$lib/SellChunks/SellComputerChunk.svelte';
+
+	const SERVER_ERROR_STRING =
+		'Serwer nie mógł przetworzyć tej operacji, możliwy błąd w uzupełnionych danych';
+
 	let modalName = 'sell';
 	let formRef;
 	let client = createPostClient(orderForm);
@@ -56,6 +61,18 @@
 
 	$: {
 		seller.synchronize($selectedParts);
+		let unfetched = $seller.filter((x) => x.info === undefined);
+		unfetched.forEach(({ part_id }) => {
+			back
+				.get(`/inventory/${part_id}`)
+				.then((res) => {
+					seller.addInfo(part_id, res.data);
+				})
+				.catch((err) => {
+					console.log(err);
+					addNotif('error', 'Problem z pobieraniem po stronie serwera', SERVER_ERROR_STRING);
+				});
+		});
 	}
 
 	$: coSeller.synchronize($selectedComputers);
@@ -84,7 +101,7 @@
 		<h1>Wybrane części do sprzedania</h1>
 		{#if $seller.length > 0}
 			{#each $seller as item, id}
-				<SellPartChunk chunkId={id} sellData={item} sellFunc={seller.updateVal} />
+				<SellPartChunk chunkId={id} part={item} sellFunc={seller.updateVal} />
 			{/each}
 		{/if}
 	</form>

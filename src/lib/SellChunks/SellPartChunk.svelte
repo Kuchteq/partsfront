@@ -7,46 +7,33 @@
 	import { setPartSelection } from '$functions/selectionManager';
 	import { onDestroy, onMount } from 'svelte';
 
-	export let sellData;
+	export let part;
 	export let sellFunc;
 	export let chunkId;
 
-	const SERVER_ERROR_STRING =
-		'Serwer nie mógł przetworzyć tej operacji, możliwy błąd w uzupełnionych danych';
-
-	back
-		.get(`/inventory/${sellData.part_id}`)
-		.then((res) => {
-			itemInfo = res.data;
-		})
-		.catch((err) => {
-			console.log(err);
-			addNotif('error', 'Problem z pobieraniem po stronie serwera', SERVER_ERROR_STRING);
-		});
-
-	let itemInfo = {};
-
 	let totalValue = 0;
 	$: {
-		totalValue = parseInt(sellData.sell_price) * parseInt(sellData.quantity);
+		console.log(part.info);
+		totalValue = parseInt(part.sell_price) * parseInt(part.quantity);
 	}
-	onDestroy(() => {
-		console.log(sellData.part_id, itemInfo.part_id);
-	});
-
+	const loadingString = 'Pobieram Dane';
 	let isOpen = true;
 </script>
 
 <article class="sellChunk" class:closedDetails={!isOpen}>
-	<button type="button" class="generalGarbageButton removeFromOrder" />
+	<button
+		type="button"
+		class="generalGarbageButton removeFromOrder"
+		on:click={() => setPartSelection(part.info.part_id)}
+	/>
 	<div class="topPart">
 		<h1>
-			{#if sellData.sell_price && sellData.quantity}
+			{#if part.sell_price && part.quantity}
 				<img src="/icons/ReadyToSell.svg" />
 			{:else}
 				<img src="/icons/NotYetToSell.svg" />
 			{/if}
-			{itemInfo.part_name}
+			{part.info ? part.info.part_name : loadingString}
 		</h1>
 		<div class="rightSideTop">
 			<h2 class="totalValue" class:visible={totalValue}>
@@ -61,20 +48,20 @@
 		<div class="fillPartSellData">
 			<PriceField
 				label={'Cena netto'}
-				initValue={sellData.sell_price}
+				initValue={part.sell_price}
 				update={(id, val) => sellFunc(chunkId, val, 'sell_price')}
 				required={true}
 				multiplier={1.23}
 				multiText={'Wartość brutto: '}
-				error={sellData.error == 1 || undefined}
+				error={part.error == 1 || undefined}
 			/>
 			<IntegerField
 				label={'Ilość do sprzedania'}
 				update={(id, val) => sellFunc(chunkId, val, 'quantity')}
-				initValue={sellData.quantity}
+				initValue={part.quantity}
 				required={true}
 				boundries={{ min: 1, max: 12 } || undefined}
-				error={sellData.error == 2 || undefined}
+				error={part.error == 2 || undefined}
 			/>
 		</div>
 
@@ -82,23 +69,30 @@
 			<div>
 				<h3>Dane o sprzedaży</h3>
 				<ul>
-					<li>- Zysk na jednej części: <b>{sellData.sell_price - itemInfo.price}</b> PLN</li>
 					<li>
-						- Zysk na wszystkich: <b>{(sellData.sell_price - itemInfo.price) * sellData.quantity}</b
+						- Zysk na jednej części: <b
+							>{part.info ? part.sell_price - part.info.price : loadingString}</b
+						> PLN
+					</li>
+					<li>
+						- Zysk na wszystkich: <b
+							>{part.info ? (part.sell_price - part.info.price) * part.quantity : loadingString}</b
 						> PLN
 					</li>
 				</ul>
 			</div>
 			<div>
 				<h3>Dane o części</h3>
-				<ul>
-					<li>- Dostępna ilość: <span>{itemInfo.stock}</span></li>
-					<li>- Cena zakupu: <b>{itemInfo.price}</b> PLN</li>
-					<li>- Dostawca: <span>{itemInfo.supplier_name}</span></li>
-					<li>- Data zakupu: <span>{itemInfo.part_name}</span></li>
-					<li>- Segment: <span>{itemInfo.segment_name}</span></li>
-					<li>- Id: <span>{itemInfo.part_id}</span></li>
-				</ul>
+				{#if part.info}
+					<ul>
+						<li>- Dostępna ilość: <span>{part.info.stock}</span></li>
+						<li>- Cena zakupu: <b>{part.info.price}</b> PLN</li>
+						<li>- Dostawca: <span>{part.info.supplier_obj.label}</span></li>
+						<li>- Data zakupu: <span>{part.info.part_name}</span></li>
+						<li>- Segment: <span>{part.info.segment_obj.label}</span></li>
+						<li>- Id: <span>{part.info.part_id}</span></li>
+					</ul>
+				{/if}
 			</div>
 		</div>
 	</div>
