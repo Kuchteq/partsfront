@@ -6,6 +6,8 @@
 	import ShowFields from '$shared/showFields/ShowFields.svelte';
 	import SearchField from '$shared/searchField/SearchField.svelte';
 	import { openModal } from '$functions/modalManager';
+	import { createQueryStore } from '$functions/URLSearchParamsStore';
+	import BackFromModule from '$shared/backFromModule/backFromModule.svelte';
 
 	const moduleName = 'clients';
 	const showIcons = [
@@ -23,6 +25,7 @@
 	let onCellDoubleClick = (val) => {
 		openModal('clientsUpdate', val);
 	};
+	const [sortQuery, sQuery] = [createQueryStore('sort'), createQueryStore('s')];
 
 	const client = createFetchClient(clientsLabels, '/clients');
 
@@ -48,8 +51,11 @@
 		resetFunc={client.resetResults}
 		highlightedCell={$highlightedCell}
 		{onCellDoubleClick}
+		{sQuery}
+		{sortQuery}
 	/>
 </div>
+<BackFromModule name="Inwentarz" />
 
 <style lang="scss">
 	.moduleMainHolder {

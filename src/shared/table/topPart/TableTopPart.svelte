@@ -1,20 +1,20 @@
 <script>
 	export let labels;
-	export let sortValue;
 	export let sortHandler;
+	export let sortQuery;
 
-	$: sortValue = sortValue;
+	let defaultSort = labels.find((label) => label.default == true).queryName;
 </script>
 
 <header>
 	{#each labels as label}
 		<button
 			on:click={() => {
-				sortHandler(label.queryName);
+				sortHandler(sortQuery, label.queryName, $sortQuery);
 			}}
-			class={`${label.widthClass} ${$sortValue.by === label.queryName ? $sortValue.dir : ''} ${
-				label.shown ? '' : 'hiddenDisplay'
-			}`}>{label.name}</button
+			class={`${label.widthClass} ${
+				$sortQuery && $sortQuery.by === label.queryName ? $sortQuery.dir : ''
+			} ${label.shown ? '' : 'hiddenDisplay'}`}>{label.name}</button
 		>
 	{/each}
 </header>
@@ -53,10 +53,10 @@
 	}
 	.asc::after {
 		opacity: 1;
+		transform: rotate(180deg);
 	}
 	.desc::after {
 		opacity: 1;
-		transform: rotate(180deg);
 	}
 	.hiddenDisplay {
 		display: none;

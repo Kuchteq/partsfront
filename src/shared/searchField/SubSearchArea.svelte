@@ -5,13 +5,14 @@
 	export let header = '';
 	export let color = '#000';
 	export let format = '';
+	export let destination = '';
 </script>
 
 <section style="--accentColor:{color}">
 	<div class="topPart">
 		<div class="inner">
 			<h2>{header}</h2>
-			<a href="#">Przejdź</a>
+			<a href={destination}>Przejdź</a>
 		</div>
 		<div class="resultsCount">Wszystkich wyników: 14, pokazuję 6</div>
 	</div>

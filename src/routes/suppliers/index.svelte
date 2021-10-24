@@ -6,6 +6,8 @@
 	import ShowFields from '$shared/showFields/ShowFields.svelte';
 	import SearchField from '$shared/searchField/SearchField.svelte';
 	import { openModal } from '$functions/modalManager';
+	import { createQueryStore } from '$functions/URLSearchParamsStore';
+	import BackFromModule from '$shared/backFromModule/backFromModule.svelte';
 
 	const moduleName = 'suppliers';
 	const showIcons = [
@@ -25,6 +27,8 @@
 		openModal('suppliersUpdate', val);
 	};
 	//some boilerplate
+	const [sortQuery, sQuery] = [createQueryStore('sort'), createQueryStore('s')];
+
 	const client = createFetchClient(suppliersLabels, '/suppliers');
 	$: results = client.results;
 	$: labels = client.labels;
@@ -41,15 +45,17 @@
 	</section>
 	<TableUniversal
 		labels={$labels}
-		sortValue={client.sortValue}
 		sortHandler={client.sortBy}
 		results={$results}
 		fetcherFunc={client.fetchInventory}
 		resetFunc={client.resetResults}
 		highlightedCell={$highlightedCell}
 		{onCellDoubleClick}
+		{sQuery}
+		{sortQuery}
 	/>
 </div>
+<BackFromModule name="Dostawcy" />
 
 <style lang="scss">
 	.moduleMainHolder {

@@ -10,9 +10,12 @@
 	import { openModal } from '$functions/modalManager';
 	import selectedParts, { setPartSelection, deselectAllParts } from '$functions/selectionManager';
 	import DeselectAllButton from '$shared/deselectAllButton/DeselectAllButton.svelte';
+	import { createQueryStore } from '$functions/URLSearchParamsStore';
+	import BackFromModule from '$shared/backFromModule/backFromModule.svelte';
 
 	const showIcons = ['id', 'segment', 'name', 'stock', 'price', 'note', 'supplier', 'date'];
-	const client = createFetchClient(inventoryLabels, '/inventory');
+	const [sortQuery, sQuery] = [createQueryStore('sort'), createQueryStore('s')];
+	const client = new createFetchClient(inventoryLabels, '/inventory');
 
 	$: results = client.results;
 	$: labels = client.labels;
@@ -33,17 +36,18 @@
 		<AssembleComputerButton />
 		<div class="innerTools">
 			<ShowFields icons={showIcons} {labels} handleHide={client.handleHide} />
-			<SearchField />
+			<SearchField {sQuery} />
 		</div>
 	</section>
 	<TableUniversal
 		labels={$labels}
-		sortValue={client.sortValue}
 		sortHandler={client.sortBy}
 		results={$results}
 		fetcherFunc={client.fetchInventory}
 		resetFunc={client.resetResults}
 		highlightedCell={$highlightedCell}
+		{sQuery}
+		{sortQuery}
 		{onCellDoubleClick}
 		{onCellSingleClick}
 		selectedCells={selectedParts}
@@ -55,6 +59,7 @@
 		/>
 	{/if}
 </div>
+<BackFromModule name="Inwentarz" />
 
 <style lang="scss">
 	.moduleMainHolder {

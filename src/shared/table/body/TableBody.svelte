@@ -15,11 +15,14 @@
 	export let onCellSingleClick;
 	export let onCellDoubleClick;
 	export let selectedCells;
+	export let sQuery;
+	export let sortQuery;
 
 	export let resetFunc = () => {};
 	let currentPage = 1;
-
+	let initiallyLoaded = false;
 	let noLabels = false;
+
 	$: {
 		//check if there are any labels shown
 		if (labels.findIndex((label) => label.shown == true) == -1) {
@@ -38,12 +41,13 @@
 					if (entry.isIntersecting) {
 						loading = true;
 						currentPage += 1;
-						fetcherFunc(currentPage)
+						console.log(currentPage);
+						fetcherFunc(currentPage, $sortQuery, $sQuery)
 							.then(() => console.log(`fetched new page ${currentPage}`))
 							.catch((err) => {
 								console.log(err);
-								observer.unobserve(entry.target);
 								loading = false;
+								initiallyLoaded = false;
 							});
 					}
 				});
@@ -59,7 +63,16 @@
 	const unsubscribe = refetchStatus.subscribe(() => {
 		resetFunc();
 		currentPage = 1;
-		fetcherFunc(currentPage);
+
+		fetcherFunc(currentPage, $sortQuery, $sQuery)
+			.then(() => {
+				initiallyLoaded = true;
+			})
+			.catch((e) => {
+				loading = false;
+				initiallyLoaded = false;
+			});
+
 		//to add fetching new data
 	});
 
@@ -86,7 +99,10 @@
 			<Loader />
 		</div>
 	{/if}
-	<div bind:this={fetchTrigger} class={`fetchTrigger ${loading ? 'visible' : ''}`}>
+	<div
+		bind:this={fetchTrigger}
+		class="fetchTrigger {loading ? 'visible' : ''} {initiallyLoaded ? 'initiallyLoaded' : ''}"
+	>
 		<Loader />
 	</div>
 </div>
@@ -98,11 +114,15 @@
 		min-height: 80vh;
 	}
 	.fetchTrigger {
+		display: none;
 		width: 80px;
 		position: relative;
 		height: 80px;
 		margin: auto;
-		opacity: 0;
+		opacity: 1;
+	}
+	.initiallyLoaded {
+		display: block;
 	}
 	.visible {
 		opacity: 1;

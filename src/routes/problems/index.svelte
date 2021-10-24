@@ -6,6 +6,8 @@
 	import ShowFields from '$shared/showFields/ShowFields.svelte';
 	import SearchField from '$shared/searchField/SearchField.svelte';
 	import { openModal } from '$functions/modalManager';
+	import { createQueryStore } from '$functions/URLSearchParamsStore';
+	import BackFromModule from '$shared/backFromModule/backFromModule.svelte';
 
 	const moduleName = 'problems';
 	const showIcons = ['id', 'name', 'computer_id', 'note', 'date', 'deadline', 'client_name'];
@@ -13,6 +15,8 @@
 		openModal('problemsUpdate', val);
 	};
 	//some boilerplate
+	const [sortQuery, sQuery] = [createQueryStore('sort'), createQueryStore('s')];
+
 	const client = createFetchClient(problemsLabels, '/problems');
 	$: results = client.results;
 	$: labels = client.labels;
@@ -36,8 +40,11 @@
 		resetFunc={client.resetResults}
 		highlightedCell={$highlightedCell}
 		{onCellDoubleClick}
+		{sQuery}
+		{sortQuery}
 	/>
 </div>
+<BackFromModule name="Problemy" />
 
 <style lang="scss">
 	.moduleMainHolder {

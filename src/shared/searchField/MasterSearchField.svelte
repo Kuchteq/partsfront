@@ -26,30 +26,35 @@
 		parts: {
 			header: 'Inwentarz',
 			color: 'var(--mBlue)',
+			route: '/inventory',
 			data: [],
 			format: PartsFormat
 		},
 		computers: {
 			header: 'Komputery',
 			color: 'var(--mPurple)',
+			route: '/computers',
 			data: [],
 			format: ComputersFormat
 		},
 		clients: {
 			header: 'Klienci',
 			color: 'var(--mClients)',
+			route: '/clients',
 			data: [],
 			format: ClientsFormat
 		},
 		suppliers: {
 			header: 'Dostawcy',
 			color: 'var(--mSuppliers)',
+			route: '/suppliers',
 			data: [],
 			format: SuppliersFormat
 		},
 		problems: {
 			header: 'Problemy',
 			color: 'var(--mOrange)',
+			route: '/problems',
 			data: [],
 			format: ProblemsFormat
 		}
@@ -60,7 +65,7 @@
 			back
 				.get('/multisearch/', {
 					params: {
-						q: query,
+						s: query,
 						across: ['parts', 'computers', 'clients', 'suppliers', 'problems']
 					}
 				})
@@ -101,6 +106,7 @@
 						color={module.color}
 						format={module.format}
 						results={module.data}
+						destination={`${module.route}/?s=${query}`}
 					/>
 				{/if}
 			{/each}

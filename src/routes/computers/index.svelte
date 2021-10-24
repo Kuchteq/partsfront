@@ -11,8 +11,11 @@
 		deselectAllComputers
 	} from '$functions/cSelectionManager';
 	import DeselectAllButton from '$shared/deselectAllButton/DeselectAllButton.svelte';
+	import { createQueryStore } from '$functions/URLSearchParamsStore';
+	import BackFromModule from '$shared/backFromModule/backFromModule.svelte';
 
 	const showIcons = ['id', 'name', 'cpu', 'motherboard', 'gpu', 'price', 'note', 'date'];
+	const [sortQuery, sQuery] = [createQueryStore('sort'), createQueryStore('s')];
 	const client = createFetchClient(computerLabels, '/computers');
 
 	$: results = client.results;
@@ -37,12 +40,13 @@
 	</section>
 	<TableUniversal
 		labels={$labels}
-		sortValue={client.sortValue}
 		sortHandler={client.sortBy}
 		results={$results}
 		fetcherFunc={client.fetchInventory}
 		resetFunc={client.resetResults}
 		highlightedCell={$highlightedCell}
+		{sQuery}
+		{sortQuery}
 		{onCellDoubleClick}
 		{onCellSingleClick}
 		selectedCells={selectedComputers}
@@ -54,6 +58,7 @@
 		/>
 	{/if}
 </div>
+<BackFromModule name="Zestawy" />
 
 <style lang="scss">
 	.moduleMainHolder {

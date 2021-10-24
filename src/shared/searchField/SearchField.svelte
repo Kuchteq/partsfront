@@ -1,7 +1,9 @@
 <script>
+	export let sQuery;
+	import { refetch } from '$functions/triggerRefetch';
 </script>
 
-<input class="searchBar" type="text" placeholder="Szukaj w bazie" />
+<input class="searchBar" type="text" placeholder="Szukaj w bazie" bind:value={$sQuery} />
 
 <style lang="scss">
 	input {

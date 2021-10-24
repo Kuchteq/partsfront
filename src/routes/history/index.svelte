@@ -6,6 +6,10 @@
 	import ShowFields from '$shared/showFields/ShowFields.svelte';
 	import SearchField from '$shared/searchField/SearchField.svelte';
 	import { openModal } from '$functions/modalManager';
+	import { createQueryStore } from '$functions/URLSearchParamsStore';
+	import BackFromModule from '$shared/backFromModule/backFromModule.svelte';
+
+	const [sortQuery, sQuery] = [createQueryStore('sort'), createQueryStore('s')];
 
 	const moduleName = 'history';
 	const showIcons = ['id', 'segment', 'note', 'date'];
@@ -31,8 +35,11 @@
 		fetcherFunc={client.fetchInventory}
 		resetFunc={client.resetResults}
 		highlightedCell={$highlightedCell}
+		{sQuery}
+		{sortQuery}
 	/>
 </div>
+<BackFromModule name="Historia" />
 
 <style lang="scss">
 	.moduleMainHolder {
