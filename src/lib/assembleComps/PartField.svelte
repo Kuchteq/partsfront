@@ -2,9 +2,8 @@
 	import { onMount } from 'svelte';
 	import back from '$axios';
 	import { openModal } from '$functions/modalManager.js';
-	import { updateMains, updateQuantity } from './assembleClient';
+	import { updateMains, updateQuantity, removeMainPart } from './assembleClient';
 	import Select from 'svelte-select';
-	import { prevent_default } from 'svelte/internal';
 	export let id;
 	export let data;
 	export let themeColor = '#006AE5';
@@ -15,13 +14,14 @@
 
 	$: curInfo = $data[id];
 
+	console.log($data[id]);
 	onMount(() => {
 		back.get(`/inventory-all-bycat/${curInfo.segment_id}`).then((res) => {
 			items = res.data;
 		});
 	});
 	const handleSelect = (event) => {
-		if (curInfo.value.part_id != event.detail.value) updateMains(id, event.detail);
+		if (curInfo != event.detail.value) updateMains(id, event.detail);
 	};
 </script>
 
@@ -42,8 +42,8 @@
 					price: curInfo.value.price,
 					stock: curInfo.value.stock
 				}}
-				on:clear={handleSelect}
 				on:select={handleSelect}
+				on:clear={() => removeMainPart(curInfo.segment_id)}
 			/>
 			<input
 				class="miniCountInput"

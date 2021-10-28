@@ -10,6 +10,7 @@
 	import createPartSeller from '$functions/sellPartsClient.js';
 	import createComputerSeller from '$functions/sellComputersClient.js';
 
+	import { closeModal } from '$functions/modalManager';
 	import SellPartChunk from '$lib/SellChunks/SellPartChunk.svelte';
 	import SellComputerChunk from '$lib/SellChunks/SellComputerChunk.svelte';
 
@@ -48,6 +49,7 @@
 						seller.resetValues();
 						coSeller.resetValues();
 						refetch();
+						closeModal(modalName);
 					});
 			}
 		},

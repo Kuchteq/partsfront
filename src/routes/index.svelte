@@ -1,11 +1,18 @@
 <script context="module">
-	export const prerender = true;
+	export const prerender = false;
 	import TabName from '$shared/tabName/TabName.svelte';
 	import AddInventoryButton from '$shared/buttons/add/AddInventoryButton.svelte';
 	import SellInventoryButton from '$shared/buttons/sell/SellInventoryButton.svelte';
 	import AssembleComputerButton from '$shared/buttons/assemble/AssembleComputerButton.svelte';
 	import UniModuleLink from '$shared/buttons/UniModuleLink/UniModuleLink.svelte';
 	import MasterSearchField from '$shared/searchField/MasterSearchField.svelte';
+
+	import authWatch from '$functions/authWatch.js';
+import MoreOptions from '$lib/moreOptions/MoreOptions.svelte';
+
+	export async function load({ session }) {
+		return await authWatch({ session });
+	}
 
 	const baseIconFolder = '/icons/';
 
@@ -73,6 +80,7 @@
 		{/each}
 	</div>
 </section>
+<MoreOptions/>
 
 <style lang="scss">
 	section {

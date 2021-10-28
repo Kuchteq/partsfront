@@ -17,7 +17,7 @@ const adjustToForm = (arr) => {
 	return arr.map((elem) => {
 		return {
 			label: segmentsLabels[elem.segment_id - 1],
-			segment_id: elem.segment_id,
+			segment_id: elem.segment_obj.value,
 			quantity: elem.quantity ? elem.quantity : 1,
 			value: {
 				part_id: elem.part_id,
@@ -33,9 +33,8 @@ const initParts = (data) => {
 	mainParts.update((mainForm) => {
 		mainForm = clone(initialForm);
 		mainForm.forEach((val, i) => {
-			let mainPart = data.filter((d) => d.segment_id == val.segment_id)[0];
+			let mainPart = data.filter((d) => d.segment_obj.value == val.segment_id)[0];
 			if (mainPart) {
-				console.log(mainPart.quantity);
 				mainForm[i].value = mainPart;
 				mainForm[i].piece_id = mainPart.piece_id;
 				mainForm[i].quantity = mainPart.quantity ? mainPart.quantity : 1;
@@ -48,13 +47,13 @@ const initParts = (data) => {
 	miscParts.update(() => {
 		let allMisc = [];
 		computerForm.forEach((val) => {
-			let foundParts = data.filter((d) => d.segment_id == val.segment_id);
+			let foundParts = data.filter((d) => d.segment_obj.value == val.segment_id);
 			if (foundParts.length > 1) {
 				allMisc = allMisc.concat(foundParts.slice(1, foundParts.length));
 			}
 		});
-
-		allMisc = allMisc.concat(data.filter((d) => d.segment_id >= 3));
+		//This 5 is very important
+		allMisc = allMisc.concat(data.filter((d) => d.segment_obj.value >= 5));
 
 		return adjustToForm(allMisc);
 	});
@@ -122,13 +121,21 @@ const updateMiscs = (place, val, segment_id) => {
 	});
 };
 
-const removePart = (place) => {
+const removeMiscPart = (place) => {
 	miscParts.update((arr) => {
 		arr.splice(place, 1);
 		return arr;
 	});
 };
 
+const removeMainPart = (place) => {
+	mainParts.update((arr) => {
+		let indx = arr.findIndex((elem) => elem.segment_id == place);
+		arr[indx].value = undefined;
+		arr[indx].quantity = undefined;
+		return arr;
+	});
+};
 const addPart = () => {
 	miscParts.update((arr) => {
 		arr.push({
@@ -273,7 +280,8 @@ export {
 	updateComputer,
 	validateComputer,
 	updateMiscs,
-	removePart,
+	removeMainPart,
+	removeMiscPart,
 	addPart,
 	updateQuantity,
 	fillFromInitial

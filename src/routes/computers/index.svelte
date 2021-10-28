@@ -1,3 +1,11 @@
+<script context="module">
+	import authWatch from '$functions/authWatch.js';
+
+	export async function load({ session }) {
+		return await authWatch({ session });
+	}
+</script>
+
 <script>
 	import TableUniversal from '$shared/table/TableUniversal.svelte';
 	import createFetchClient from '$functions/fetchClient.js';
@@ -13,6 +21,7 @@
 	import DeselectAllButton from '$shared/deselectAllButton/DeselectAllButton.svelte';
 	import { createQueryStore } from '$functions/URLSearchParamsStore';
 	import BackFromModule from '$shared/backFromModule/backFromModule.svelte';
+	import SellInventoryButton from '$shared/buttons/sell/SellInventoryButton.svelte';
 
 	const showIcons = ['id', 'name', 'cpu', 'motherboard', 'gpu', 'price', 'note', 'date'];
 	const [sortQuery, sQuery] = [createQueryStore('sort'), createQueryStore('s')];
@@ -33,6 +42,7 @@
 <div class="moduleMainHolder">
 	<section class="upTools">
 		<AssembleComputerButton />
+		<SellInventoryButton />
 		<div class="innerTools">
 			<ShowFields icons={showIcons} {labels} handleHide={client.handleHide} />
 			<SearchField />

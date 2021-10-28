@@ -22,7 +22,7 @@
 			})
 			.then((res) => {
 				addNotif('success', 'Udane logowanie');
-				goto('/');
+				window.location = '/';
 			})
 			.catch((err) => {
 				addNotif('error', 'Złe dane logowania', 'Sprawdź swój login lub hasło');

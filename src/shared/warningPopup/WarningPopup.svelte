@@ -14,7 +14,13 @@
 				Kontynuować?
 				<div class="btns">
 					<button type="button" on:click={() => isOpen.set(false)}>Nie</button>
-					<button type="button" on:click={onConfirm}>Tak</button>
+					<button
+						type="button"
+						on:click={() => {
+							onConfirm();
+							isOpen.set(false);
+						}}>Tak</button
+					>
 				</div>
 			</div>
 		</div>

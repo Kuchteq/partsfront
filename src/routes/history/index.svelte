@@ -1,3 +1,11 @@
+<script context="module">
+	import authWatch from '$functions/authWatch.js';
+
+	export async function load({ session }) {
+		return await authWatch({ session });
+	}
+</script>
+
 <script>
 	import TableUniversal from '$shared/table/TableUniversal.svelte';
 	import createFetchClient from '$functions/fetchClient.js';

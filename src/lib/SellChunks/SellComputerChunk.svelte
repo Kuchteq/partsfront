@@ -80,7 +80,9 @@
 				<h3>Dane o komputerze</h3>
 				<ul>
 					{#each parts as part}
-						<li>- {part.segment_name}: <span>{part.part_name}</span> / <b>{part.price}</b> PLN</li>
+						<li>
+							- {part.segment_obj.label}: <span>{part.part_name}</span> / <b>{part.price}</b> PLN
+						</li>
 					{/each}
 				</ul>
 			</div>

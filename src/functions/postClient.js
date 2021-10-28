@@ -76,7 +76,7 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 			.get(`${getPath}${updateId}`)
 			.then((res) => {
 				getData = res.data;
-
+				console.log(getData);
 				fillFromGet(getData);
 			})
 			.catch((err) => {

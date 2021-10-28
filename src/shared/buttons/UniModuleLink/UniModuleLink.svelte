@@ -20,6 +20,11 @@
 		text-align: center;
 		display: flex;
 		align-items: center;
+		transition: var(--sTrans);
+		&:hover {
+			filter: brightness(1.1);
+			box-shadow: 0px 2px 20px #8d8d8d99;
+		}
 	}
 	img {
 		width: 58px;

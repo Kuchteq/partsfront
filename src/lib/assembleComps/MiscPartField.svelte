@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import back from '$axios';
-	import { updateMiscs, removePart, updateQuantity } from './assembleClient';
+	import { updateMiscs, removeMiscPart, updateQuantity } from './assembleClient';
 	import Select from 'svelte-select';
 	import segmentsMap from '/config/segmentsMap';
 	export let id;
@@ -42,7 +42,7 @@
 		class="uniField {required && 'reqField'} {error && 'fieldFillError'} partField"
 		style="--selectFieldColor:{themeColor}"
 	>
-		<button type="button" class="removeFromComputer" on:click={() => removePart(id)} />
+		<button type="button" class="removeFromComputer" on:click={() => removeMiscPart(id)} />
 		<label class="miscCategory" for="miscPart">
 			<Select
 				items={categoryItems}

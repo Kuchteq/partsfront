@@ -8,8 +8,16 @@ let computerForm = [
 		// part_name: 'Artido'
 	},
 	{
+		label: 'Płyta główna',
+		segment_id: 3
+	},
+	{
 		label: 'Karta graficzna',
 		segment_id: 2
+	},
+	{
+		label: 'RAM',
+		segment_id: 4
 	}
 ];
 

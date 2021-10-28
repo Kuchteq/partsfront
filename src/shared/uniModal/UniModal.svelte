@@ -21,7 +21,7 @@
 	export let theme;
 </script>
 
-<!-- <div class="dimmedBg" /> -->
+<div class="dimmedBg" />
 <section class="uniModal absCenter {theme}" id="modal-{modalName}">
 	<TabName text={tabName} clickHandler={closeModalHandler} />
 	<div class="upButtons">
