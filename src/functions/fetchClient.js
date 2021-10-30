@@ -11,7 +11,6 @@ function createFetchClient(labelsToCreate, fetchSource) {
 			if (!sortQuery) {
 				sortQuery = adjustedInitialQuery();
 			}
-
 			back
 				.get(fetchSource, {
 					params: {

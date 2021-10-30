@@ -1,6 +1,7 @@
 <script context="module">
 	import authWatch from '$functions/authWatch.js';
 
+	export const prerender = false;
 	export async function load({ session }) {
 		return await authWatch({ session });
 	}

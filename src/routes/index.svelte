@@ -8,7 +8,7 @@
 	import MasterSearchField from '$shared/searchField/MasterSearchField.svelte';
 
 	import authWatch from '$functions/authWatch.js';
-import MoreOptions from '$lib/moreOptions/MoreOptions.svelte';
+	import MoreOptions from '$lib/moreOptions/MoreOptions.svelte';
 
 	export async function load({ session }) {
 		return await authWatch({ session });
@@ -80,7 +80,7 @@ import MoreOptions from '$lib/moreOptions/MoreOptions.svelte';
 		{/each}
 	</div>
 </section>
-<MoreOptions/>
+<MoreOptions />
 
 <style lang="scss">
 	section {

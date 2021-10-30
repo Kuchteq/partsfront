@@ -1,6 +1,5 @@
 import { writable, derived, get } from 'svelte/store';
 import { addNotif } from '$functions/PopupClient';
-import clone from 'just-clone';
 import back from '$axios';
 
 const SERVER_ERROR_STRING =
