@@ -6,7 +6,7 @@ let problemsLabels = [
 		name: 'id',
 		queryName: 'order_id',
 		shown: true,
-		widthClass: 'w3',
+		widthClass: 'w2',
 		default: true
 	},
 	{

@@ -16,6 +16,7 @@
 	import SearchField from '$shared/searchField/SearchField.svelte';
 	import { openModal } from '$functions/modalManager';
 	import { createQueryStore } from '$functions/URLSearchParamsStore';
+	import CustomTableBody from '$lib/raports/customTable/CustomTableBody.svelte';
 
 	const moduleName = 'raports';
 	const showIcons = ['id', 'client_name', 'name', 'items', 'stock', 'deadline', 'price', 'date'];
@@ -25,10 +26,14 @@
 	//some boilerplate
 	const [sortQuery, sQuery] = [createQueryStore('sort'), createQueryStore('s')];
 
-	const client = createFetchClient(orderLabels, '/orders/2021/10');
+	const client = createFetchClient(orderLabels);
+
+	const nowDate = { month: parseInt(new Date().getMonth()) + 1, year: new Date().getFullYear() };
+	console.log(nowDate);
 	$: results = client.results;
 	$: labels = client.labels;
 	$: highlightedCell = client.highlighted;
+	$: console.log($results);
 </script>
 
 <div class="moduleMainHolder">
@@ -39,16 +44,16 @@
 			<SearchField />
 		</div>
 	</section>
-
-	<TableUniversal
+	<CustomTableBody
 		labels={$labels}
 		sortValue={client.sortValue}
 		sortHandler={client.sortBy}
 		results={$results}
-		fetcherFunc={client.fetchInventory}
+		fetcherFunc={client.fetchRecords}
 		resetFunc={client.resetResults}
 		highlightedCell={$highlightedCell}
 		{onCellDoubleClick}
+		date={nowDate}
 		{sQuery}
 		{sortQuery}
 	/>
@@ -70,6 +75,6 @@
 	}
 	:global(.raports-open-button) {
 		--buttonBg: var(--graGold);
-		--buttonIcon: url('/icons/CreateRaport.svg');
+		--buttonIcon: url('/icons/MakeRaport.svg');
 	}
 </style>

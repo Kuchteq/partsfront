@@ -60,6 +60,7 @@
 		animation: fadeIn 0.1s;
 		transition: 0.1 all;
 		cursor: pointer;
+		background-color: #fff;
 		&:nth-child(even) {
 			background-color: #eeeeee;
 		}

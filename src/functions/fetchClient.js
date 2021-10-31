@@ -37,6 +37,34 @@ function createFetchClient(labelsToCreate, fetchSource) {
 				});
 		});
 	};
+
+	const fetchRecords = (path, sortQuery, sQuery) => {
+		return new Promise((resolve, reject) => {
+			if (!sortQuery) {
+				sortQuery = adjustedInitialQuery();
+			}
+			console.log(path);
+			back
+				.get(path, {
+					params: {
+						sort_by: sortQuery.by
+							? sortQuery.by
+							: labelsToCreate.find((labelsToCreate) => labelsToCreate.default == true).queryName,
+						sort_dir: sortQuery.dir ? sortQuery.dir : 'desc',
+						s: sQuery ? sQuery : undefined
+					}
+				})
+				.then((res) => {
+					results.update((initial) => initial.concat([res.data]));
+
+					resolve();
+				})
+				.catch((err) => {
+					console.log(err);
+					reject('No more inventory');
+				});
+		});
+	};
 	const adjustedInitialQuery = () => {
 		return {
 			by: labelsToCreate.find((labelsToCreate) => labelsToCreate.default == true).queryName,
@@ -50,6 +78,7 @@ function createFetchClient(labelsToCreate, fetchSource) {
 		highlighted: derived(highlighted, (bs) => bs),
 
 		fetchInventory: fetchInventory,
+		fetchRecords: fetchRecords,
 		sortBy: (sortObj, toByVal, prevObj) => {
 			if (!prevObj) {
 				prevObj = adjustedInitialQuery();
