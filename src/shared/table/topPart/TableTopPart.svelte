@@ -27,6 +27,9 @@
 		color: #fff;
 		font-weight: 600;
 		background: var(--moduleThemeGradient);
+		position: sticky;
+		top: 8px;
+		z-index: 50;
 	}
 	button {
 		padding: 12px 16px;

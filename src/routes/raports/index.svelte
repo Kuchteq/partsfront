@@ -17,6 +17,7 @@
 	import { openModal } from '$functions/modalManager';
 	import { createQueryStore } from '$functions/URLSearchParamsStore';
 	import CustomTableBody from '$lib/raports/customTable/CustomTableBody.svelte';
+	import TableTopPart from '$shared/table/topPart/TableTopPart.svelte';
 
 	const moduleName = 'raports';
 	const showIcons = ['id', 'client_name', 'name', 'items', 'stock', 'deadline', 'price', 'date'];
@@ -44,6 +45,7 @@
 			<SearchField />
 		</div>
 	</section>
+	<TableTopPart labels={$labels} {sortQuery} />
 	<CustomTableBody
 		labels={$labels}
 		sortValue={client.sortValue}

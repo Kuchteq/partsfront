@@ -18,6 +18,7 @@
 		bottom: 20%;
 		border: 2px solid #d5d5d5;
 		overflow: hidden;
+		background: #fff;
 	}
 	h5 {
 		writing-mode: vertical-rl;
