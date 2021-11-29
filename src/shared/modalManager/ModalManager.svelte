@@ -6,7 +6,7 @@
 	import SellModal from '$lib/modals/SellModal.svelte';
 	import SuppliersModal from '$lib/modals/SuppliersModal.svelte';
 	import ProblemsModal from '$lib/modals/ProblemsModal.svelte';
-
+	import CreateRaportModal from '$lib/modals/CreateRaportModal.svelte';
 	//update modal imports
 	import InventoryUpdateModal from '$lib/updateModals/InventoryUpdateModal.svelte';
 	import SuppliersUpdateModal from '$lib/updateModals/SuppliersUpdateModal.svelte';
@@ -40,6 +40,11 @@
 	<ProblemsModal />
 {/if}
 
+
+{#if $modalsState.createRaports}
+	<CreateRaportModal />
+{/if}
+<!-- Modals associated with previewing/updating data -->
 {#if $modalsState.inventoryUpdate}
 	<InventoryUpdateModal />
 {/if}

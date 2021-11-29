@@ -5,7 +5,7 @@ const modalsState = new writable({
 	add: false,
 	sell: false,
 	assemble: false,
-	raports: false,
+	createRaports: false,
 	clients: false,
 	suppliers: false,
 	problems: false,

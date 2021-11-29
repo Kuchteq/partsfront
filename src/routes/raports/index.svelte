@@ -39,7 +39,7 @@
 
 <div class="moduleMainHolder">
 	<section class="upTools">
-		<UniModalOpenButton theme={moduleName} text={'Dodaj raport'} modal="raports" />
+		<UniModalOpenButton theme={moduleName} text={'Dodaj raport'} modal="createRaports" />
 		<div class="innerTools">
 			<ShowFields icons={showIcons} {labels} handleHide={client.handleHide} />
 			<SearchField />
