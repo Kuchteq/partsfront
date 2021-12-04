@@ -1,5 +1,5 @@
 <script>
-	import UniModal from '$shared/uniModal/UniModal.svelte';
+	import UniModal from '$shared//modals/uniModal/UniModal.svelte';
 	import computerInfoForm from '/config/forms/computerInfoForm.js';
 	import createPostClient from '$functions/postClient';
 	import { refetch } from '$functions/triggerRefetch';
