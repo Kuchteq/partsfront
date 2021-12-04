@@ -3,7 +3,6 @@
 import { goto } from '$app/navigation';
 
 import { page } from '$app/stores';
-import { get } from 'svelte/store';
 
 function queryToObject(params) {
 	// parse query string

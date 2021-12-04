@@ -1,20 +1,19 @@
 <script>
-  import UniModal from "$shared//modals/uniModal/UniModal.svelte";
+  //import the components
+  import UniModal from "$shared/modals/uniModal/UniModal.svelte";
   import inventoryForm from "/config/forms/inventoryForm.js";
   import createPostClient from "$functions/postClient";
   import { refetch } from "$functions/triggerRefetch";
 
+  //set the modal settings
   let modalName = "add";
-  let formRef;
   let client = createPostClient(inventoryForm);
-
   let actionButton = {
     do: () => {
       let successMessage = {
         title: `Sukces!`,
         desc: `${$client[1].value} została dodana`
       };
-      //pass name to
       let valid = client.checkValidity(modalName);
       if (valid) {
         client.post("/inventory", successMessage).then(() => refetch());
@@ -29,6 +28,7 @@
   };
 </script>
 
+<!-- Use the UniModal modal boilerplate component-->
 <UniModal
   {modalName}
   theme="addModal"
@@ -36,7 +36,8 @@
   {resetAction}
   tabName="Dodaj inwentarz"
 >
-  <form bind:this={formRef}>
+  <form>
+    <!-- For each form input to be filled in, create the appropriate field type component -->
     {#each $client as field, id}
       <svelte:component
         this={field.component}
