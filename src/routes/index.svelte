@@ -5,7 +5,7 @@
 	import SellInventoryButton from '$shared/buttons/sell/SellInventoryButton.svelte';
 	import AssembleComputerButton from '$shared/buttons/assemble/AssembleComputerButton.svelte';
 	import UniModuleLink from '$shared/buttons/UniModuleLink/UniModuleLink.svelte';
-	import MasterSearchField from '$shared/searchField/MasterSearchField.svelte';
+	import MasterSearchField from '$shared/masterSearchField/MasterSearchField.svelte';
 
 	import authWatch from '$functions/authWatch.js';
 	import MoreOptions from '$lib/moreOptions/MoreOptions.svelte';
