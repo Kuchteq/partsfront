@@ -40,12 +40,6 @@
 			} else if (problem == 3) {
 				isWarningPopupOpen.set(true);
 			}
-
-			//pass name to
-			// let valid = client.checkValidity(modalName);
-			// if (valid) {
-			// 	client.post('/computers', successMessage).then(() => refetch());
-			// }
 		},
 		text: 'Złóż',
 		icon: '/icons/AddCircle.svg'

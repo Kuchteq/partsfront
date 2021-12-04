@@ -74,7 +74,6 @@ function createFetchClient(labelsToCreate, fetchSource) {
 	return {
 		results: derived(results, (bs) => bs),
 		labels: derived(labels, (bs) => bs),
-		// sortValue: derived(sortValue, (bs) => bs),
 		highlighted: derived(highlighted, (bs) => bs),
 
 		fetchInventory: fetchInventory,

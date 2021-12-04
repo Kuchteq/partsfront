@@ -24,7 +24,6 @@
 </script>
 
 <script>
-	import { toQueryDate } from '$functions/dateHandler';
 	import IndividualSales from '$lib/viewraports/IndividualSales.svelte';
 	import ClientsInfo from '$lib/viewraports/moduleSpaces/ClientsInfo.svelte';
 	import GeneralInfo from '$lib/viewraports/moduleSpaces/generalInfo.svelte';

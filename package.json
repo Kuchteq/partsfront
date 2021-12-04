@@ -1,6 +1,6 @@
 {
-  "name": "PartsFront",
-  "version": "0.1",
+  "name": "partsfront",
+  "version": "1.0",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
@@ -16,19 +16,16 @@
     "eslint-plugin-svelte3": "^3.2.0",
     "prettier": "~2.2.1",
     "prettier-plugin-svelte": "^2.2.0",
-    "svelte": "^3.34.0"
+    "svelte": "^3.34.0",
+    "svelte-preprocess": "^4.7.4"
   },
   "type": "module",
   "dependencies": {
-    "@fontsource/fira-mono": "^4.2.2",
-    "@lukeed/uuid": "^2.0.0",
     "axios": "^0.21.1",
     "chart.js": "^3.6.0",
     "cookie": "^0.4.1",
     "just-clone": "^3.2.1",
     "sass": "^1.38.0",
-    "svelte-pathfinder": "^3.3.0",
-    "svelte-preprocess": "^4.7.4",
     "svelte-select": "^4.4.0"
   }
 }

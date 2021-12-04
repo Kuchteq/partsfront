@@ -14,7 +14,7 @@
 
 	const client = new createFetchClient(
 		orderLabels,
-		`/raport-individual-orders/${span.from}/${span.to}`
+		`/orders-span/${span.from}/${span.to}`
 	);
 
 	$: results = client.results;

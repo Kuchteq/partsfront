@@ -33,6 +33,12 @@ const config = {
 					$axios: path.resolve('./config/axios-config'),
 					$functions: path.resolve('./src/functions')
 				}
+			},
+			server: {
+				fs: {
+					// Allow serving files from one level up to the project root
+					allow: ['..']
+				}
 			}
 		}
 	},
