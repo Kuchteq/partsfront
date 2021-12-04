@@ -4,7 +4,7 @@
 
   //Modules imported in this component are anchored on every page
   import PopupPanel from "$shared/statusPopup/PopupPanel.svelte";
-  import ModalManager from "$shared/modalManager/ModalManager.svelte";
+  import ModalManager from "$shared/modals/ModalManager.svelte";
 
   /* CSS styles imported here are global, these classes are available everywhere throughout the app,
   	unlike the ones in the components which are local - only available in the specific component */
