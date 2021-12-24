@@ -27,17 +27,17 @@
   <div class="upButtons">
     {#if deleteAction}
       <button class={`otherActionBtn deleteBtn`} on:click={deleteAction()}
-        ><img src={"/icons/DeleteForever.svg"} /></button
+        ><img src={"/icons/DeleteForever.svg"} alt="Delete Forever" /></button
       >
     {/if}
     <button class={`otherActionBtn`} on:click={resetAction()}
-      ><img src={"/icons/ResetCircle.svg"} /></button
+      ><img src={"/icons/ResetCircle.svg"} alt="Reset" /></button
     >
     <button
       class="actionButton"
       type="submit"
       on:click={() => actionButton.do()}
-      ><img src={actionButton.icon} />{actionButton.text}</button
+      ><img src={actionButton.icon} alt="Proceed" />{actionButton.text}</button
     >
   </div>
   <div class="mainSlot">

@@ -4,8 +4,6 @@ import PriceField from '$shared/fields/PriceField.svelte';
 import SelectField from '$shared/fields/SelectField.svelte';
 import StringField from '$shared/fields/StringField.svelte';
 import { getCurrentTime } from '../formatHelpers.js';
-// import EmailField from '$shared/fields/EmailField.svelte';
-// import PhoneField from '$shared/fields/PhoneField.svelte';
 let inventoryForm = [
 	{
 		label: 'Segment',

@@ -1,4 +1,4 @@
-import { writable, derived, get } from 'svelte/store';
+import { writable } from 'svelte/store';
 import { addNotif } from '$functions/PopupClient';
 import back from '$axios';
 
@@ -6,6 +6,7 @@ const SERVER_ERROR_STRING =
 	'Serwer nie mógł przetworzyć tej operacji, możliwy błąd w uzupełnionych danych';
 
 const checkForConstraints = (field) => {
+	//function to check whether some constraints are violated
 	let valid;
 	field.constraints.every((con, errFunc) => {
 		const target = con.target ? field.value[con.target] : field.value;
@@ -20,9 +21,11 @@ const checkForConstraints = (field) => {
 };
 
 const createReqJson = (formStructure) => {
+	//function to create json object to send to server in post request body
 	let json = {};
 
 	formStructure.forEach(({ queryName, value, type }) => {
+		//format value if needed
 		if (type == 'phone') {
 			json[queryName] = value.number ? value.countryCode + value.number.replace(/\s/g, '') : null;
 		} else if (queryName.endsWith('_obj') && value) {
@@ -35,6 +38,17 @@ const createReqJson = (formStructure) => {
 };
 
 function createPostClient(formStructure, getPath = undefined, updateId = undefined) {
+	//main function that takes care of post request validation and sending the data to server
+	//with that function you create an object that can be used to post data to server
+
+	/*create store - a special value that stores state of some part of the app.
+	Here we create a store that will hold the form structure and the data that is 
+	being sent to server*/
+
+	const { subscribe, update } = writable(formStructure);
+
+	/*a function that will be called when the form is submitted and
+	when the user clicks on the reset button*/
 	const resetValues = () => {
 		update((arr) => {
 			arr.forEach((val, i) => {
@@ -44,9 +58,10 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 			return arr;
 		});
 	};
+
 	const fillFromGet = (data) => {
 		update((arr) => {
-			Object.keys(data).forEach((key, i) => {
+			Object.keys(data).forEach((key) => {
 				let idx = arr.findIndex((obj) => obj.queryName === key);
 
 				// console.log(arr.find((obj) => obj.queryName === key));
@@ -65,9 +80,8 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 		});
 	};
 
-	const { subscribe, set, update } = writable(formStructure);
+	//if the form is being updated, we need to first get the data from server and fill in the fields
 	let getData;
-
 	if (updateId && getPath) {
 		resetValues();
 
@@ -75,10 +89,10 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 			.get(`${getPath}${updateId}`)
 			.then((res) => {
 				getData = res.data;
-				console.log(getData);
 				fillFromGet(getData);
 			})
 			.catch((err) => {
+				console.log(err)
 				addNotif('error', 'Problem z pobieraniem po stronie serwera', SERVER_ERROR_STRING);
 			});
 	}
@@ -89,6 +103,7 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 
 	return {
 		subscribe,
+		//fumction that is used to update some field in the form
 		updateVal: (id, val) => {
 			update((old) => {
 				old[id].value = val;
@@ -96,10 +111,12 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 				return old;
 			});
 		},
+		//function to check whether the form is valid
 		checkValidity: (modalName) => {
 			let valid = true;
 			update((old) => {
 				old.forEach((field, i) => {
+					//if some value is required and it is not filled in, set error to true and show it to the user
 					if (field.required && !field.value) {
 						field.error = true;
 						valid = false;
@@ -108,6 +125,7 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 						});
 					}
 					if (field.constraints && field.value) {
+						//if some constraints are violated, set error to true and show it to the user
 						let localValid = checkForConstraints(field, () => {
 							document.querySelector(`#modal-${modalName} [data-field-id="${i}"] input`).focus();
 						});
@@ -121,20 +139,21 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 			});
 			return valid;
 		},
+		//function to send the data to server
 		post: (path, successMessage) => {
 			return new Promise((resolve, reject) => {
+				//create json object to send to server in post request body
 				let postJson = createReqJson(formStructure);
-
 				back
 					.post(path, postJson)
 					.then(() => {
-						//Notif template
-						//let successMessage = {title: ``, desc: ``}
+						//notify user that the data was sent successfully
 						addNotif('success', successMessage.title, successMessage.desc);
 						resetValues();
 						resolve();
 					})
 					.catch((err) => {
+						console.log(err)
 						addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
 						reject();
 					});
@@ -142,25 +161,25 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 		},
 		createReqJson,
 		resetValues,
+		//similar to above post function, but it is used to update data on server
 		put: (path, updateId, successMessage) => {
 			return new Promise((resolve, reject) => {
 				let updateJson = createReqJson(formStructure);
-
 				back
 					.put(`${path}${updateId}`, updateJson)
 					.then(() => {
-						//Notif template
-						//let successMessage = {title: ``, desc: ``}
 						addNotif('success', successMessage.title, successMessage.desc);
 						resolve();
 					})
 					.catch((err) => {
+						console.log(err)
 						addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
 						reject();
 					});
 			});
 		},
 		resetFromGet,
+		//makes a request to the server to delete some data
 		delete: (path, deleteId, successMessage) => {
 			return new Promise((resolve, reject) => {
 				let updateJson = createReqJson(formStructure);
@@ -174,6 +193,7 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 						resolve();
 					})
 					.catch((err) => {
+						console.log(err)
 						addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
 						reject();
 					});

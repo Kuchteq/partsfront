@@ -60,6 +60,7 @@
 </UniModal>
 
 <style>
+  /* setting this particular modal theme */
   :global(.uniModal.addModal) {
     --themeGradient: var(--graBlue);
     --themeColor: var(--mBlue);
