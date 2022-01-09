@@ -1,9 +1,8 @@
-import { formatPhone } from '../formatHelpers';
 
 let problemsLabels = [
 	{
 		id: 0,
-		name: 'Problem id',
+		name: _ => _('problems.id'),
 		queryName: 'problem_id',
 		shown: true,
 		widthClass: 'w3',
@@ -11,28 +10,28 @@ let problemsLabels = [
 	},
 	{
 		id: 1,
-		name: 'Nazwa komputera',
+		name: _ => _('problems.computer_name'),
 		queryName: 'computer_name',
 		shown: true,
 		widthClass: 'w7'
 	},
 	{
 		id: 2,
-		name: 'komp id',
+		name: _ => _('problems.computer_id'),
 		queryName: 'computer_Id',
 		shown: false,
 		widthClass: 'w3'
 	},
 	{
 		id: 3,
-		name: 'Opis problemu',
+		name: _ => _('problems.problem_desc'),
 		queryName: 'problem_note',
 		shown: true,
 		widthClass: 'w20'
 	},
 	{
 		id: 4,
-		name: 'Data oddania',
+		name: _ => _('problems.return_date'),
 		queryName: 'hand_in_date',
 		shown: true,
 		widthClass: 'w3'
@@ -40,21 +39,21 @@ let problemsLabels = [
 
 	{
 		id: 6,
-		name: 'Deadline',
+		name: _ => _('problems.deadline'),
 		queryName: 'deadline_date',
 		shown: true,
 		widthClass: 'w5'
 	},
 	{
 		id: 7,
-		name: 'Klient',
+		name: _ => _('problems.client'),
 		queryName: 'client_name',
 		shown: false,
 		widthClass: 'w7'
 	},
 	{
 		id: 7,
-		name: 'Finished',
+		name: _ => _('problems.status'),
 		queryName: 'finished',
 		determining: true //should be grayed out if true
 	}

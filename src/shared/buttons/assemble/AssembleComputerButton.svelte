@@ -1,19 +1,22 @@
 <script>
-	import { openModal } from '$functions/modalManager';
+  import { openModal } from "$functions/modalManager";
 
-	export let larger = false;
+  import { _ } from "/config/i18n.js";
+  export let larger = false;
 </script>
 
 <button
-	on:click={() => openModal('assemble')}
-	class={larger ? 'uniLongButton' : 'uniModalOpenButton'}>Złóż komputer</button
+  on:click={() => openModal("assemble")}
+  class={larger ? "uniLongButton" : "uniModalOpenButton"}
 >
+  {$_("modals_btns.assemble_computer")}
+</button>
 
 <style lang="scss">
-	button {
-		background: var(--graPurple);
-		&::before {
-			background-image: url('/icons/Computer.svg');
-		}
-	}
+  button {
+    background: var(--graPurple);
+    &::before {
+      background-image: url("/icons/Computer.svg");
+    }
+  }
 </style>

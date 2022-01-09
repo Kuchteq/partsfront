@@ -3,6 +3,8 @@
   export let labels;
   export let sortHandler;
   export let sortQuery;
+  console.log(sortHandler);
+  import { _ } from "/config/i18n.js";
 </script>
 
 <header>
@@ -15,7 +17,7 @@
       }}
       class={`${label.widthClass} ${
         $sortQuery && $sortQuery.by === label.queryName ? $sortQuery.dir : ""
-      } ${label.shown ? "" : "hiddenDisplay"}`}>{label.name}</button
+      } ${label.shown ? "" : "hiddenDisplay"}`}>{label.name($_)}</button
     >
   {/each}
 </header>

@@ -7,6 +7,7 @@
   import modalsState, { closeModal } from "$functions/modalManager";
   import WarningPopup from "$shared/warningPopup/WarningPopup.svelte";
   import { writable } from "svelte/store";
+  import { _ } from "/config/i18n.js";
 
   let modalName = "suppliersUpdate";
   let formRef;
@@ -16,8 +17,10 @@
   let actionButton = {
     do: () => {
       let successMessage = {
-        title: `Sukces!`,
-        desc: `${$client[0].value} została zaktualizowana`
+        title: $_("popup_msg.success"),
+        desc: $_("popup_msg.general_modified_desc", {
+          values: { name: $client[0].value }
+        })
       };
       //pass name to
       let valid = client.checkValidity(modalName);
@@ -26,20 +29,24 @@
         client.put("/suppliers/", id, successMessage).then(() => refetch());
       }
     },
-    text: "Aktualizuj",
+    text: $_("modal_action_btns.update"),
     icon: "/icons/Update.svg"
   };
 
   let isWarningPopupOpen = writable(false);
 
-  let deleteAction = () => {
-    isWarningPopupOpen.set(true);
+  let deleteButton = {
+    do: () => {
+      isWarningPopupOpen.set(true);
+    }
   };
 
   let onDeleteConfirm = () => {
     let successMessage = {
-      title: `Sukces!`,
-      desc: `Dostawca ${$client[0].value} został usunięty`
+      title: $_("popup_msg.success"),
+      desc: $_("popup_msg.general_removed_desc", {
+        values: { name: $client[0].value }
+      })
     };
 
     client.delete("/suppliers/", id, successMessage).then(() => {
@@ -58,9 +65,11 @@
   {modalName}
   theme="suppliersUpdate"
   {actionButton}
-  {deleteAction}
+  {deleteButton}
   {resetAction}
-  tabName="Przejrzyj/aktualizuj dostawcę {$client[0].value} o id {id}"
+  tabName={$_("modal_tabs.modify_supplier", {
+    values: { name: $client[0].value, id: id }
+  })}
 >
   <form bind:this={formRef}>
     {#each $client as field, id}
@@ -73,7 +82,7 @@
         required={field.required}
         initValue={field.value}
         multiplier={field.quantity && $client[2].value}
-        multiText={"Wartość"}
+        multiText={$_("misc.value")}
         fetchString={field.fetchString && field.fetchString}
         themeColor={field.themeColor && field.themeColor}
         addHandlerModal={field.addHandlerModal && field.addHandlerModal}
@@ -83,8 +92,8 @@
     {/each}
   </form>
   <WarningPopup
-    header="Uwaga!"
-    desc="Nie zalecamy usuwać danych. Z powiązanych części zostaną usunięte nazwy dostawcy oraz wykonywane raporty mogą nie uwzględniać wkładu danego dostawcy."
+    header={$_("warning_msg.title")}
+    desc={$_("warning_msg.supplier_removal_msg")}
     isOpen={isWarningPopupOpen}
     onConfirm={onDeleteConfirm}
   />

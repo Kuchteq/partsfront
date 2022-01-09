@@ -36,7 +36,11 @@
           : ''} 
 			{highlighted == i ? 'highlighted' : ''}"
       >
-        {!column ? "" : labels[i].format ? labels[i].format(column) : column}
+        {!column && column !== 0
+          ? ""
+          : labels[i].format
+          ? labels[i].format(column)
+          : column}
       </li>
     {/each}
   </button>

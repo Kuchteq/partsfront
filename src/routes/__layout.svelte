@@ -5,7 +5,16 @@
   //Modules imported in this component are anchored on every page
   import PopupPanel from "$shared/statusPopup/PopupPanel.svelte";
   import ModalManager from "$shared/modals/ModalManager.svelte";
+  import { onMount } from "svelte";
+  import { setupI18n } from "/config/i18n.js";
 
+  setupI18n({ withLocale: "en" });
+
+  onMount(() => {
+    if (window.localStorage.getItem("lang")) {
+      setupI18n({ withLocale: window.localStorage.getItem("lang") });
+    }
+  });
   /* CSS styles imported here are global, these classes are available everywhere throughout the app,
   	unlike the ones in the components which are local - only available in the specific component */
   import "../styles/reset.scss";

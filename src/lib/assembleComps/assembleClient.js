@@ -2,6 +2,7 @@ import computerForm from './computerPartsForm';
 import { writable, get } from 'svelte/store';
 import back from '$axios';
 import clone from 'just-clone';
+import { _ } from "/config/i18n.js";
 
 const initialForm = clone(computerForm);
 const mainParts = writable(computerForm);
@@ -10,8 +11,7 @@ const miscParts = writable([]);
 import { segmentsLabels } from '/config/segmentsMap';
 import { addNotif } from '$functions/PopupClient';
 
-const SERVER_ERROR_STRING =
-	'Serwer nie mógł przetworzyć tej operacji, możliwy błąd w uzupełnionych danych';
+const formatGet = (string, values) => string.replace(/{(.*?)}/g, (match, offset) => values[offset]);
 
 const adjustToForm = (arr) => {
 	return arr.map((elem) => {
@@ -75,7 +75,7 @@ const fillFromInitial = (updateId) => {
 		})
 		.catch((err) => {
 			console.log(err);
-			addNotif('error', 'Problem z pobieraniem po stronie serwera', SERVER_ERROR_STRING);
+			addNotif('error', get(_)('server_error_title'), get(_)('server_error_desc'));
 		});
 };
 
@@ -189,13 +189,13 @@ const makeComputer = (basicInfo) => {
 			.then(() => {
 				addNotif(
 					'success',
-					'Pomyślnie dodano komputer',
-					`Komputer o nazwie ${basicInfo.computer_name} został dodany!`
+					get(_)('popup_msg.set_added_title'),
+					formatGet((get(_)('popup_msg.set_added_msg')), { name: basicInfo.computer_name })
 				);
 				resolve();
 			})
 			.catch(() => {
-				addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
+				addNotif('error', get(_)('server_error_title'), get(_)('server_error_desc'));
 				reject();
 			});
 	});
@@ -222,13 +222,13 @@ const updateComputer = (basicInfo, computer_id) => {
 			.then(() => {
 				addNotif(
 					'success',
-					'Pomyślnie zmodyfikowano komputer',
-					`Komputer o nazwie ${basicInfo.computer_name} został zmodyfikowany!`
+					get(_)('popup_msg.set_modified_title'),
+					formatGet((get(_)('popup_msg.set_modified_msg')), { name: basicInfo.computer_name })
 				);
 				resolve();
 			})
 			.catch(() => {
-				addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
+				addNotif('error', get(_)('server_error_title'), get(_)('server_error_desc'));
 				reject();
 			});
 	});
@@ -246,8 +246,8 @@ const validateComputer = () => {
 		if (!miParts[i].value) {
 			addNotif(
 				'error',
-				'Inne części bez wartości',
-				'Pole na inne części jest dodane lecz jego wartość jest pusta, proszę usunąć puste pola lub wybrać cześć.'
+				get(_)('computer_modal.empty_misc_field_title'),
+				get(_)('computer_modal.empty_misc_field_msg')
 			);
 			return 1;
 		}
@@ -255,8 +255,8 @@ const validateComputer = () => {
 	if ([].concat(get(mainParts), get(miscParts)).filter((val) => val.value).length < 1) {
 		addNotif(
 			'error',
-			'Brak cześci',
-			'Komputer nie posiada części, aby stworzyć komputer, należy dodać do niego przynajmniej jedną część.'
+			get(_)('computer_modal.no_parts_title'),
+			get(_)('computer_modal.no_parts_desc')
 		);
 		return 2;
 	}

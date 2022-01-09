@@ -7,14 +7,14 @@ import EmailField from '$shared/fields/EmailField.svelte';
 import PhoneField from '$shared/fields/PhoneField.svelte';
 let inventoryForm = [
 	{
-		label: 'Nazwa',
+		label: _ => _('suppliers.name'),
 		queryName: 'supplier_name',
 		component: StringField,
 		value: '',
 		required: true
 	},
 	{
-		label: 'Telefon',
+		label: _ => _('suppliers.phone'),
 		queryName: 'phone',
 		component: PhoneField,
 		type: 'phone',
@@ -37,28 +37,28 @@ let inventoryForm = [
 		required: false
 	},
 	{
-		label: 'Email',
+		label: _ => _('suppliers.email'),
 		queryName: 'email',
 		component: EmailField,
 		value: '',
 		required: false
 	},
 	{
-		label: 'Strona Internetowa',
+		label: _ => _('suppliers.web_full'),
 		queryName: 'website',
 		component: StringField,
 		value: '',
 		required: false
 	},
 	{
-		label: 'Adres',
+		label: _ => _('suppliers.address'),
 		queryName: 'adress',
 		component: StringField,
 		value: '',
 		required: false
 	},
 	{
-		label: 'NIP',
+		label: _ => _('suppliers.nip'),
 		queryName: 'nip',
 		component: IntegerField,
 		value: '',
@@ -72,7 +72,7 @@ let inventoryForm = [
 		]
 	},
 	{
-		label: 'Notatka',
+		label: _ => _('suppliers.note'),
 		queryName: 'short_note',
 		component: StringField,
 		value: '',
@@ -80,7 +80,7 @@ let inventoryForm = [
 	},
 
 	{
-		label: 'Dołączono',
+		label: _ => _('suppliers.joined_at'),
 		queryName: 'join_date',
 		component: DatetimeField,
 		value: getCurrentTime(),

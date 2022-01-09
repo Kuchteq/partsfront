@@ -1,36 +1,40 @@
 <script>
   import UniModal from "$shared//modals/uniModal/UniModal.svelte";
-  import problemsForm from "/config/forms/problemsForm.js";
-  import createPostClient from "$functions/postClient";
-  import { formatDateOnly } from "/config/formatHelpers.js";
   import { addNotif } from "$functions/PopupClient";
-  import { goto } from "$app/navigation";
+  import modalsState from "$functions/modalManager";
+  import { _ } from "/config/i18n.js";
   let modalName = "createRaports";
-  let formRef;
 
-  let dateFrom = "";
+  let dateFrom = $modalsState.createRaports.from
+    ? $modalsState.createRaports.from
+    : "";
+  let dateTo = $modalsState.createRaports.to
+    ? $modalsState.createRaports.to
+    : today;
 
-  let dateTo = "";
+  const today = new Date().toISOString().substring(0, 10);
   let actionButton = {
     do: () => {
       let successMessage = {
-        title: `Sukces!`,
-        desc: `Raport od ${dateFrom} do ${dateTo} został wygenerowany.`
+        title: $_("popup_msg.success"),
+        desc: $_("viewraport.raport_generated", {
+          values: { from: dateFrom, to: dateTo }
+        })
       };
       if (dateFrom && dateTo && dateTo <= dateFrom) {
-        addNotif("error", "Data końcowa musi być większa od początkowej");
+        addNotif("error", $_("viewraport.end_date_error"));
         return;
       } else if (!dateFrom || !dateTo) {
-        addNotif("error", "Wypełnij wszystkie pola");
+        addNotif("error", $_("viewraport.fill_every"));
         return;
       } else {
         window.location.href = `/viewraport/${dateFrom}t${dateTo}`;
-        addNotif("success", successMessage);
+        addNotif("success", successMessage.title, successMessage.desc);
       }
 
       //pass name to
     },
-    text: "Wygeneruj",
+    text: $_("modal_action_btns.generate"),
     icon: "/icons/AddCircle.svg"
   };
 
@@ -44,17 +48,25 @@
   theme="createRaports"
   {actionButton}
   {resetAction}
-  tabName="Stwórz raport"
+  tabName={$_("modal_tabs.make_report")}
 >
   <h2>
-    Okres raportu:
+    {$_("viewraport.period")}
     <h2>
       <div class="spanButtons">
         <label for="od"
-          ><span>Od:</span><input bind:value={dateFrom} name="od" type="date" />
+          ><span>{$_("misc.from")}</span><input
+            bind:value={dateFrom}
+            name="od"
+            type="date"
+          />
         </label>
         <label for="do"
-          ><span>Do:</span><input bind:value={dateTo} name="do" type="date" />
+          ><span>{$_("misc.to")}</span><input
+            bind:value={dateTo}
+            name="do"
+            type="date"
+          />
         </label>
       </div>
     </h2>

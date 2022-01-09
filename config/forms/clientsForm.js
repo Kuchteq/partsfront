@@ -1,20 +1,21 @@
 import DatetimeField from '$shared/fields/DatetimeField.svelte';
 import IntegerField from '$shared/fields/IntegerField.svelte';
 import StringField from '$shared/fields/StringField.svelte';
-
 import { getCurrentTime, checkLength } from '../formatHelpers.js';
 import EmailField from '$shared/fields/EmailField.svelte';
 import PhoneField from '$shared/fields/PhoneField.svelte';
+import { get } from 'svelte/store';
+
 let inventoryForm = [
 	{
-		label: 'Nazwa',
+		label: _ => _('clients.name'),
 		queryName: 'client_name',
 		component: StringField,
 		value: '',
 		required: true
 	},
 	{
-		label: 'Telefon',
+		label: _ => _('clients.phone'),
 		queryName: 'phone',
 		component: PhoneField,
 		type: 'phone',
@@ -37,21 +38,21 @@ let inventoryForm = [
 		required: false
 	},
 	{
-		label: 'Email',
+		label: _ => _('clients.email'),
 		queryName: 'email',
 		component: EmailField,
 		value: '',
 		required: false
 	},
 	{
-		label: 'Adres',
+		label: _ => _('clients.address'),
 		queryName: 'adress',
 		component: StringField,
 		value: '',
 		required: false
 	},
 	{
-		label: 'NIP',
+		label: _ => _('clients.nip'),
 		queryName: 'nip',
 		component: IntegerField,
 		value: '',
@@ -65,7 +66,7 @@ let inventoryForm = [
 		]
 	},
 	{
-		label: 'Notatka',
+		label: _ => _('clients.note'),
 		queryName: 'short_note',
 		component: StringField,
 		value: '',
@@ -73,7 +74,7 @@ let inventoryForm = [
 	},
 
 	{
-		label: 'Dołączono',
+		label: _ => _('clients.joined_at'),
 		queryName: 'join_date',
 		component: DatetimeField,
 		value: getCurrentTime(),

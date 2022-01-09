@@ -4,6 +4,7 @@
   import inventoryForm from "/config/forms/inventoryForm.js";
   import createPostClient from "$functions/postClient";
   import { refetch } from "$functions/triggerRefetch";
+  import { _ } from "/config/i18n.js";
 
   //set the modal settings
   let modalName = "add";
@@ -11,15 +12,17 @@
   let actionButton = {
     do: () => {
       let successMessage = {
-        title: `Sukces!`,
-        desc: `${$client[1].value} została dodana`
+        title: $_("popup_msg.success"),
+        desc: $_("popup_msg.part_added_msg", {
+          values: { name: $client[1].value }
+        })
       };
       let valid = client.checkValidity(modalName);
       if (valid) {
         client.post("/inventory", successMessage).then(() => refetch());
       }
     },
-    text: "Dodaj",
+    text: $_("modal_action_btns.add"),
     icon: "/icons/AddCircle.svg"
   };
 
@@ -34,7 +37,7 @@
   theme="addModal"
   {actionButton}
   {resetAction}
-  tabName="Dodaj inwentarz"
+  tabName={$_("modal_tabs.add_part")}
 >
   <form>
     <!-- For each form input to be filled in, create the appropriate field type component -->
@@ -48,7 +51,7 @@
         required={field.required}
         initValue={field.value}
         multiplier={field.quantity && $client[2].value}
-        multiText={"Wartość"}
+        multiText={$_("misc.value")}
         fetchString={field.fetchString && field.fetchString}
         themeColor={field.themeColor && field.themeColor}
         addHandlerModal={field.addHandlerModal && field.addHandlerModal}

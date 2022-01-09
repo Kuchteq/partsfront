@@ -1,9 +1,8 @@
 import { writable } from 'svelte/store';
 import { addNotif } from '$functions/PopupClient';
 import back from '$axios';
-
-const SERVER_ERROR_STRING =
-	'Serwer nie mógł przetworzyć tej operacji, możliwy błąd w uzupełnionych danych';
+import { get } from 'svelte/store';
+import { _ } from '/config/i18n.js';
 
 const checkForConstraints = (field) => {
 	//function to check whether some constraints are violated
@@ -13,7 +12,7 @@ const checkForConstraints = (field) => {
 		if (target && !con.checker(target, ...con.args)) {
 			field.error = true;
 
-			addNotif('error', `Pole ${field.label} nie spełnia wymagań`, con.errorDesc, errFunc);
+			addNotif('error', `Pole ${field.label(get(_))} nie spełnia wymagań`, con.errorDesc, errFunc);
 			valid = false;
 		}
 	});
@@ -30,7 +29,10 @@ const createReqJson = (formStructure) => {
 			json[queryName] = value.number ? value.countryCode + value.number.replace(/\s/g, '') : null;
 		} else if (queryName.endsWith('_obj') && value) {
 			json[queryName.replace('_obj', '_id')] = value.value ? value.value : null;
-		} else {
+		} else if (value === false) {
+			json[queryName] = false;
+		}
+		else {
 			json[queryName] = value ? value : null;
 		}
 	});
@@ -93,7 +95,11 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 			})
 			.catch((err) => {
 				console.log(err)
-				addNotif('error', 'Problem z pobieraniem po stronie serwera', SERVER_ERROR_STRING);
+				addNotif(
+					'error',
+					get(_)('computer_modal.empty_misc_field_title'),
+					get(_)('computer_modal.empty_misc_field_msg')
+				);
 			});
 	}
 
@@ -120,7 +126,7 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 					if (field.required && !field.value) {
 						field.error = true;
 						valid = false;
-						addNotif('error', 'Niepoprawne dane', `${field.label} nie jest uzupełniony/a`, () => {
+						addNotif('error', 'Niepoprawne dane', `${field.label(get(_))} nie jest uzupełniony/a`, () => {
 							document.querySelector(`#modal-${modalName} [data-field-id="${i}"] input`).focus();
 						});
 					}
@@ -154,7 +160,11 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 					})
 					.catch((err) => {
 						console.log(err)
-						addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
+						addNotif(
+							'error',
+							get(_)('computer_modal.empty_misc_field_title'),
+							get(_)('computer_modal.empty_misc_field_msg')
+						);
 						reject();
 					});
 			});
@@ -173,7 +183,11 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 					})
 					.catch((err) => {
 						console.log(err)
-						addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
+						addNotif(
+							'error',
+							get(_)('computer_modal.empty_misc_field_title'),
+							get(_)('computer_modal.empty_misc_field_msg')
+						);
 						reject();
 					});
 			});
@@ -187,14 +201,16 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 				back
 					.delete(`${path}${deleteId}`, updateJson)
 					.then(() => {
-						//Notif template
-						//let successMessage = {title: ``, desc: ``}
 						addNotif('success', successMessage.title, successMessage.desc);
 						resolve();
 					})
 					.catch((err) => {
 						console.log(err)
-						addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
+						addNotif(
+							'error',
+							get(_)('computer_modal.empty_misc_field_title'),
+							get(_)('computer_modal.empty_misc_field_msg')
+						);
 						reject();
 					});
 			});

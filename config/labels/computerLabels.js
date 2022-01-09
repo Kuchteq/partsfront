@@ -3,7 +3,7 @@ import { formatDateOnly } from '../formatHelpers';
 let computerLabels = [
 	{
 		id: 0,
-		name: 'id',
+		name: _ => _('sets.id'),
 		queryName: 'computer_id',
 		shown: true,
 		widthClass: 'w5',
@@ -11,49 +11,49 @@ let computerLabels = [
 	},
 	{
 		id: 1,
-		name: 'Nazwa komputera',
+		name: _ => _('sets.computer_name'),
 		queryName: 'computer_name',
 		shown: true,
 		widthClass: 'w20'
 	},
 	{
 		id: 2,
-		name: 'Procesor',
+		name: _ => _('sets.processor'),
 		queryName: 'processor_name',
 		shown: true,
 		widthClass: 'w20'
 	},
 	{
 		id: 3,
-		name: 'Płyta główna',
+		name: _ => _('sets.motherboard'),
 		queryName: 'motherboard_name',
 		shown: true,
 		widthClass: 'w20'
 	},
 	{
 		id: 3,
-		name: 'Karta graficzna',
+		name: _ => _('sets.graphics_card'),
 		queryName: 'graphics_card_name',
 		shown: true,
 		widthClass: 'w20'
 	},
 	{
 		id: 4,
-		name: 'Wartość',
+		name: _ => _('sets.value'),
 		queryName: 'computer_value',
 		shown: true,
 		widthClass: 'w5'
 	},
 	{
 		id: 7,
-		name: 'Notatka',
+		name: _ => _('sets.note'),
 		queryName: 'short_note',
 		shown: false,
 		widthClass: 'w20'
 	},
 	{
 		id: 7,
-		name: 'Złożono',
+		name: _ => _('sets.assembled_at'),
 		queryName: 'assembled_at',
 		shown: true,
 		widthClass: 'w7',

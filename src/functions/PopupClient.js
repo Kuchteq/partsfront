@@ -1,4 +1,6 @@
 import { writable } from 'svelte/store';
+import { get } from 'svelte/store';
+import { _ } from "/config/i18n.js";
 
 const pushStack = writable([]);
 
@@ -60,4 +62,10 @@ function killInstantly(id) {
 		return arr;
 	});
 }
-export { addNotif, pushStack, holdLifeTime, resumeKilling, killInstantly };
+
+let serverError = () => {
+	addNotif('error', get(_)('server_error_title'), get(_)('server_error_desc'));
+
+}
+
+export { addNotif, pushStack, holdLifeTime, resumeKilling, killInstantly, serverError };

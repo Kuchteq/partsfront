@@ -1,73 +1,85 @@
 <script>
-	import TableUniversal from '$shared/table/TableUniversal.svelte';
-	import createFetchClient from '$functions/fetchClient.js';
-	import ShowFields from '$shared/showFields/ShowFields.svelte';
-	import SearchField from '$shared/searchField/SearchField.svelte';
-	import { openModal } from '$functions/modalManager';
-	import selectedParts, { setPartSelection, deselectAllParts } from '$functions/selectionManager';
-	import orderLabels from '/config/labels/orderLabels.js';
-	import { createQueryStore } from '$functions/URLSearchParamsStore';
-	export let span;
+  import TableUniversal from "$shared/table/TableUniversal.svelte";
+  import createFetchClient from "$functions/fetchClient.js";
+  import ShowFields from "$shared/showFields/ShowFields.svelte";
+  import SearchField from "$shared/searchField/SearchField.svelte";
+  import { openModal } from "$functions/modalManager";
+  import selectedParts, {
+    setPartSelection,
+    deselectAllParts
+  } from "$functions/selectionManager";
+  import orderLabels from "/config/labels/orderLabels.js";
+  import { createQueryStore } from "$functions/URLSearchParamsStore";
+  export let span;
 
-	const showIcons = ['id', 'segment', 'name', 'stock', 'price', 'note', 'supplier', 'date'];
-	const [sortQuery, sQuery] = [createQueryStore('sort'), createQueryStore('s')];
+  const showIcons = [
+    "id",
+    "segment",
+    "name",
+    "stock",
+    "price",
+    "note",
+    "supplier",
+    "date"
+  ];
+  const [sortQuery, sQuery] = [createQueryStore("sort"), createQueryStore("s")];
 
-	const client = new createFetchClient(
-		orderLabels,
-		`/orders-span/${span.from}/${span.to}`
-	);
+  const client = new createFetchClient(
+    orderLabels,
+    `/orders-span/${span.from}/${span.to}`
+  );
 
-	$: results = client.results;
-	$: labels = client.labels;
-	$: highlightedCell = client.highlighted;
+  $: results = client.results;
+  $: labels = client.labels;
+  $: highlightedCell = client.highlighted;
 
-	let onCellDoubleClick = (val) => {
-		openModal('inventoryUpdate', val);
-	};
-	let onCellSingleClick = (val) => {
-		setPartSelection(val);
-	};
+  let onCellDoubleClick = (val) => {
+    openModal("orderUpdate", val);
+  };
+  let onCellSingleClick = (val) => {
+    setPartSelection(val);
+  };
 </script>
 
 <div class="moduleMainHolder">
-	<div class="innerTools">
-		<ShowFields icons={showIcons} {labels} handleHide={client.handleHide} />
-		<SearchField {sQuery} />
-	</div>
-	<TableUniversal
-		labels={$labels}
-		sortHandler={client.sortBy}
-		results={$results}
-		fetcherFunc={client.fetchInventory}
-		resetFunc={client.resetResults}
-		highlightedCell={$highlightedCell}
-		{sQuery}
-		{sortQuery}
-		{onCellDoubleClick}
-		{onCellSingleClick}
-		selectedCells={selectedParts}
-	/>
+  <div class="innerTools">
+    <ShowFields icons={showIcons} {labels} handleHide={client.handleHide} />
+    <SearchField {sQuery} />
+  </div>
+  <TableUniversal
+    labels={$labels}
+    sortHandler={client.sortBy}
+    results={$results}
+    fetcherFunc={client.fetchInventory}
+    resetFunc={client.resetResults}
+    highlightedCell={$highlightedCell}
+    {sQuery}
+    {sortQuery}
+    {onCellDoubleClick}
+    {onCellSingleClick}
+    selectedCells={selectedParts}
+  />
 </div>
 
 <style lang="scss">
-	.moduleMainHolder {
-		//theme color customization
-		--moduleThemeColor: #edb413;
-		--loaderColor: var(--moduleThemeColor);
-		--moduleThemeLighter: #ffdb77;
-		--moduleThemeGradient: var(--graGold);
-		//optional for table top part
+  .moduleMainHolder {
+    //theme color customization
+    --moduleThemeColor: #edb413;
+    --loaderColor: var(--moduleThemeColor);
+    --moduleThemeLighter: #ffdb77;
+    --moduleThemeGradient: var(--graGold);
+    //optional for table top part
 
-		--topPartBg: #f3c541;
-		--topPartTurnedOff: var(--mGold);
-	}
-	:global(.raports-open-button) {
-		--buttonBg: var(--graGold);
-		--buttonIcon: url('/icons/MakeRaport.svg');
-	}
-	.innerTools {
-		margin-bottom: 25px;
-		width: fit-content;
-		gap: 6px;
-	}
+    --topPartBg: #f3c541;
+    --topPartTurnedOff: var(--mGold);
+  }
+  :global(.raports-open-button) {
+    --buttonBg: var(--graGold);
+    --buttonIcon: url("/icons/MakeRaport.svg");
+  }
+  .innerTools {
+    margin-bottom: 25px;
+    width: fit-content;
+    gap: 6px;
+  }
 </style>

@@ -26,6 +26,7 @@
     "cookie": "^0.4.1",
     "just-clone": "^3.2.1",
     "sass": "^1.38.0",
+    "svelte-i18n": "^3.3.13",
     "svelte-select": "^4.4.0"
   }
 }

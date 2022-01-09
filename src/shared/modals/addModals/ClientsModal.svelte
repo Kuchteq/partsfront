@@ -3,15 +3,19 @@
   import clientsForm from "/config/forms/clientsForm.js";
   import createPostClient from "$functions/postClient";
   import { refetch } from "$functions/triggerRefetch";
+  import { _ } from "/config/i18n.js";
+
   let modalName = "clients";
-  let formRef;
   let client = createPostClient(clientsForm);
+  let formRef;
 
   let actionButton = {
     do: () => {
       let successMessage = {
-        title: `Sukces!`,
-        desc: `${$client[0].value} została dodana`
+        title: $_("popup_msg.success"),
+        desc: $_("popup_msg.general_added_desc", {
+          values: { name: $client[0].value }
+        })
       };
       //pass name to
       let valid = client.checkValidity(modalName);
@@ -19,7 +23,7 @@
         client.post("/clients", successMessage).then(() => refetch());
       }
     },
-    text: "Dodaj",
+    text: $_("modal_action_btns.add"),
     icon: "/icons/AddCircle.svg"
   };
 
@@ -33,7 +37,7 @@
   theme="clientsModal"
   {actionButton}
   {resetAction}
-  tabName="Dodaj klienta"
+  tabName={$_("modal_tabs.add_client")}
 >
   <form bind:this={formRef}>
     {#each $client as field, id}

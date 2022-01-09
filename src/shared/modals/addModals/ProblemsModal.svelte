@@ -3,6 +3,7 @@
   import problemsForm from "/config/forms/problemsForm.js";
   import createPostClient from "$functions/postClient";
   import { refetch } from "$functions/triggerRefetch";
+  import { _ } from "/config/i18n.js";
 
   let modalName = "problems";
   let formRef;
@@ -11,8 +12,10 @@
   let actionButton = {
     do: () => {
       let successMessage = {
-        title: `Sukces!`,
-        desc: `Problem związany z komputerem ${$client[0].value.label} został dodany`
+        title: $_("popup_msg.success"),
+        desc: $_("popup_msg.general_added_title", {
+          values: { name: $client[0].value.label }
+        })
       };
       //pass name to
       let valid = client.checkValidity(modalName);
@@ -20,7 +23,7 @@
         client.post("/problems", successMessage).then(() => refetch());
       }
     },
-    text: "Dodaj",
+    text: $_("modal_action_btns.add"),
     icon: "/icons/AddCircle.svg"
   };
 
@@ -34,7 +37,7 @@
   theme="problemsModal"
   {actionButton}
   {resetAction}
-  tabName="Dodaj problem"
+  tabName={$_("modal_tabs.add_problem")}
 >
   <form bind:this={formRef}>
     {#each $client as field, id}
@@ -46,8 +49,6 @@
         update={client.updateVal}
         required={field.required}
         initValue={field.value}
-        multiplier={field.quantity && $client[2].value}
-        multiText={"Wartość"}
         fetchString={field.fetchString && field.fetchString}
         themeColor={field.themeColor && field.themeColor}
         addHandlerModal={field.addHandlerModal && field.addHandlerModal}

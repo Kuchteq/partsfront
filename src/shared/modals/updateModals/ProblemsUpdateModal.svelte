@@ -7,6 +7,7 @@
   import modalsState, { closeModal } from "$functions/modalManager";
   import { writable } from "svelte/store";
   import WarningPopup from "$shared/warningPopup/WarningPopup.svelte";
+  import { _ } from "/config/i18n.js";
 
   let modalName = "problemsUpdate";
   let formRef;
@@ -16,8 +17,10 @@
   let actionButton = {
     do: () => {
       let successMessage = {
-        title: `Sukces!`,
-        desc: `${$client[1].value} została zaktualizowana`
+        title: $_("popup_msg.success"),
+        desc: $_("popup_msg.part_modified_msg", {
+          values: { name: $client[1].value }
+        })
       };
       //pass name to
       let valid = client.checkValidity(modalName);
@@ -32,16 +35,19 @@
 
   let isWarningPopupOpen = writable(false);
 
-  let deleteAction = () => {
-    isWarningPopupOpen.set(true);
+  let deleteButton = {
+    do: () => {
+      isWarningPopupOpen.set(true);
+    }
   };
 
   let onDeleteConfirm = () => {
     let successMessage = {
-      title: `Sukces!`,
-      desc: `Część ${$client[0].value} została usunięty`
+      title: $_("popup_msg.success"),
+      desc: $_("popup_msg.part_removed_msg", {
+        values: { name: $client[0].value.label }
+      })
     };
-
     client.delete("/problems/", id, successMessage).then(() => {
       refetch();
       closeModal(modalName);
@@ -51,6 +57,7 @@
   let resetAction = () => {
     client.resetFromGet();
   };
+  $: console.log($client);
 </script>
 
 <UniModal
@@ -58,8 +65,10 @@
   theme="problemsModal"
   {actionButton}
   {resetAction}
-  {deleteAction}
-  tabName="Przejrzyj"
+  {deleteButton}
+  tabName={$_("modal_tabs.modify_problem", {
+    values: { name: $client[1].value, id: id }
+  })}
 >
   <form bind:this={formRef}>
     {#each $client as field, id}
@@ -80,8 +89,8 @@
     {/each}
   </form>
   <WarningPopup
-    header="Uwaga!"
-    desc="Nie zalecamy usuwać danych. Z powiązanych części zostaną usunięte nazwy dostawcy oraz wykonywane raporty mogą nie uwzględniać wkładu danego dostawcy."
+    header={$_("warning_msg.title")}
+    desc={$_("warning_msg.problem_removal_msg")}
     isOpen={isWarningPopupOpen}
     onConfirm={onDeleteConfirm}
   />

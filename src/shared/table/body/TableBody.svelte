@@ -4,6 +4,7 @@
   import Loader from "$shared/loader/Loader.svelte";
   import { onDestroy, onMount } from "svelte";
   import refetchStatus from "$functions/triggerRefetch";
+  import { _ } from "/config/i18n.js";
 
   //receive the props
   export let results = [];
@@ -97,9 +98,7 @@
   {:else}
     <div class="noResultsLoadWrap absCenter">
       <h6>
-        {noLabels
-          ? "Wybierz pola widoku aby zobaczyć dane..."
-          : "Pobieram dane..."}
+        {noLabels ? $_("misc.select_fields") : $_("misc.fetching_data")}
       </h6>
       <Loader />
     </div>

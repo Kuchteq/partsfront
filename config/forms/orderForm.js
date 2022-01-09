@@ -5,7 +5,7 @@ import { getCurrentTime } from '../formatHelpers.js';
 
 let orderForm = [
 	{
-		label: 'Tytuł sprzedaży',
+		label: _ => _('orders.order_name'),
 		queryName: 'name',
 		component: StringField,
 		value: '',
@@ -13,7 +13,7 @@ let orderForm = [
 		placeholder: 'Jeżeli pozostawisz puste nazwa wygeneruje się sama'
 	},
 	{
-		label: 'Klient',
+		label: _ => _('orders.client'),
 		queryName: 'client_obj',
 		component: SelectField,
 		fetchString: '/client-list',
@@ -23,7 +23,7 @@ let orderForm = [
 		required: true
 	},
 	{
-		label: 'Data sprzedaży',
+		label: _ => _('orders.date'),
 		queryName: 'sell_date',
 		component: DatetimeField,
 		value: getCurrentTime(),

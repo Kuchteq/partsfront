@@ -15,40 +15,43 @@
   }
 
   const baseIconFolder = "/icons/";
+</script>
 
-  const moduleDirections = [
+<script>
+  import { _ } from "/config/i18n.js";
+  let moduleDirections = [
     {
-      name: "Inwentarz",
+      name: (_) => _("modules.inventory"),
       href: "/inventory",
       icon: "InventoryModuleIcon.svg"
     },
     {
-      name: "Raporty",
+      name: (_) => _("modules.orders"),
       href: "/raports",
       icon: "RaportsModuleIcon.svg"
     },
     {
-      name: "Zestawy",
+      name: (_) => _("modules.sets"),
       href: "/computers",
       icon: "ComputersModuleIcon.svg"
     },
     {
-      name: "Klienci",
+      name: (_) => _("modules.clients"),
       href: "/clients",
       icon: "ClientsModuleIcon.svg"
     },
     {
-      name: "Dostawcy",
+      name: (_) => _("modules.suppliers"),
       href: "/suppliers",
       icon: "SuppliersModuleIcon.svg"
     },
     {
-      name: "Problemy",
+      name: (_) => _("modules.problems"),
       href: "/problems",
       icon: "ProblemsModuleIcon.svg"
     },
     {
-      name: "Historia",
+      name: (_) => _("modules.history"),
       href: "/history",
       icon: "HistoryModuleIcon.svg"
     }
@@ -60,16 +63,15 @@
 </svelte:head>
 
 <section>
-  <TabName text="Witaj w PartsKeeperze" />
-
-  <h4>Szybkie akcje</h4>
+  <TabName text={$_("misc.welcome_message")} />
+  <h4>{$_("misc.fast_actions")}</h4>
   <div class="fastActionsHolder">
     <AddInventoryButton larger />
     <SellInventoryButton larger />
     <AssembleComputerButton larger />
   </div>
   <MasterSearchField />
-  <h3>Moduły</h3>
+  <h3>{$_("misc.modules_text")}</h3>
   <div class="toModules">
     {#each moduleDirections as direction}
       <UniModuleLink

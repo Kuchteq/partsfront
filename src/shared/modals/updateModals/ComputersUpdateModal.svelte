@@ -20,51 +20,66 @@
   import { deselectAllParts } from "$functions/selectionManager";
   import { addNotif } from "$functions/PopupClient";
   import clone from "just-clone";
+  import back from "$axios";
+  import { _ } from "/config/i18n.js";
 
   let id = $modalsState.computersUpdate;
   let modalName = "computersUpdate";
-  let formRef;
   let client = createPostClient(
     clone(computerInfoForm),
     "/computers/",
     $modalsState.computersUpdate
   );
   let isWarningPopupOpen = writable(false);
-  let initialData;
 
+  let warningText = $_("computer_modal.missing_parts_desc");
   let actionButton = {
     do: () => {
-      let successMessage = {
-        title: `Sukces!`,
-        desc: `${$client[1].value} została dodana`
-      };
-
       let problem = validateComputer();
       if (problem == 0) {
         createConfirm();
       } else if (problem == 3) {
-        isWarningPopupOpen.set(true);
+        warningText = $_("computer_modal.missing_parts_desc");
+        isWarningPopupOpen.set(1);
       }
-      //pass name to
-      // let valid = client.checkValidity(modalName);
-      // if (valid) {
-      // 	client.post('/computers', successMessage).then(() => refetch());
-      // }
     },
     text: "Przemontuj",
     icon: "/icons/Update.svg"
   };
 
   const createConfirm = () => {
-    updateComputer(client.createReqJson($client), id)
-      .then(() => {
-        closeModal("assemble");
+    if ($isWarningPopupOpen == 2) {
+      back.delete(`/computers/${id}`).then(() => {
+        closeModal("computersUpdate");
         deselectAllParts();
         refetch();
-      })
-      .catch((err) => console.log(err));
+        addNotif(
+          "success",
+          $_("popup_msg.set_disassembled_title"),
+          $_("popup_msg.set_disassembled_msg", {
+            values: { name: $client[0].value }
+          })
+        );
+      });
+    } else {
+      updateComputer(client.createReqJson($client), id)
+        .then(() => {
+          closeModal("assemble");
+          deselectAllParts();
+          refetch();
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
+  let deleteButton = {
+    do: () => {
+      warningText = $_("computer_modal.disassemble_msg");
+      isWarningPopupOpen.set(2);
+    },
+    icon: "/icons/Disassemble.svg",
+    color: "#a40000"
+  };
   let resetAction = () => {
     client.resetFromGet();
     fillFromInitial(id);
@@ -79,7 +94,10 @@
   theme="assembleModal"
   {actionButton}
   {resetAction}
-  tabName="Przeglądaj/zmodyfikuj komputer {$client[0].value} o id {id}"
+  {deleteButton}
+  tabName={$_("modal_tabs.modify_set", {
+    values: { name: $client[1].value, id: id }
+  })}
 >
   <form class="computerInfoTop">
     {#each $client as field, id}
@@ -100,27 +118,28 @@
     {/each}
   </form>
   <form>
-    <h1>Główne części</h1>
-    {#each $mainParts as data, id}
+    <h1>{$_("computer_modal.main_parts_title")}</h1>
+
+    {#each $mainParts as _, id}
       <PartField data={mainParts} {id} />
     {/each}
   </form>
 
   <form class="otherPartsWrap">
-    <h1>Inne części</h1>
+    <h1>{$_("computer_modal.misc_parts_title")}</h1>
 
     {#if $miscParts.length > 0}
-      {#each $miscParts as data, id}
+      {#each $miscParts as _, id}
         <MiscPartField data={miscParts} {id} />
       {/each}
     {/if}
     <button class="anotherPart" type="button" on:click={() => addPart()}
-      >+ Dodaj kolejną część
+      >{$_("computer_modal.add_misc_part")}
     </button>
   </form>
   <WarningPopup
-    header="Uwaga!"
-    desc="Zamierzasz stworzyć komputer bez części wymaganych do poprawnego działania. Jeżeli nie miałeś tego na myśli, proszę kliknąć nie oraz uzupełnić wymagane podsespoły, jeżeli chcesz złożyć taki komputer, kliknij tak."
+    header={$_("warning_msg.title")}
+    desc={warningText}
     isOpen={isWarningPopupOpen}
     onConfirm={createConfirm}
   />

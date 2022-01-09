@@ -3,43 +3,75 @@
   import orderForm from "/config/forms/orderForm.js";
   import createPostClient from "$functions/postClient";
   import { refetch } from "$functions/triggerRefetch";
-  import selectedParts from "$functions/selectionManager";
+  import selectedParts, {
+    setPartSelection,
+    deselectAllParts
+  } from "$functions/selectionManager";
   import back from "$axios";
-  import { addNotif } from "$functions/PopupClient";
-  import selectedComputers from "$functions/cSelectionManager";
+  import { addNotif, serverError } from "$functions/PopupClient";
+  import selectedComputers, {
+    deselectAllComputers,
+    setComputerSelection
+  } from "$functions/cSelectionManager";
   import createPartSeller from "$functions/sellPartsClient.js";
   import createComputerSeller from "$functions/sellComputersClient.js";
   import { writable } from "svelte/store";
-  import { closeModal } from "$functions/modalManager";
+  import modalsState, { closeModal } from "$functions/modalManager";
   import SellPartChunk from "$lib/sellComps/SellPartChunk.svelte";
   import SellComputerChunk from "$lib/sellComps/SellComputerChunk.svelte";
   import MoreAddButton from "$lib/sellComps/MoreAddButton.svelte";
+  import clone from "just-clone";
+  import { onDestroy } from "svelte";
   import { _ } from "/config/i18n.js";
+  import WarningPopup from "$shared/warningPopup/WarningPopup.svelte";
 
-  let modalName = "sell";
+  let modalName = "orderUpdate";
   let formRef;
-  let client = createPostClient(orderForm);
+
+  let order_id = $modalsState.orderUpdate;
+  let client = createPostClient(clone(orderForm), "/orders-basic/", order_id);
   let seller = createPartSeller();
   let coSeller = createComputerSeller();
   let waitingState = writable(false);
 
+  let isWarningPopupOpen = writable(false);
+
+  let deleteButton = {
+    do: () => {
+      isWarningPopupOpen.set(true);
+    }
+  };
+
+  let onDeleteConfirm = () => {
+    let successMessage = {
+      title: $_("popup_msg.success"),
+      desc: $_("popup_msg.general_removed_desc", {
+        values: { name: $client[0].value.label }
+      })
+    };
+
+    client.delete("/orders/", order_id, successMessage).then(() => {
+      refetch();
+      closeModal(modalName);
+    });
+  };
   let actionButton = {
     do: () => {
       let successMessage = {
         title: $_("popup_msg.success"),
-        desc: $_("popup_msg.order_added_msg", {
+        desc: $_("popup_msg.order_modified_msg", {
           values: { name: $client[0].value }
         })
       };
 
-      //pass name to
       let valid = client.checkValidity(modalName);
       valid = seller.checkValidity();
       valid = coSeller.checkValidity();
       console.log(valid);
       if (valid) {
         seller
-          .sell(
+          .modify(
+            order_id,
             client.createReqJson($client),
             $client[1].value.label,
             $seller,
@@ -47,17 +79,35 @@
             successMessage
           )
           .then(() => {
-            client.resetValues();
-            seller.resetValues();
-            coSeller.resetValues();
             refetch();
-            closeModal(modalName);
           });
       }
     },
-    text: $_("sell_modal.sell_btn"),
-    icon: "/icons/SellCircle.svg"
+    text: $_("modal_action_btns.modify"),
+    icon: "/icons/Update.svg"
   };
+
+  deselectAllParts();
+  deselectAllComputers();
+  back
+    .get(`/orders-chunks/${order_id}`)
+    .then((res) => {
+      res.data.partsInfo.forEach((elem, i) => {
+        setPartSelection(elem.part_id);
+        seller.synchronize($selectedParts);
+        seller.updateVal(i, elem.sold_at, "sell_price");
+        seller.updateVal(i, elem.quantity, "quantity");
+      });
+      res.data.compsInfo.forEach((elem, i) => {
+        setComputerSelection(elem.computer_id);
+        coSeller.synchronize($selectedComputers);
+        coSeller.updateVal(i, elem.sold_at, "sell_price");
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      serverError();
+    });
 
   let resetAction = () => {
     client.resetValues();
@@ -74,21 +124,28 @@
         })
         .catch((err) => {
           console.log(err);
-          addNotif("error", $_("server_error_title"), $_("server_error_desc"));
+          serverError();
         });
     });
   }
 
   $: coSeller.synchronize($selectedComputers);
+  onDestroy(() => {
+    deselectAllComputers();
+    deselectAllParts();
+  });
 </script>
 
 <div class={$waitingState ? "awaitForNewParts" : ""}>
   <UniModal
     {modalName}
-    theme="sellModal"
+    theme="orderUpdate"
     {actionButton}
     {resetAction}
-    tabName={$_("modal_tabs.add_order")}
+    {deleteButton}
+    tabName={$_("modal_tabs.modify_order", {
+      values: { name: $client[0].value, id: order_id }
+    })}
   >
     <form bind:this={formRef}>
       {#each $client as field, id}
@@ -112,7 +169,12 @@
       <h1>{$_("sell_modal.parts_title")}</h1>
       {#if $seller.length > 0}
         {#each $seller as item, id}
-          <SellPartChunk chunkId={id} part={item} sellFunc={seller.updateVal} />
+          <SellPartChunk
+            chunkId={id}
+            part={item}
+            sellFunc={seller.updateVal}
+            isOpen={false}
+          />
         {/each}
       {/if}
       <MoreAddButton
@@ -131,6 +193,7 @@
             chunkId={id}
             sellData={item}
             sellFunc={coSeller.updateVal}
+            isOpen={false}
           />
         {/each}
       {/if}
@@ -142,6 +205,12 @@
         state={waitingState}
       />
     </form>
+    <WarningPopup
+      header={$_("warning_msg.title")}
+      desc={$_("warning_msg.order_removal_msg")}
+      isOpen={isWarningPopupOpen}
+      onConfirm={onDeleteConfirm}
+    />
   </UniModal>
 </div>
 <button
@@ -157,10 +226,9 @@
 </button>
 
 <style lang="scss">
-  :global(.uniModal.sellModal) {
-    --themeGradient: var(--graRed);
-    --themeColor: var(--ff5151);
-    --actionColor: var(--graRed);
+  :global(.uniModal.orderUpdate) {
+    --themeGradient: var(--graGold);
+    --actionColor: var(--graGold);
   }
   .sellPartChunks,
   .sellComputerChunks {

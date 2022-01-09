@@ -1,10 +1,13 @@
 export default function accordion(node, isOpen) {
-	let initialHeight = node.offsetHeight;
 	node.style.height = isOpen ? 'auto' : 0;
 	node.style.overflow = 'hidden';
 	return {
 		update(isOpen) {
-			console.log(initialHeight);
+			let initialHeight = 28;
+			node.childNodes.forEach((child) => {
+				console.log(child.clientHeight)
+				initialHeight += child.clientHeight ? child.clientHeight : 0;
+			})
 			let animation = node.animate(
 				[
 					{
@@ -16,7 +19,7 @@ export default function accordion(node, isOpen) {
 						overflow: 'hidden'
 					}
 				],
-				{ duration: 75, fill: 'both' }
+				{ duration: 60, fill: 'both' }
 			);
 			animation.pause();
 			if (!isOpen) {

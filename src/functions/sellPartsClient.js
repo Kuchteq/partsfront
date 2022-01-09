@@ -77,6 +77,29 @@ function createPartSeller() {
 				});
 		});
 	};
+	const modify = (id, orderInfoJson, clientName, orderPartChunks, orderComputerChunks, successMessage) => {
+		return new Promise((resolve, reject) => {
+			if (!orderInfoJson.name)
+				orderInfoJson.name = `Sprzedaż dla ${clientName} w dniu i godzinie ${orderInfoJson.sell_date} `;
+			orderInfoJson.parts = orderPartChunks;
+			orderInfoJson.computers = orderComputerChunks;
+			console.log(orderInfoJson);
+			back
+				.put(`/orders/${id}`, orderInfoJson)
+				.then(() => {
+					//Notif template
+					//let successMessage = {title: ``, desc: ``}
+					addNotif('success', successMessage.title, successMessage.desc);
+
+					resolve();
+				})
+				.catch((err) => {
+					addNotif('error', 'Problem po stronie serwera', SERVER_ERROR_STRING);
+					reject();
+				});
+		});
+	}
+
 	const checkValidity = () => {
 		let valid = true;
 		update((arr) => {
@@ -97,6 +120,6 @@ function createPartSeller() {
 		return valid;
 	};
 	const resetValues = () => set([]);
-	return { synchronize, addInfo, subscribe, updateVal, sell, checkValidity, resetValues };
+	return { synchronize, addInfo, subscribe, updateVal, sell, checkValidity, resetValues, modify };
 }
 export default createPartSeller;

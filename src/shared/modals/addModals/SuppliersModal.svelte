@@ -3,6 +3,8 @@
   import suppliersForm from "/config/forms/suppliersForm.js";
   import createPostClient from "$functions/postClient";
   import { refetch } from "$functions/triggerRefetch";
+  import { _ } from "/config/i18n.js";
+
   let modalName = "suppliers";
   let formRef;
   let client = createPostClient(suppliersForm);
@@ -10,8 +12,10 @@
   let actionButton = {
     do: () => {
       let successMessage = {
-        title: `Sukces!`,
-        desc: `${$client[0].value} został dodany`
+        title: $_("popup_msg.success"),
+        desc: $_("popup_msg.general_added_desc", {
+          values: { name: $client[0].value }
+        })
       };
       //pass name to
       let valid = client.checkValidity(modalName);
@@ -19,7 +23,7 @@
         client.post("/suppliers", successMessage).then(() => refetch());
       }
     },
-    text: "Dodaj",
+    text: $_("modal_action_btns.add"),
     icon: "/icons/AddCircle.svg"
   };
 
@@ -33,7 +37,7 @@
   theme="suppliersModal"
   {actionButton}
   {resetAction}
-  tabName="Dodaj dostawcę"
+  tabName={$_("modal_tabs.add_supplier")}
 >
   <form bind:this={formRef}>
     {#each $client as field, id}

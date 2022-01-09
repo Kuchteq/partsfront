@@ -14,6 +14,7 @@
   import ClientsUpdateModal from "./updateModals/ClientsUpdateModal.svelte";
   import ComputersUpdateModal from "./updateModals/ComputersUpdateModal.svelte";
   import ProblemsUpdateModal from "./updateModals/ProblemsUpdateModal.svelte";
+  import OrderUpdateModal from "./updateModals/OrderUpdateModal.svelte";
 </script>
 
 {#if $modalsState.add}
@@ -61,4 +62,8 @@
 
 {#if $modalsState.problemsUpdate}
   <ProblemsUpdateModal />
+{/if}
+
+{#if $modalsState.orderUpdate}
+  <OrderUpdateModal />
 {/if}

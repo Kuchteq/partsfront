@@ -4,7 +4,7 @@ import { getCurrentTime } from '../formatHelpers.js';
 
 let orderForm = [
 	{
-		label: 'Nazwa komputera',
+		label: _ => _('computer_modal.computer_name'),
 		queryName: 'computer_name',
 		component: StringField,
 		value: '',
@@ -13,7 +13,7 @@ let orderForm = [
 	},
 
 	{
-		label: 'Złożono',
+		label: _ => _('computer_modal.assembled_at'),
 		queryName: 'assembled_at',
 		component: DatetimeField,
 		value: getCurrentTime(),
@@ -21,7 +21,7 @@ let orderForm = [
 		required: true
 	},
 	{
-		label: 'Krótka notka',
+		label: _ => _('computer_modal.note'),
 		queryName: 'short_note',
 		component: StringField,
 		value: '',

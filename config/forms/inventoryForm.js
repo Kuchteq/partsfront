@@ -6,7 +6,7 @@ import StringField from '$shared/fields/StringField.svelte';
 import { getCurrentTime } from '../formatHelpers.js';
 let inventoryForm = [
 	{
-		label: 'Segment',
+		label: _ => _('inventory.segment'),
 		queryName: 'segment_obj',
 		component: SelectField,
 		fetchString: '/segment-list',
@@ -15,14 +15,14 @@ let inventoryForm = [
 		required: true
 	},
 	{
-		label: 'Nazwa/model produktu',
+		label: _ => _('inventory.name_model'),
 		queryName: 'part_name',
 		component: StringField,
 		value: '',
 		required: true
 	},
 	{
-		label: 'Ilość',
+		label: _ => _('inventory.stock'),
 		queryName: 'stock',
 		component: IntegerField,
 		boundries: {
@@ -33,7 +33,7 @@ let inventoryForm = [
 		required: true
 	},
 	{
-		label: 'Cena',
+		label: _ => _('inventory.price'),
 		queryName: 'price',
 		component: PriceField,
 		quantity: true,
@@ -41,7 +41,7 @@ let inventoryForm = [
 		required: true
 	},
 	{
-		label: 'Dostawca',
+		label: _ => _('inventory.supplier'),
 		queryName: 'supplier_obj',
 		component: SelectField,
 		fetchString: '/supplier-list',
@@ -51,7 +51,7 @@ let inventoryForm = [
 		required: true
 	},
 	{
-		label: 'Notatka',
+		label: _ => _('inventory.note'),
 		queryName: 'short_note',
 		component: StringField,
 		value: '',
@@ -59,7 +59,7 @@ let inventoryForm = [
 	},
 
 	{
-		label: 'Data zakupu',
+		label: _ => _('inventory.purchase_date'),
 		queryName: 'purchase_date',
 		component: DatetimeField,
 		value: getCurrentTime(),

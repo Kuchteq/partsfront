@@ -11,7 +11,7 @@
     text: "",
     icon: ""
   };
-  export let deleteAction;
+  export let deleteButton;
   export let resetAction = () => {};
   // pass css variables such as themeGradient
   export let theme;
@@ -25,9 +25,19 @@
 <section class="uniModal absCenter {theme}" id="modal-{modalName}">
   <TabName text={tabName} clickHandler={closeModalHandler} />
   <div class="upButtons">
-    {#if deleteAction}
-      <button class={`otherActionBtn deleteBtn`} on:click={deleteAction()}
-        ><img src={"/icons/DeleteForever.svg"} alt="Delete Forever" /></button
+    {#if deleteButton}
+      <button
+        class={`otherActionBtn deleteBtn`}
+        on:click={deleteButton.do()}
+        style={deleteButton.color
+          ? `--deleteBtnColor:${deleteButton.color}`
+          : ""}
+        ><img
+          src={deleteButton.icon
+            ? deleteButton.icon
+            : "/icons/DeleteForever.svg"}
+          alt="Delete Forever"
+        /></button
       >
     {/if}
     <button class={`otherActionBtn`} on:click={resetAction()}
@@ -62,6 +72,7 @@
     box-shadow: var(--modalShadow);
     border-radius: var(--modalRounding);
     animation: fadeIn 0.1s;
+    --deleteBtnColor: #000;
   }
   .actionButton {
     font-size: 25px;
@@ -96,7 +107,7 @@
     }
   }
   .deleteBtn {
-    background-color: #000;
+    background-color: var(--deleteBtnColor);
   }
   .upButtons {
     display: flex;
