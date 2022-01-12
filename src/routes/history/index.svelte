@@ -13,7 +13,7 @@
   import ShowFields from "$shared/showFields/ShowFields.svelte";
   import SearchField from "$shared/searchField/SearchField.svelte";
   import { createQueryStore } from "$functions/URLSearchParamsStore";
-  import BackFromModule from "$shared/backFromModule/backFromModule.svelte";
+  import BackFromModule from "$shared/backFromModule/BackFromModule.svelte";
   import { _ } from "/config/i18n.js";
 
   const [sortQuery, sQuery] = [createQueryStore("sort"), createQueryStore("s")];

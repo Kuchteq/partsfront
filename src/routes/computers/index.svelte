@@ -20,7 +20,7 @@
   } from "$functions/cSelectionManager";
   import DeselectAllButton from "$shared/deselectAllButton/DeselectAllButton.svelte";
   import { createQueryStore } from "$functions/URLSearchParamsStore";
-  import BackFromModule from "$shared/backFromModule/backFromModule.svelte";
+  import BackFromModule from "$shared/backFromModule/BackFromModule.svelte";
   import SellInventoryButton from "$shared/buttons/sell/SellInventoryButton.svelte";
   import { _ } from "/config/i18n.js";
 

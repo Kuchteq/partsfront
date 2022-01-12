@@ -23,7 +23,7 @@
   } from "$functions/selectionManager";
   import DeselectAllButton from "$shared/deselectAllButton/DeselectAllButton.svelte";
   import { createQueryStore } from "$functions/URLSearchParamsStore";
-  import BackFromModule from "$shared/backFromModule/backFromModule.svelte";
+  import BackFromModule from "$shared/backFromModule/BackFromModule.svelte";
   import { _ } from "/config/i18n.js";
 
   const showIcons = [

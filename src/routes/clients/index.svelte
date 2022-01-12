@@ -15,7 +15,7 @@
   import SearchField from "$shared/searchField/SearchField.svelte";
   import { openModal } from "$functions/modalManager";
   import { createQueryStore } from "$functions/URLSearchParamsStore";
-  import BackFromModule from "$shared/backFromModule/backFromModule.svelte";
+  import BackFromModule from "$shared/backFromModule/BackFromModule.svelte";
   import { _ } from "/config/i18n.js";
 
   const moduleName = "clients";

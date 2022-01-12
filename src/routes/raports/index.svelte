@@ -7,8 +7,8 @@
 </script>
 
 <script>
-  import BackFromModule from "$shared/backFromModule/backFromModule.svelte";
-  import SellInventoryButton from "$shared/buttons/sell/sellInventoryButton.svelte";
+  import BackFromModule from "$shared/backFromModule/BackFromModule.svelte";
+  import SellInventoryButton from "$shared/buttons/sell/SellInventoryButton.svelte";
   import createFetchClient from "$functions/fetchClient.js";
   import orderLabels from "/config/labels/orderLabels.js";
   import UniModalOpenButton from "$shared/buttons/uni/UniModalOpenButton.svelte";

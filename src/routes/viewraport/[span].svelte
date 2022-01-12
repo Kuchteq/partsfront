@@ -26,10 +26,10 @@
 <script>
   import IndividualSales from "$lib/viewraports/IndividualSales.svelte";
   import ClientsInfo from "$lib/viewraports/moduleSpaces/ClientsInfo.svelte";
-  import GeneralInfo from "$lib/viewraports/moduleSpaces/generalInfo.svelte";
+  import GeneralInfo from "$lib/viewraports/moduleSpaces/GeneralInfo.svelte";
   import SegmentsInfo from "$lib/viewraports/moduleSpaces/SegmentsInfo.svelte";
   import SuppliersInfo from "$lib/viewraports/moduleSpaces/SuppliersInfo.svelte";
-  import BackFromModule from "$shared/backFromModule/backFromModule.svelte";
+  import BackFromModule from "$shared/backFromModule/BackFromModule.svelte";
   import { _ } from "/config/i18n.js";
   export let data;
   export let span;
