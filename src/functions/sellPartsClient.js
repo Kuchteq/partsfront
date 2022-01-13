@@ -104,6 +104,7 @@ function createPartSeller() {
 		let valid = true;
 		update((arr) => {
 			arr.forEach((field, i) => {
+				console.log(field)
 				if (!field.sell_price) {
 					field.error = 1;
 					valid = false;
@@ -113,6 +114,11 @@ function createPartSeller() {
 					field.error = 2;
 					valid = false;
 					addNotif('error', 'Niepoprawne dane', `${i + 1} przedmiot nie ma uzupełnionej ilości`);
+				}
+				if (field.quantity > field.info.stock) {
+					field.error = 3;
+					valid = false;
+					addNotif('error', 'Nieprawidłowa ilość', `nie posiadasz wystarczającej ilości przedmiotu ${i + 1} potrzebnego do tej sprzedaży`);
 				}
 			});
 			return arr;

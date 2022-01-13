@@ -110,8 +110,9 @@
             "date": "Czas wykonania"
         },
         "login": {
-            "login": "Login",
-            "password": "Hasło",
+            "login": "Zaloguj",
+            "password": "hasło",
+            "username": "użytkownik",
             "login_btn": "Zaloguj",
             "login_error_title": "Błąd logowania",
             "login_error_msg": "Sprawdź swój login lub hasło",

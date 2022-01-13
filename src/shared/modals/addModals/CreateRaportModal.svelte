@@ -5,6 +5,7 @@
   import { _ } from "/config/i18n.js";
   let modalName = "createRaports";
 
+  const today = new Date().toISOString().substring(0, 10);
   let dateFrom = $modalsState.createRaports.from
     ? $modalsState.createRaports.from
     : "";
@@ -12,7 +13,6 @@
     ? $modalsState.createRaports.to
     : today;
 
-  const today = new Date().toISOString().substring(0, 10);
   let actionButton = {
     do: () => {
       let successMessage = {

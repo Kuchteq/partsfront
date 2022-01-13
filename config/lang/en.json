@@ -111,11 +111,12 @@
   },
   "login": {
     "login": "Login",
-    "password": "Password",
+    "password": "password",
     "login_btn": "Login",
-    "login_error_title": "Login error",
-    "login_error_msg": "Check your login or password",
-    "login_success_title": "Successful login",
+    "username": "username",
+    "error_title": "Login error",
+    "error_msg": "Check your login or password",
+    "success_title": "Successful login",
     "logout_success_title": "Logged out"
   },
   "sell_modal": {

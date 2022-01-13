@@ -2,12 +2,13 @@
   import back from "$axios";
   import { addNotif } from "$functions/PopupClient";
   import Langs from "./Langs.svelte";
+  import { _ } from "/config/i18n.js";
   const logout = () => {
     back
       .post("/userlogout")
       .then(() => {
         window.location = "/login";
-        addNotif("success", "Wylogowano");
+        addNotif("success", $_("login.logout_success_title"));
       })
       .catch((e) => {
         console.log("Nie wylogowano");

@@ -6,7 +6,7 @@
   import LoginArrow from "$lib/compIcons//for_login_arrow.svelte";
   import back from "$axios";
   import { addNotif } from "$functions/PopupClient";
-  import { goto } from "$app/navigation";
+  import { _ } from "/config/i18n.js";
 
   let usernameCred = "";
   let passCred = "";
@@ -21,32 +21,33 @@
         password: passCred
       })
       .then((res) => {
-        addNotif("success", "Udane logowanie");
+        addNotif("success", $_("login.success_title"));
         window.location = "/";
       })
       .catch((err) => {
-        addNotif("error", "Złe dane logowania", "Sprawdź swój login lub hasło");
+        addNotif("error", $_("login.error_msg"), $_("login.error_msg"));
         console.log(err);
       });
   };
 </script>
 
 <header class="absCenter">
-  <TabName text="Zaloguj" />
+  <TabName text={$_("login.login")} />
   <form on:submit|preventDefault={loginSubmit}>
     <LoginInput
-      placeholderText={"login"}
+      placeholderText={$_("login.username")}
       Icon={AccountCircle}
       bind:value={usernameCred}
     />
     <LoginInput
-      placeholderText={"hasło"}
+      placeholderText={$_("login.password")}
       Icon={PassCircle}
       bind:value={passCred}
       type="pass"
     />
     <button class="loginButton" type="submit">
-      Zaloguj <div><LoginArrow /></div></button
+      {$_("login.login_btn")}
+      <div><LoginArrow /></div></button
     >
   </form>
 </header>
