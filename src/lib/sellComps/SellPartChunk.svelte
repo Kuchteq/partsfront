@@ -62,7 +62,7 @@
         update={(id, val) => sellFunc(chunkId, val, "quantity")}
         initValue={part.quantity}
         required={true}
-        boundries={{ min: 1, max: 12 } || undefined}
+        boundries={part.info ? { min: 1, max: part.info.stock } : undefined}
         error={part.error == 2 || undefined}
       />
     </div>

@@ -8,6 +8,7 @@
   import WarningPopup from "$shared/warningPopup/WarningPopup.svelte";
   import { writable } from "svelte/store";
   import { _ } from "/config/i18n.js";
+  import IndividualSales from "$lib/viewraports/IndividualSales.svelte";
 
   let modalName = "clientsUpdate";
   let formRef;
@@ -89,6 +90,11 @@
       />
     {/each}
   </form>
+  <div class = "individ">
+    <IndividualSales source={`/orders-clients/${id}`} />
+
+  </div>
+
   <WarningPopup
     header={$_("warning_msg.title")}
     desc={$_("warning_msg.client_removal_msg")}
@@ -102,5 +108,9 @@
     --themeGradient: var(--graClients);
     --themeColor: var(--mClients);
     --actionColor: var(--graClients);
+  }
+  :global(.individ .moduleMainHolder)
+  {
+    width:100%;
   }
 </style>

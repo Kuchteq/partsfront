@@ -10,7 +10,7 @@
   } from "$functions/selectionManager";
   import orderLabels from "/config/labels/orderLabels.js";
   import { createQueryStore } from "$functions/URLSearchParamsStore";
-  export let span;
+  export let source;
 
   const showIcons = [
     "id",
@@ -26,7 +26,7 @@
 
   const client = new createFetchClient(
     orderLabels,
-    `/orders-span/${span.from}/${span.to}`
+    source
   );
 
   $: results = client.results;

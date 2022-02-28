@@ -58,7 +58,7 @@
   <SuppliersInfo data={data.suppliersSalesInfo} />
 </div>
 <h2>{$_("viewraport.sold_that_period")}</h2>
-<IndividualSales {span} />
+<IndividualSales source={`/orders-span/${span.from}/${span.to}`} />
 
 <BackFromModule name={periodInfo} />
 

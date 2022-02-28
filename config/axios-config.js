@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const BACKEND_URL = 'http://system.altis.net.pl';
+export const BACKEND_URL = 'http://localhost:5000';
 
 const back = axios.create({
 	baseURL: BACKEND_URL

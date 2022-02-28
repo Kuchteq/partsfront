@@ -5,11 +5,10 @@
   export let update;
   export let initValue = 0;
   export let error = undefined;
-  export const boundries = {
+  export let boundries = {
     min: 0,
     max: Number.MAX_SAFE_INTEGER
   };
-
   export let required = true;
 
   const blockRange = (e) => {
@@ -17,7 +16,7 @@
       e.target.value = boundries.max;
     }
     if (e.target.value <= boundries.min) {
-      e.target.value = "";
+      e.target.value = boundries.min;
     }
     update(id, e.target.value);
   };
