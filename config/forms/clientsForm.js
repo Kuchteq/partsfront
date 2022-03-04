@@ -54,7 +54,7 @@ let inventoryForm = [
 	{
 		label: _ => _('clients.nip'),
 		queryName: 'nip',
-		component: IntegerField,
+		component: StringField,
 		value: '',
 		required: false,
 		constraints: [

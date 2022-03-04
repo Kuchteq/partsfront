@@ -48,7 +48,7 @@
     openModal("inventoryUpdate", val);
   };
   let onCellSingleClick = (val) => {
-    setPartSelection(val);
+    if (val.stock > 0) setPartSelection(val.part_id);
   };
 </script>
 

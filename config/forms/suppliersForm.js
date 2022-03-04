@@ -1,5 +1,4 @@
 import DatetimeField from '$shared/fields/DatetimeField.svelte';
-import IntegerField from '$shared/fields/IntegerField.svelte';
 import StringField from '$shared/fields/StringField.svelte';
 
 import { getCurrentTime, checkLength } from '../formatHelpers.js';
@@ -60,7 +59,7 @@ let inventoryForm = [
 	{
 		label: _ => _('suppliers.nip'),
 		queryName: 'nip',
-		component: IntegerField,
+		component: StringField,
 		value: '',
 		required: false,
 		constraints: [

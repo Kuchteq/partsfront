@@ -38,15 +38,43 @@
   <div class="basicInfo">
     <h4>{$_("general.header")}</h4>
     <ul>
-      <li>{$_("general.profit")}: <span>{bInfo.all_profit} PLN</span></li>
-      <li>{$_("general.orders_value")}: <span>{bInfo.all_value} PLN </span></li>
-      <li>{$_("general.orders_count")}: <span>{bInfo.all_orders}</span></li>
       <li>
-        {$_("general.parts_bought_count")} <span>{bInfo.all_parts_amount}</span>
+        {$_("general.profit")}:
+        <span
+          >{(
+            bInfo.post_sale_all_value -
+            bInfo.parts_value -
+            bInfo.computers_value
+          ).toFixed(2)} PLN</span
+        >
       </li>
-      <li>{$_("general.computers_count")}<span /></li>
+      <li>{$_("general.orders_count")}: <span>{bInfo.orders_count}</span></li>
       <li>
-        {$_("general.clients_added")} <span>{bInfo.new_clients_amount}</span>
+        {$_("general.orders_value")}:
+        <span
+          >{parseFloat(bInfo.parts_value + bInfo.computers_value).toFixed(2)} PLN
+        </span>
+      </li>
+      <li>
+        {$_("general.parts_sold_count")}:
+        <span>{bInfo.parts_sold_amount} </span>
+      </li>
+      <li>
+        {$_("general.parts_value")}: <span>{bInfo.parts_value} PLN </span>
+      </li>
+      <li>
+        {$_("general.computers_sold_count")}:
+        <span>{bInfo.computers_sold_amount} </span>
+      </li>
+      <li>
+        {$_("general.computers_value")}:
+        <span>{bInfo.computers_value} PLN </span>
+      </li>
+      <li>
+        {$_("general.clients_added")} <span>{bInfo.clients_amount}</span>
+      </li>
+      <li>
+        {$_("general.suppliers_added")} <span>{bInfo.suppliers_amount}</span>
       </li>
     </ul>
   </div>

@@ -12,7 +12,9 @@ const checkForConstraints = (field) => {
 		if (target && !con.checker(target, ...con.args)) {
 			field.error = true;
 
-			addNotif('error', `Pole ${field.label(get(_))} nie spełnia wymagań`, con.errorDesc, errFunc);
+			addNotif('error', get(_)('popup_msg.constraints_violation_title', {
+				values: { field: field.label(get(_)) }
+			}))
 			valid = false;
 		}
 	});
@@ -126,10 +128,12 @@ function createPostClient(formStructure, getPath = undefined, updateId = undefin
 					if (field.required && !field.value) {
 						field.error = true;
 						valid = false;
-						addNotif('error', 'Niepoprawne dane', `${field.label(get(_))} nie jest uzupełniony/a`, () => {
-							document.querySelector(`#modal-${modalName} [data-field-id="${i}"] input`).focus();
-						});
+						addNotif('error', get(_)('popup_msg.incorrect_data_title'), get(_)('popup_msg.incorrect_data_msg', { values: { field: field.label(get(_)) } }),
+							() => {
+								document.querySelector(`#modal-${modalName} [data-field-id="${i}"] input`).focus()
+							})
 					}
+
 					if (field.constraints && field.value) {
 						//if some constraints are violated, set error to true and show it to the user
 						let localValid = checkForConstraints(field, () => {

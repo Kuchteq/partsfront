@@ -27,7 +27,7 @@
     ? 'selected'
     : ''} {grayedOut ? 'grr' : ''}"
   on:dblclick={onDoubleClick(id)}
-  on:click={onSingleClick(id)}
+  on:click={onSingleClick(result)}
 >
   <button>
     <!-- For every column in the row create a list item tag with the appropriate data -->

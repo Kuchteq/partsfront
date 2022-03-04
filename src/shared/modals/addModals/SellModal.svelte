@@ -32,12 +32,15 @@
         })
       };
 
+      console.log($seller, $coSeller);
       //pass name to
-      let valid = client.checkValidity(modalName);
-      valid = seller.checkValidity();
-      valid = coSeller.checkValidity();
-      console.log(valid);
-      if (valid) {
+      let valid =
+        client.checkValidity(modalName) &&
+        seller.checkValidity() &&
+        coSeller.checkValidity();
+
+      let empty = !$seller.length && !$coSeller.length;
+      if (valid && !empty) {
         seller
           .sell(
             client.createReqJson($client),
@@ -53,6 +56,8 @@
             refetch();
             closeModal(modalName);
           });
+      } else if (empty) {
+        addNotif("error", $_("sell_modal.empty_order_error"));
       }
     },
     text: $_("sell_modal.sell_btn"),
