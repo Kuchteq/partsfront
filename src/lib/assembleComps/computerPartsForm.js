@@ -1,24 +1,29 @@
 //stock and part name get pulled later
 let computerForm = [
 	{
-		label: 'Procesor',
+		label: _ => _('processor'),
 		segment_id: 1
-
-		// part_id: 53,
-		// part_name: 'Artido'
 	},
 	{
-		label: 'Płyta główna',
+		label: _ => _('motherboard'),
 		segment_id: 3
 	},
 	{
-		label: 'Karta graficzna',
-		segment_id: 2
+		label: _ => _('ram'),
+		segment_id: 4
 	},
 	{
-		label: 'RAM',
-		segment_id: 4
-	}
+		label: _ => _('hard_drive'),
+		segment_id: 6
+	},
+	{
+		label: _ => _('power_supply'),
+		segment_id: 7
+	},
+	{
+		label: _ => _('case'),
+		segment_id: 9
+	},
 ];
 
 export default computerForm;

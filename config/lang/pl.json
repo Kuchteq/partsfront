@@ -158,14 +158,7 @@
             "main_parts_title": "Główne części",
             "misc_parts_title": "Dodatkowe części",
             "add_misc_part": "+ Dodaj kolejną część",
-            "p_names":
-            {
-                "processor": "Procesor",
-                "płyta_główna": "Płyta główna",
-                "karta_graficzna": "Karta graficzna",
-                "ram": "RAM",
-                "dysk": "Dysk"
-            },
+            "part_id_info": "ID części: ",
             "empty_misc_field_title": "Inne części bez wartości",
             "empty_misc_field_msg": "Pole na inne części jest dodane lecz jego wartość jest pusta, proszę usunąć puste pola lub wybrać cześć.",
             "no_parts_title": "Brak części",

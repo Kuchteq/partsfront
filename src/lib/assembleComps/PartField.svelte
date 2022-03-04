@@ -8,6 +8,8 @@
     removeMainPart
   } from "./assembleClient";
   import Select from "svelte-select";
+  import { _ } from "/config/i18n.js";
+
   export let id;
   export let data;
   export let themeColor = "#006AE5";
@@ -35,12 +37,12 @@
     'fieldFillError'} partField"
   style="--selectFieldColor:{themeColor}"
 >
-  <label>{curInfo.label}</label>
+  <label>{curInfo.label($_)}</label>
   <div class="innerWrap" data-field-id={id}>
     <div class="withId">
       <Select
         {items}
-        placeholder={"Wybierz..."}
+        placeholder={$_("misc.choose")}
         containerClasses={"customContainer"}
         value={curInfo.value && {
           value: curInfo.value.part_id,
@@ -59,7 +61,8 @@
       />
       {#if curInfo.value}
         <p>
-          id części: {curInfo.value.part_id}
+          {$_("computer_modal.part_id_info")}
+          {curInfo.value.part_id}
         </p>
       {/if}
     </div>

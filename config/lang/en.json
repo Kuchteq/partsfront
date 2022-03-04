@@ -158,13 +158,7 @@
     "main_parts_title": "Main parts",
     "misc_parts_title": "Extra parts",
     "add_misc_part": "+ Add another part",
-    "p_names": {
-      "processor": "Processor",
-      "płyta_główna": "Motherboard",
-      "karta_graficzna": "Graphics Card",
-      "ram": "RAM",
-      "dysk": "Disk"
-    },
+    "part_id_info": "part ID: ",
     "empty_misc_field_title": "Other parts are not filled",
     "empty_misc_field_msg": "The field for other parts is added but its value is empty, please remove the empty fields or choose a part.",
     "no_parts_title": "No parts",
@@ -172,6 +166,13 @@
     "missing_parts_desc": "You are going to create a computer without the parts required to make it run properly. If you did not mean it, please click no and complete the required parts, if you want to assemble such a computer, click yes.",
     "disassemble_msg": "You are going to disassemble the computer, the parts in it will be returned to your inventory."
   },
+  "processor": "Processor",
+  "motherboard": "Motherboard",
+  "ram": "RAM",
+  "hard_drive": "Hard Drive",
+  "power_supply": "Power Supply",
+  "case": "Case",
+
   "server_error_title": "Server-side fetchimg problem",
   "server_error_desc": "The server could not process the operation, possible error in the miscompleted data",
   "popup_msg": {
