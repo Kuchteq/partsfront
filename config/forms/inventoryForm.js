@@ -12,7 +12,7 @@ let inventoryForm = [
 		fetchString: '/segment-list',
 		value: '',
 		themeColor: '#006ae5',
-		required: true
+		required: true,
 	},
 	{
 		label: _ => _('inventory.name_model'),
@@ -33,22 +33,23 @@ let inventoryForm = [
 		required: true
 	},
 	{
-		label: _ => _('inventory.price'),
+		label: _ => _('inventory.priceFull'),
 		queryName: 'price',
 		component: PriceField,
-		quantity: true,
+		multiplier: true,
 		value: 0,
-		required: true
+		required: true,
+		multiText: _ => _("misc.value")
 	},
 	{
 		label: _ => _('inventory.supplier'),
 		queryName: 'supplier_obj',
 		component: SelectField,
 		fetchString: '/supplier-list',
-		addHandlerModal: 'suppliersModal',
+		addHandlerModal: 'suppliers',
 		value: '',
 		themeColor: '#00a4d8',
-		required: true
+		required: true,
 	},
 	{
 		label: _ => _('inventory.note'),
@@ -57,7 +58,15 @@ let inventoryForm = [
 		value: '',
 		required: false
 	},
-
+	{
+		label: _ => _('inventory.suggested_price'),
+		queryName: 'suggested_price',
+		component: PriceField,
+		value: 0,
+		required: false,
+		multiplier: true,
+		multiText: _ => _("sell_modal.brutto_value")
+	},
 	{
 		label: _ => _('inventory.purchase_date'),
 		queryName: 'purchase_date',

@@ -38,14 +38,14 @@ let problemsLabels = [
 	},
 
 	{
-		id: 6,
+		id: 5,
 		name: _ => _('problems.deadline'),
 		queryName: 'deadline_date',
 		shown: true,
 		widthClass: 'w5'
 	},
 	{
-		id: 7,
+		id: 6,
 		name: _ => _('problems.client'),
 		queryName: 'client_name',
 		shown: false,
@@ -55,7 +55,11 @@ let problemsLabels = [
 		id: 7,
 		name: _ => _('problems.status'),
 		queryName: 'finished',
-		determining: true //should be grayed out if true
+		determining: (v) => {
+			if (v == true)
+				return true
+			return false
+		} //should be grayed out if true
 	}
 ];
 

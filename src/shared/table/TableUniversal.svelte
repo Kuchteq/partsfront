@@ -17,12 +17,14 @@
   export let selectedCells = undefined;
   export let sQuery = "";
   export let sortQuery;
+  export let past;
 
   /*the dollar sign is a special character in svelte that runs a specified function when some
 state gets change - for instance if the sortQuery or sQuery - searchQuery is changed, refetch the data,*/
   $: {
     $sortQuery;
     $sQuery;
+    $past;
     refetch();
   }
 </script>

@@ -13,7 +13,18 @@ const toQueryDate = (date) => {
 };
 
 const formatDate = (date, _) => {
-	return `${_('month_names')[date.month - 1]} ${date.year}`;
+	try {
+
+		return `${_('month_names')[date.month - 1]} ${date.year}`;
+	}
+	catch
+	{
+		date = {
+			month: parseInt(new Date().getMonth()) + 1,
+			year: new Date().getFullYear()
+		};
+		return `${_('month_names')[date.month - 1]} ${date.year}`;
+	}
 };
 
 export { monthBack, toQueryDate, formatDate };

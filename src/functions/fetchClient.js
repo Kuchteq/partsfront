@@ -4,9 +4,10 @@ import back from '$axios';
 function createFetchClient(labelsToCreate, fetchSource) {
 	const labels = writable(labelsToCreate);
 	const results = writable([]);
+	let past = writable(false);
 	let highlighted = writable(-1);
 
-	const fetchInventory = (page, sortQuery, sQuery) => {
+	const fetchPage = (page, sortQuery, sQuery) => {
 		return new Promise((resolve, reject) => {
 			if (!sortQuery) {
 				sortQuery = adjustedInitialQuery();
@@ -19,7 +20,8 @@ function createFetchClient(labelsToCreate, fetchSource) {
 							? sortQuery.by
 							: labelsToCreate.find((labelsToCreate) => labelsToCreate.default == true).queryName,
 						sort_dir: sortQuery.dir ? sortQuery.dir : 'desc',
-						s: sQuery ? sQuery : undefined
+						s: sQuery ? sQuery : undefined,
+						past: get(past)
 					}
 				})
 				.then((res) => {
@@ -37,13 +39,14 @@ function createFetchClient(labelsToCreate, fetchSource) {
 				});
 		});
 	};
-
+	const togglePast = () => {
+		past.set(!get(past));
+	};
 	const fetchRecords = (path, sortQuery, sQuery) => {
 		return new Promise((resolve, reject) => {
 			if (!sortQuery) {
 				sortQuery = adjustedInitialQuery();
 			}
-			console.log(path);
 			back
 				.get(path, {
 					params: {
@@ -75,8 +78,9 @@ function createFetchClient(labelsToCreate, fetchSource) {
 		results: derived(results, (bs) => bs),
 		labels: derived(labels, (bs) => bs),
 		highlighted: derived(highlighted, (bs) => bs),
-
-		fetchInventory: fetchInventory,
+		togglePast: togglePast,
+		past: past,
+		fetchPage: fetchPage,
 		fetchRecords: fetchRecords,
 		sortBy: (sortObj, toByVal, prevObj) => {
 			if (!prevObj) {
@@ -84,6 +88,12 @@ function createFetchClient(labelsToCreate, fetchSource) {
 			}
 
 			sortObj.setObj({
+				by: toByVal,
+				dir: toByVal !== prevObj.by ? 'desc' : prevObj.dir == 'asc' ? 'desc' : 'asc'
+			});
+		},
+		sortByLocal: (sortObj, toByVal, prevObj) => {
+			sortObj.set({
 				by: toByVal,
 				dir: toByVal !== prevObj.by ? 'desc' : prevObj.dir == 'asc' ? 'desc' : 'asc'
 			});

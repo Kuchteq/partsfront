@@ -1,6 +1,6 @@
 <script>
-  import GraphSpace from "$lib/viewraports/GraphSpace.svelte";
-  import SectionWrap from "$lib/viewraports/SectionWrap.svelte";
+  import GraphSpace from "$lib/viewreports/GraphSpace.svelte";
+  import SectionWrap from "$lib/viewreports/SectionWrap.svelte";
   import { _ } from "/config/i18n.js";
   export let data;
   export let elemColors = [

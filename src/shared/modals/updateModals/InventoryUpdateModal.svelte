@@ -81,8 +81,8 @@
         update={client.updateVal}
         required={field.required}
         initValue={field.value}
-        multiplier={field.quantity && $client[2].value}
-        multiText={$_("misc.value")}
+        multiplier={id == 3 ? $client[2].value : id==6 ? 1.23 : undefined}
+        multiText={field.multiText && field.multiText($_)}
         fetchString={field.fetchString && field.fetchString}
         themeColor={field.themeColor && field.themeColor}
         addHandlerModal={field.addHandlerModal && field.addHandlerModal}

@@ -2,7 +2,7 @@
   export async function load({ page, fetch, session, stuff }) {
     if (session.Authorization) {
       const [from, to] = page.params.span.split("t");
-      const url = `http://localhost:5000/getraport/${from}/${to}`;
+      const url = `http://localhost:5000/getreport/${from}/${to}`;
       const res = await fetch(url);
       if (res.ok) {
         return {
@@ -24,11 +24,11 @@
 </script>
 
 <script>
-  import IndividualSales from "$lib/viewraports/IndividualSales.svelte";
-  import ClientsInfo from "$lib/viewraports/moduleSpaces/ClientsInfo.svelte";
-  import GeneralInfo from "$lib/viewraports/moduleSpaces/GeneralInfo.svelte";
-  import SegmentsInfo from "$lib/viewraports/moduleSpaces/SegmentsInfo.svelte";
-  import SuppliersInfo from "$lib/viewraports/moduleSpaces/SuppliersInfo.svelte";
+  import IndividualSales from "$lib/viewreports/IndividualSales.svelte";
+  import ClientsInfo from "$lib/viewreports/moduleSpaces/ClientsInfo.svelte";
+  import GeneralInfo from "$lib/viewreports/moduleSpaces/GeneralInfo.svelte";
+  import SegmentsInfo from "$lib/viewreports/moduleSpaces/SegmentsInfo.svelte";
+  import SuppliersInfo from "$lib/viewreports/moduleSpaces/SuppliersInfo.svelte";
   import BackFromModule from "$shared/backFromModule/BackFromModule.svelte";
   import { _ } from "/config/i18n.js";
   export let data;
@@ -38,7 +38,7 @@
     byMonthInfo: data.byMonthInfo,
     byWeekInfo: data.byWeekInfo
   };
-  let periodInfo = $_("viewraport.period_info", {
+  let periodInfo = $_("viewreport.period_info", {
     values: {
       from: span.from.replaceAll("-", "/"),
       to: span.to.replaceAll("-", "/")
@@ -47,6 +47,10 @@
   console.log(periodInfo);
 </script>
 
+
+<svelte:head>
+  <title>{periodInfo}</title>
+</svelte:head>
 <div class="padCenter">
   <header>
     {periodInfo}
@@ -57,7 +61,7 @@
   <ClientsInfo data={data.clientsInfo} />
   <SuppliersInfo data={data.suppliersSalesInfo} />
 </div>
-<h2>{$_("viewraport.sold_that_period")}</h2>
+<h2>{$_("viewreport.sold_that_period")}</h2>
 <IndividualSales source={`/orders-span/${span.from}/${span.to}`} />
 
 <BackFromModule name={periodInfo} />

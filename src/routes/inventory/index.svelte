@@ -34,14 +34,15 @@
     "price",
     "note",
     "supplier",
+    "suggested_price",
     "date"
   ];
   const [sortQuery, sQuery] = [createQueryStore("sort"), createQueryStore("s")];
   const client = new createFetchClient(inventoryLabels, "/inventory");
-
   $: results = client.results;
   $: labels = client.labels;
   $: highlightedCell = client.highlighted;
+  $: past = client.past;
 
   let onCellDoubleClick = (val) => {
     openModal("inventoryUpdate", val);
@@ -60,18 +61,25 @@
       <ShowFields icons={showIcons} {labels} handleHide={client.handleHide} />
       <SearchField {sQuery} />
     </div>
+    <div class="smallTools">
+      <button
+        class="pastToggler {$past ? 'visibToggled' : ''}"
+        on:click={() => client.togglePast()}
+      />
+    </div>
   </section>
   <TableUniversal
     labels={$labels}
     sortHandler={client.sortBy}
     results={$results}
-    fetcherFunc={client.fetchInventory}
+    fetcherFunc={client.fetchPage}
     resetFunc={client.resetResults}
     highlightedCell={$highlightedCell}
     {sQuery}
     {sortQuery}
     {onCellDoubleClick}
     {onCellSingleClick}
+    past={client.past}
     selectedCells={selectedParts}
   />
   {#if $selectedParts.length != 0}

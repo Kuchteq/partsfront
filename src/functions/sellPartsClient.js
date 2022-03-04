@@ -18,7 +18,7 @@ function createPartSeller() {
 					arr.push({
 						part_id: n,
 						sell_price: 0,
-						quantity: 1
+						quantity: 1,
 					});
 				});
 
@@ -58,7 +58,7 @@ function createPartSeller() {
 	) => {
 		return new Promise((resolve, reject) => {
 			if (!orderInfoJson.name)
-				orderInfoJson.name = `Sprzedaż dla ${clientName} w dniu i godzinie ${orderInfoJson.sell_date} `;
+				orderInfoJson.name = `Sale for ${clientName} on ${orderInfoJson.sell_date} `;
 			orderInfoJson.parts = orderPartChunks;
 			orderInfoJson.computers = orderComputerChunks;
 			console.log(orderInfoJson);

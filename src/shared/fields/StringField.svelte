@@ -15,7 +15,7 @@
 >
   <label>{label($_)}</label>
   <input
-    {placeholder}
+    placeholder={placeholder ? placeholder($_) : ""}
     on:input={(e) => update(id, e.target.value)}
     value={initValue}
     type="text"

@@ -27,8 +27,8 @@
     },
     {
       name: (_) => _("modules.orders"),
-      href: "/raports",
-      icon: "RaportsModuleIcon.svg"
+      href: "/orders",
+      icon: "OrdersModuleIcon.svg"
     },
     {
       name: (_) => _("modules.sets"),

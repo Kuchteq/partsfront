@@ -38,7 +38,7 @@
     sortValue={client.sortValue}
     sortHandler={client.sortBy}
     results={$results}
-    fetcherFunc={client.fetchInventory}
+    fetcherFunc={client.fetchPage}
     resetFunc={client.resetResults}
     highlightedCell={$highlightedCell}
     {sQuery}

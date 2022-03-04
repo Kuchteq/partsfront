@@ -36,6 +36,7 @@
   let fetchTrigger;
 
   let loading = false;
+  let ready = false;
   const pageLoader = () => {
     let observer = new IntersectionObserver(
       (entries) => {
@@ -50,6 +51,7 @@
                 console.log(err);
                 loading = false;
                 initiallyLoaded = false;
+                ready = true;
               });
           }
         });
@@ -63,25 +65,30 @@
   });
 
   const unsubscribe = refetchStatus.subscribe(() => {
-    resetFunc();
+    ready = false;
+    dateStack = [];
     currentDate = clone(date);
     dateStack.push(currentDate);
+    resetFunc();
     fetcherFunc(toQueryDate(currentDate), $sortQuery, $sQuery)
       .then(() => {
         currentDate = monthBack(currentDate);
+        console.log(currentDate);
         dateStack.push(currentDate);
         fetcherFunc(toQueryDate(currentDate), $sortQuery, $sQuery).then(() => {
           currentDate = monthBack(currentDate);
+          console.log(currentDate);
           dateStack.push(currentDate);
           fetcherFunc(toQueryDate(currentDate), $sortQuery, $sQuery).then(
             () => {
+              console.log(dateStack);
+              ready = true;
               initiallyLoaded = true;
             }
           );
         });
       })
       .catch((e) => {
-        console.log(e);
         loading = false;
         initiallyLoaded = false;
       });
@@ -91,7 +98,7 @@
 
   onDestroy(unsubscribe);
 
-  const handleMonthRaport = (d) => {
+  const handleMonthReport = (d) => {
     console.log(d);
     const year = date.year - parseInt(d / 12);
     let month =
@@ -103,12 +110,7 @@
     let dateFrom = `${year}-${month}-01`;
     const lastMonthDay = new Date(year, month, 0).getDate();
     let dateTo = `${year}-${month}-${lastMonthDay}`;
-    // let dateTo = `${date.year - parseInt(d / 12)}-${
-    //   date.month - (d % 12)
-    // }-${new Date(date.year, date.month, 0).getDate()}`;
-
-    console.log({ from: dateFrom, to: dateTo });
-    openModal("createRaports", { from: dateFrom, to: dateTo });
+    openModal("createReports", { from: dateFrom, to: dateTo });
   };
 </script>
 
@@ -122,7 +124,7 @@
             <button
               type="button"
               class="localReportButton"
-              on:click={() => handleMonthRaport(d)}
+              on:click={() => handleMonthReport(d)}
             />
           {/if}
         </h1>
@@ -152,6 +154,7 @@
       <Loader />
     </div>
   {/if}
+  <div class={!ready ? "bufferer" : ""} />
   <div
     bind:this={fetchTrigger}
     class="fetchTrigger {loading ? 'visible' : ''} {initiallyLoaded
@@ -186,7 +189,7 @@
       display: block;
       margin-left: 10px;
       background-color: #fffce9;
-      background-image: url("/icons/MakeRaportBlack.svg");
+      background-image: url("/icons/MakeReportBlack.svg");
       background-size: 70%;
       background-repeat: no-repeat;
       background-position: center;
@@ -239,5 +242,8 @@
     margin-left: 8px;
     padding-top: 8px;
     display: flex;
+  }
+  .bufferer {
+    height: 150vh;
   }
 </style>

@@ -44,6 +44,9 @@
   $: highlightedCell = client.highlighted;
 </script>
 
+<svelte:head>
+  <title>{$_("modules.suppliers")}</title>
+</svelte:head>
 <div class="moduleMainHolder">
   <section class="upTools">
     <UniModalOpenButton
@@ -60,7 +63,7 @@
     labels={$labels}
     sortHandler={client.sortBy}
     results={$results}
-    fetcherFunc={client.fetchInventory}
+    fetcherFunc={client.fetchPage}
     resetFunc={client.resetResults}
     highlightedCell={$highlightedCell}
     {onCellDoubleClick}

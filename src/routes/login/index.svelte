@@ -10,9 +10,6 @@
 
   let usernameCred = "";
   let passCred = "";
-  $: {
-    console.log(usernameCred, passCred);
-  }
   const loginSubmit = () => {
     back
       .post("/userlogin", {
@@ -31,6 +28,9 @@
   };
 </script>
 
+<svelte:head>
+  <title>{$_("Login")}</title>
+</svelte:head>
 <header class="absCenter">
   <TabName text={$_("login.login")} />
   <form on:submit|preventDefault={loginSubmit}>

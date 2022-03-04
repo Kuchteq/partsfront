@@ -8,7 +8,7 @@
   import WarningPopup from "$shared/warningPopup/WarningPopup.svelte";
   import { writable } from "svelte/store";
   import { _ } from "/config/i18n.js";
-  import IndividualSales from "$lib/viewraports/IndividualSales.svelte";
+  import IndividualSales from "$lib/viewreports/IndividualSales.svelte";
 
   let modalName = "clientsUpdate";
   let formRef;

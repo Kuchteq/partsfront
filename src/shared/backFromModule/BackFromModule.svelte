@@ -4,7 +4,7 @@
 
 <div class="backFromModule" href="/">
 	<a href="/">
-		<img src="icons/BackToModule.svg" />
+		<img src="/icons/BackToModule.svg" />
 	</a>
 	<h5>
 		{name}

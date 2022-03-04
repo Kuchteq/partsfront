@@ -58,6 +58,17 @@ let computerLabels = [
 		shown: true,
 		widthClass: 'w7',
 		format: formatDateOnly
+	},
+	{
+		id: 8,
+		name: _ => _('sets.in_order'),
+		queryName: "in_order",
+		shown: false,
+		widthClass: 'w0',
+		determining: (v) => {
+			if (v)
+				return true
+		}
 	}
 ];
 

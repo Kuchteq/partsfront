@@ -5,7 +5,6 @@ export default function accordion(node, isOpen) {
 		update(isOpen) {
 			let initialHeight = 28;
 			node.childNodes.forEach((child) => {
-				console.log(child.clientHeight)
 				initialHeight += child.clientHeight ? child.clientHeight : 0;
 			})
 			let animation = node.animate(

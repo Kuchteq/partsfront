@@ -12,9 +12,12 @@
   let grayedOut = false;
 
   /*determining means that the cell is grayed out
-	  useful in problems table to make the finished problems grayed out*/
-  let isDetermining = labels.slice(-1)[0].determining;
-  if (isDetermining && row.slice(-1)[0]) {
+	  useful in problems table to make the finished problems grayed out or when stock run out*/
+  let isDetermining = labels.findIndex((label) => label.determining);
+  if (
+    isDetermining != -1 &&
+    labels[isDetermining].determining(row[isDetermining])
+  ) {
     grayedOut = true;
   }
 </script>
@@ -31,9 +34,7 @@
     {#each row as column, i}
       <li
         class="{labels[i].widthClass} 
-			{!labels[i].shown || (isDetermining && i == row.length - 1)
-          ? 'hiddenDisplay'
-          : ''} 
+			{!labels[i].shown ? 'hiddenDisplay' : ''} 
 			{highlighted == i ? 'highlighted' : ''}"
       >
         {!column && column !== 0

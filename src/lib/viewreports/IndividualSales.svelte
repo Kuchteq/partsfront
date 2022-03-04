@@ -6,10 +6,9 @@
   import { openModal } from "$functions/modalManager";
   import selectedParts, {
     setPartSelection,
-    deselectAllParts
   } from "$functions/selectionManager";
   import orderLabels from "/config/labels/orderLabels.js";
-  import { createQueryStore } from "$functions/URLSearchParamsStore";
+  import { writable } from 'svelte/store';
   export let source;
 
   const showIcons = [
@@ -22,8 +21,10 @@
     "supplier",
     "date"
   ];
-  const [sortQuery, sQuery] = [createQueryStore("sort"), createQueryStore("s")];
+  let sortQuery = writable({by:undefined,dir:undefined})
+  let sQuery=writable("");
 
+  console.log($sortQuery,$sQuery);
   const client = new createFetchClient(
     orderLabels,
     source
@@ -48,9 +49,9 @@
   </div>
   <TableUniversal
     labels={$labels}
-    sortHandler={client.sortBy}
+    sortHandler={client.sortByLocal}
     results={$results}
-    fetcherFunc={client.fetchInventory}
+    fetcherFunc={client.fetchPage}
     resetFunc={client.resetResults}
     highlightedCell={$highlightedCell}
     {sQuery}
@@ -73,9 +74,9 @@
     --topPartBg: #f3c541;
     --topPartTurnedOff: var(--mGold);
   }
-  :global(.raports-open-button) {
+  :global(.reports-open-button) {
     --buttonBg: var(--graGold);
-    --buttonIcon: url("/icons/MakeRaport.svg");
+    --buttonIcon: url("/icons/MakeReport.svg");
   }
   .innerTools {
     margin-bottom: 25px;

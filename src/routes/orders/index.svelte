@@ -16,11 +16,11 @@
   import SearchField from "$shared/searchField/SearchField.svelte";
   import { openModal } from "$functions/modalManager";
   import { createQueryStore } from "$functions/URLSearchParamsStore";
-  import CustomTableBody from "$lib/raports/customTable/CustomTableBody.svelte";
+  import CustomTableBody from "$lib/orders/customTable/CustomTableBody.svelte";
   import TableTopPart from "$shared/table/topPart/TableTopPart.svelte";
   import { refetch } from "$functions/triggerRefetch";
   import { _ } from "/config/i18n.js";
-  const moduleName = "raports";
+  const moduleName = "orders";
   const showIcons = [
     "id",
     "client_name",
@@ -56,12 +56,15 @@
 
 <svelte:window bind:scrollY={y} />
 
+<svelte:head>
+  <title>{$_("modules.orders")}</title>
+</svelte:head>
 <div class="moduleMainHolder">
   <section class="upTools">
     <UniModalOpenButton
       theme={moduleName}
       text={$_("modals_btns.make_report")}
-      modal="createRaports"
+      modal="createReports"
     />
     <SellInventoryButton />
     <div class="innerTools ">
@@ -104,8 +107,8 @@
     --topPartBg: #f3c541;
     --topPartTurnedOff: var(--mGold);
   }
-  :global(.raports-open-button) {
+  :global(.orders-open-button) {
     --buttonBg: var(--graGold);
-    --buttonIcon: url("/icons/MakeRaport.svg");
+    --buttonIcon: url("/icons/MakeReport.svg");
   }
 </style>

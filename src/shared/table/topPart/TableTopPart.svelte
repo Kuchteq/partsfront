@@ -3,7 +3,6 @@
   export let labels;
   export let sortHandler;
   export let sortQuery;
-  console.log(sortHandler);
   import { _ } from "/config/i18n.js";
 </script>
 

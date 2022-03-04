@@ -27,7 +27,13 @@ let inventoryLabels = [
 		name: _ => _('inventory.stock'),
 		queryName: 'stock',
 		shown: true,
-		widthClass: 'w5'
+		widthClass: 'w5',
+		determining: (v) => {
+			if (v <= 0) {
+				return true;
+			}
+			return false
+		}
 	},
 	{
 		id: 4,
@@ -53,6 +59,13 @@ let inventoryLabels = [
 	},
 	{
 		id: 7,
+		name: _ => _('inventory.suggested_price'),
+		queryName: 'suggested_price',
+		shown: false,
+		widthClass: 'w5'
+	},
+	{
+		id: 8,
 		name: _ => _('inventory.purchase_date'),
 		queryName: 'purchase_date',
 		shown: true,

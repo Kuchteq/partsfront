@@ -27,7 +27,8 @@ export function createQueryStore(prop) {
 				query = queryToObject(p.query);
 				if (prop == 'sort') {
 					h({ by: query['by'], dir: query['dir'] });
-				} else {
+				}
+				else {
 					h(query[prop]);
 				}
 			});

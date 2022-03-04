@@ -3,32 +3,32 @@
   import { addNotif } from "$functions/PopupClient";
   import modalsState from "$functions/modalManager";
   import { _ } from "/config/i18n.js";
-  let modalName = "createRaports";
+  let modalName = "createReports";
 
   const today = new Date().toISOString().substring(0, 10);
-  let dateFrom = $modalsState.createRaports.from
-    ? $modalsState.createRaports.from
+  let dateFrom = $modalsState.createReports.from
+    ? $modalsState.createReports.from
     : "";
-  let dateTo = $modalsState.createRaports.to
-    ? $modalsState.createRaports.to
+  let dateTo = $modalsState.createReports.to
+    ? $modalsState.createReports.to
     : today;
 
   let actionButton = {
     do: () => {
       let successMessage = {
         title: $_("popup_msg.success"),
-        desc: $_("viewraport.raport_generated", {
+        desc: $_("viewreport.report_generated", {
           values: { from: dateFrom, to: dateTo }
         })
       };
       if (dateFrom && dateTo && dateTo <= dateFrom) {
-        addNotif("error", $_("viewraport.end_date_error"));
+        addNotif("error", $_("viewreport.end_date_error"));
         return;
       } else if (!dateFrom || !dateTo) {
-        addNotif("error", $_("viewraport.fill_every"));
+        addNotif("error", $_("viewreport.fill_every"));
         return;
       } else {
-        window.location.href = `/viewraport/${dateFrom}t${dateTo}`;
+        window.location.href = `/viewreport/${dateFrom}t${dateTo}`;
         addNotif("success", successMessage.title, successMessage.desc);
       }
 
@@ -45,13 +45,13 @@
 
 <UniModal
   {modalName}
-  theme="createRaports"
+  theme="createReports"
   {actionButton}
   {resetAction}
   tabName={$_("modal_tabs.make_report")}
 >
   <h2>
-    {$_("viewraport.period")}
+    {$_("viewreport.period")}
     <h2>
       <div class="spanButtons">
         <label for="od"
@@ -74,7 +74,7 @@
 >
 
 <style lang="scss">
-  :global(.uniModal.createRaports) {
+  :global(.uniModal.createReports) {
     --themeGradient: var(--graGold);
     --themeColor: var(--mGold);
     --actionColor: var(--graGold);

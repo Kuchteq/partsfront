@@ -4,15 +4,28 @@
   import accordion from "$functions/accordion";
   import { setPartSelection } from "$functions/selectionManager";
   import { _ } from "svelte-i18n";
+  import { writable } from "svelte/store";
+  import { onMount } from "svelte";
   export let part;
   export let sellFunc;
   export let chunkId;
 
   let totalValue = 0;
   $: {
-    totalValue = parseInt(part.sell_price) * parseInt(part.quantity);
+    totalValue = parseFloat(part.sell_price) * parseInt(part.quantity);
   }
 
+  onMount(async () => {
+    (async () => {
+      while (!part.info) {
+        console.log(part.info);
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      }
+      if (part.sell_price == 0 && part.info.suggested_price) {
+        part.sell_price = part.info.suggested_price;
+      }
+    })();
+  });
   const loadingString = $_("misc.fetching_data");
   export let isOpen = true;
 </script>
@@ -50,7 +63,11 @@
     <div class="fillPartSellData">
       <PriceField
         label={$_("sell_modal.netto_price")}
-        initValue={part.sell_price}
+        initValue={part.sell_price
+          ? part.sell_price
+          : part.info && part.info.suggested_price
+          ? part.info.suggested_price
+          : 0}
         update={(id, val) => sellFunc(chunkId, val, "sell_price")}
         required={true}
         multiplier={1.23}
@@ -106,6 +123,12 @@
               - {$_("sell_modal.supplier")}
               <span>{part.info.supplier_obj.label}</span>
             </li>
+            {#if part.info.suggested_price}
+              <li>
+                - {$_("inventory.suggested_price")}:
+                <b>{part.info.suggested_price}</b> PLN
+              </li>
+            {/if}
             <li>
               - {$_("sell_modal.purchase_date")}
               <span>{part.info.purchase_date}</span>

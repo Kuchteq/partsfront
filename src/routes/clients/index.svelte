@@ -41,6 +41,7 @@
   $: results = client.results;
   $: labels = client.labels;
   $: highlightedCell = client.highlighted;
+  $: console.log($results);
 </script>
 
 <div class="moduleMainHolder">
@@ -60,7 +61,7 @@
     sortValue={client.sortValue}
     sortHandler={client.sortBy}
     results={$results}
-    fetcherFunc={client.fetchInventory}
+    fetcherFunc={client.fetchPage}
     resetFunc={client.resetResults}
     highlightedCell={$highlightedCell}
     {onCellDoubleClick}
