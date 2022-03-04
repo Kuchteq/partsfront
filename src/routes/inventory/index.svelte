@@ -52,6 +52,9 @@
   };
 </script>
 
+<svelte:head>
+  <title>{$_("modules.inventory")}</title>
+</svelte:head>
 <div class="moduleMainHolder">
   <section class="upTools">
     <AddInventoryButton />

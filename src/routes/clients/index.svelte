@@ -44,6 +44,9 @@
   $: console.log($results);
 </script>
 
+<svelte:head>
+  <title>{$_("modules.clients")}</title>
+</svelte:head>
 <div class="moduleMainHolder">
   <section class="upTools">
     <UniModalOpenButton

@@ -50,6 +50,9 @@
   };
 </script>
 
+<svelte:head>
+  <title>{$_("modules.computers")}</title>
+</svelte:head>
 <div class="moduleMainHolder">
   <section class="upTools">
     <AssembleComputerButton />

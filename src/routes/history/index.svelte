@@ -26,6 +26,9 @@
   $: highlightedCell = client.highlighted;
 </script>
 
+<svelte:head>
+  <title>{$_("modules.history")}</title>
+</svelte:head>
 <div class="moduleMainHolder">
   <section class="upTools">
     <div class="innerTools">

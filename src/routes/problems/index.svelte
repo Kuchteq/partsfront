@@ -40,6 +40,9 @@
   $: highlightedCell = client.highlighted;
 </script>
 
+<svelte:head>
+  <title>{$_("modules.problems")}</title>
+</svelte:head>
 <div class="moduleMainHolder">
   <section class="upTools">
     <UniModalOpenButton
