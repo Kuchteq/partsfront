@@ -51,7 +51,7 @@
 </script>
 
 <svelte:head>
-  <title>{$_("modules.computers")}</title>
+  <title>{$_("modules.sets")}</title>
 </svelte:head>
 <div class="moduleMainHolder">
   <section class="upTools">

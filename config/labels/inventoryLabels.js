@@ -20,14 +20,14 @@ let inventoryLabels = [
 		name: _ => _('inventory.name_model'),
 		queryName: 'part_name',
 		shown: true,
-		widthClass: 'w40'
+		widthClass: 'w30'
 	},
 	{
 		id: 3,
 		name: _ => _('inventory.stock'),
 		queryName: 'stock',
 		shown: true,
-		widthClass: 'w5',
+		widthClass: 'w3',
 		determining: (v) => {
 			if (v <= 0) {
 				return true;
@@ -69,7 +69,7 @@ let inventoryLabels = [
 		name: _ => _('inventory.purchase_date'),
 		queryName: 'purchase_date',
 		shown: true,
-		widthClass: 'w10'
+		widthClass: 'w8'
 	}
 ];
 

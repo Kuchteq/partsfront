@@ -30,6 +30,7 @@ const adjustToForm = (arr) => {
 };
 
 const initParts = (data) => {
+	console.log(data)
 	mainParts.update((mainForm) => {
 		mainForm = clone(initialForm);
 		mainForm.forEach((val, i) => {
@@ -53,7 +54,8 @@ const initParts = (data) => {
 			}
 		});
 		//This 5 is very important
-		allMisc = allMisc.concat(data.filter((d) => d.segment_obj.value >= 5));
+		console.log(data)
+		allMisc = allMisc.concat(data.filter(d=>[1,2,4,6,7,9].findIndex((x)=>x==d.segment_obj.value)==-1));
 
 		return adjustToForm(allMisc);
 	});

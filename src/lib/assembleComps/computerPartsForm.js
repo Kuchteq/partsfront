@@ -6,7 +6,7 @@ let computerForm = [
 	},
 	{
 		label: _ => _('motherboard'),
-		segment_id: 3
+		segment_id: 2
 	},
 	{
 		label: _ => _('ram'),
