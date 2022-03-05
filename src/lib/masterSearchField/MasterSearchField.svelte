@@ -78,7 +78,6 @@
               anyResults = true;
             }
           });
-          console.log(modules);
         });
     }
   };

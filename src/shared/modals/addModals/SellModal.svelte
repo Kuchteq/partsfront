@@ -32,7 +32,6 @@
         })
       };
 
-      console.log($seller, $coSeller);
       //pass name to
       let valid =
         client.checkValidity(modalName) &&

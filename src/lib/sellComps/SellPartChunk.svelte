@@ -18,7 +18,6 @@
   onMount(async () => {
     (async () => {
       while (!part.info) {
-        console.log(part.info);
         await new Promise((resolve) => setTimeout(resolve, 200));
       }
       if (part.sell_price == 0 && part.info.suggested_price) {

@@ -67,7 +67,6 @@
       let valid = client.checkValidity(modalName);
       valid = seller.checkValidity();
       valid = coSeller.checkValidity();
-      console.log(valid);
       if (valid) {
         seller
           .modify(

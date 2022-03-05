@@ -61,7 +61,6 @@ function createPartSeller() {
 				orderInfoJson.name = `Sale for ${clientName} on ${orderInfoJson.sell_date} `;
 			orderInfoJson.parts = orderPartChunks;
 			orderInfoJson.computers = orderComputerChunks;
-			console.log(orderInfoJson);
 			back
 				.post('/orders', orderInfoJson)
 				.then(() => {
@@ -83,7 +82,6 @@ function createPartSeller() {
 				orderInfoJson.name = `Sprzedaż dla ${clientName} w dniu i godzinie ${orderInfoJson.sell_date} `;
 			orderInfoJson.parts = orderPartChunks;
 			orderInfoJson.computers = orderComputerChunks;
-			console.log(orderInfoJson);
 			back
 				.put(`/orders/${id}`, orderInfoJson)
 				.then(() => {
@@ -104,7 +102,6 @@ function createPartSeller() {
 		let valid = true;
 		update((arr) => {
 			arr.forEach((field, i) => {
-				console.log(field)
 				if (!field.sell_price) {
 					field.error = 1;
 					valid = false;

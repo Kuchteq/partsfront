@@ -44,9 +44,7 @@
       to: span.to.replaceAll("-", "/")
     }
   });
-  console.log(periodInfo);
 </script>
-
 
 <svelte:head>
   <title>{periodInfo}</title>

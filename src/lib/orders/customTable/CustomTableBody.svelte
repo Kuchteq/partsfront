@@ -73,15 +73,12 @@
     fetcherFunc(toQueryDate(currentDate), $sortQuery, $sQuery)
       .then(() => {
         currentDate = monthBack(currentDate);
-        console.log(currentDate);
         dateStack.push(currentDate);
         fetcherFunc(toQueryDate(currentDate), $sortQuery, $sQuery).then(() => {
           currentDate = monthBack(currentDate);
-          console.log(currentDate);
           dateStack.push(currentDate);
           fetcherFunc(toQueryDate(currentDate), $sortQuery, $sQuery).then(
             () => {
-              console.log(dateStack);
               ready = true;
               initiallyLoaded = true;
             }
@@ -99,14 +96,12 @@
   onDestroy(unsubscribe);
 
   const handleMonthReport = (d) => {
-    console.log(d);
     const year = date.year - parseInt(d / 12);
     let month =
       date.month - (d % 12) < 0
         ? date.month - (d % 12) + 12
         : date.month - (d % 12);
     month = month < 10 ? "0" + month : month;
-    console.log(date.month);
     let dateFrom = `${year}-${month}-01`;
     const lastMonthDay = new Date(year, month, 0).getDate();
     let dateTo = `${year}-${month}-${lastMonthDay}`;

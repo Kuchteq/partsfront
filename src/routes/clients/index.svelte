@@ -41,7 +41,6 @@
   $: results = client.results;
   $: labels = client.labels;
   $: highlightedCell = client.highlighted;
-  $: console.log($results);
 </script>
 
 <svelte:head>
