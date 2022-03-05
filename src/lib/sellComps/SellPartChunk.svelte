@@ -47,7 +47,7 @@
     <div class="rightSideTop">
       <h2 class="totalValue" class:visible={totalValue}>
         {$_("sell_modal.order_chunk_value")}
-        {totalValue} PLN
+        {totalValue.toFixed(2)} PLN
       </h2>
       <button
         type="button"
@@ -91,7 +91,7 @@
             - {$_("sell_modal.profit_per_part")}:
             <b
               >{part.info
-                ? part.sell_price - part.info.price
+                ? (part.sell_price - part.info.price).toFixed(2)
                 : loadingString}</b
             > PLN
           </li>
@@ -99,7 +99,7 @@
             - {$_("sell_modal.profit_on_all")}:
             <b
               >{part.info
-                ? (part.sell_price - part.info.price) * part.quantity
+                ? ((part.sell_price - part.info.price) * part.quantity).toFixed(2)
                 : loadingString}</b
             > PLN
           </li>

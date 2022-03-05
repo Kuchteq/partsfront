@@ -13,7 +13,7 @@
     do: () => {
       let successMessage = {
         title: $_("popup_msg.success"),
-        desc: $_("popup_msg.general_added_title", {
+        desc: $_("popup_msg.general_added_desc", {
           values: { name: $client[0].value.label }
         })
       };

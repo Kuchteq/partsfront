@@ -6,7 +6,7 @@
   import PriceField from "$shared/fields/PriceField.svelte";
   import accordion from "$functions/accordion";
   import { _ } from "/config/i18n.js";
-
+  import {setComputerSelection} from "$functions/cSelectionManager";
   export let chunkId;
   let computerInfo = {};
   let parts = [];
@@ -30,7 +30,9 @@
 </script>
 
 <article class="sellChunk" class:closedDetails={!isOpen}>
-  <button class="generalGarbageButton removeFromOrder" />
+  <button type="button" class="generalGarbageButton removeFromOrder" 
+on:click={() => setComputerSelection(computerInfo.computer_id)}
+/>
   <div class="topPart">
     <h1>
       {#if sellData.sell_price && sellData.quantity}
@@ -43,7 +45,7 @@
     <div class="rightSideTop">
       <h2 class="totalValue" class:visible={totalValue}>
         {$_("sell_modal.order_chunk_value")}
-        {totalValue} PLN
+        {totalValue.toFixed(2)} PLN
       </h2>
       <button
         type="button"
@@ -77,7 +79,7 @@
           </li>
           <li>
             - {$_("sell_modal.profit")}
-            <b>{sellData.sell_price - computerInfo.computer_value}</b> PLN
+            <b>{(sellData.sell_price - computerInfo.computer_value).toFixed(2)}</b> PLN
           </li>
         </ul>
       </div>
@@ -87,7 +89,7 @@
           {#each parts as part}
             <li>
               - {part.segment_obj.label}: <span>{part.part_name}</span> /
-              <b>{part.price}</b> PLN
+              <b>{part.price*part.quantity}</b> PLN {#if part.quantity > 1} x {part.quantity}{/if}
             </li>
           {/each}
         </ul>
@@ -203,3 +205,4 @@
     }
   }
 </style>
+

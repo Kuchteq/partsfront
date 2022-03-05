@@ -96,7 +96,7 @@
       </div>
       {#if curInfo.value}
         <div class="partValue">
-          {curInfo.value.price} zł
+          {curInfo.value.price*curInfo.quantity} zł
         </div>
       {/if}
     </div>

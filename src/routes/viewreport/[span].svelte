@@ -1,9 +1,16 @@
 <script context="module">
   export async function load({ page, fetch, session, stuff }) {
     if (session.Authorization) {
+console.log(session);
       const [from, to] = page.params.span.split("t");
-      const url = `http://localhost:5000/getreport/${from}/${to}`;
-      const res = await fetch(url);
+      const url = `http://localhost:5100/api/getreport/${from}/${to}`;
+      const res = await fetch(url, {
+  credentials: 'same-origin',
+  headers:{
+	cookies:session.Authorization
+},
+  mode: 'cors'
+});
       if (res.ok) {
         return {
           props: {
