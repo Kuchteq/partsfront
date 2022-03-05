@@ -46,7 +46,7 @@
     openModal("computersUpdate", val);
   };
   let onCellSingleClick = (val) => {
-    setComputerSelection(val);
+    setComputerSelection(val.computer_id);
   };
 </script>
 

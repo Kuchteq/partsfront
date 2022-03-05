@@ -54,7 +54,7 @@
       on:click={() => removeMiscPart(id)}
     />
     <label class="miscCategory" for="miscPart">
-      <Select
+    <Select
         items={categoryItems}
         placeholder={$_("misc.choose")}
         containerClasses={"customContainer"}
@@ -62,10 +62,10 @@
         on:select={handleCategorySelect}
         value={curInfo.segment_id && {
           value: curInfo.segment_id,
-          label: curInfo.label
-        }}
-      />
-    </label>
+          label: categoryItems.find((item) => item.value === curInfo.segment_id)
+            .label
+        }}/>
+</label>
     <div class="innerWrap" data-field-id={id}>
       <div class="withId">
         <Select

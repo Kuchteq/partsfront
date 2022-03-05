@@ -21,9 +21,10 @@ let computerForm = [
 		segment_id: 7
 	},
 	{
-		label: _ => _('case'),
+		label: _ => _('computer_case'),
 		segment_id: 9
 	},
 ];
 
 export default computerForm;
+
