@@ -4,11 +4,9 @@
   import ShowFields from "$shared/showFields/ShowFields.svelte";
   import SearchField from "$shared/searchField/SearchField.svelte";
   import { openModal } from "$functions/modalManager";
-  import selectedParts, {
-    setPartSelection,
-  } from "$functions/selectionManager";
+  import selectedParts, { setPartSelection } from "$functions/selectionManager";
   import orderLabels from "/config/labels/orderLabels.js";
-  import { writable } from 'svelte/store';
+  import { writable } from "svelte/store";
   export let source;
 
   const showIcons = [
@@ -21,14 +19,10 @@
     "supplier",
     "date"
   ];
-  let sortQuery = writable({by:undefined,dir:undefined})
-  let sQuery=writable("");
+  let sortQuery = writable({ by: undefined, dir: undefined });
+  let sQuery = writable("");
 
-  console.log($sortQuery,$sQuery);
-  const client = new createFetchClient(
-    orderLabels,
-    source
-  );
+  const client = new createFetchClient(orderLabels, source);
 
   $: results = client.results;
   $: labels = client.labels;

@@ -43,7 +43,6 @@
           if (entry.isIntersecting) {
             loading = true;
             currentPage += 1;
-            console.log(currentPage);
             fetcherFunc(currentPage, $sortQuery, $sQuery)
               .then(() => console.log(`fetched new page ${currentPage}`))
               .catch((err) => {

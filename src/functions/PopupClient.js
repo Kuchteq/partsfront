@@ -56,7 +56,6 @@ function resumeKilling(id) {
 function killInstantly(id) {
 	pushStack.update((arr) => {
 		let idx = arr.findIndex((obj) => obj.id === id);
-		console.log(id);
 		arr[idx].visible = false;
 		arr[idx].display = false;
 		return arr;
