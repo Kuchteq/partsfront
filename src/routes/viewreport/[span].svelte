@@ -1,7 +1,6 @@
 <script context="module">
   export async function load({ page, fetch, session, stuff }) {
     if (session.Authorization) {
-console.log(session);
       const [from, to] = page.params.span.split("t");
       const url = `http://localhost:5100/api/getreport/${from}/${to}`;
       const res = await fetch(url, {
@@ -64,7 +63,7 @@ console.log(session);
   <GeneralInfo data={generalData} />
   <SegmentsInfo data={data.segmentInfo} />
   <ClientsInfo data={data.clientsInfo} />
-  <SuppliersInfo data={data.suppliersSalesInfo} />
+  <SuppliersInfo data={{sales:data.suppliersSalesInfo, buy:data.suppliersBuyInfo}} />
 </div>
 <h2>{$_("viewreport.sold_that_period")}</h2>
 <IndividualSales source={`/orders-span/${span.from}/${span.to}`} />

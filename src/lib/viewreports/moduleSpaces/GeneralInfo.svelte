@@ -2,9 +2,11 @@
   import GraphSpace from "$lib/viewreports/GraphSpace.svelte";
   import SectionWrap from "$lib/viewreports/SectionWrap.svelte";
   import { _ } from "/config/i18n.js";
+  import { locale } from "svelte-i18n";
+
   export let data;
   const months = data.byMonthInfo.map((d) =>
-    new Date(d["month"]).toLocaleDateString("pl-PL", {
+    new Date(d["month"]).toLocaleDateString($locale, {
       month: "long",
       year: "numeric"
     })

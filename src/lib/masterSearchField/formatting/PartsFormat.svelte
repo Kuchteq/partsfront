@@ -1,10 +1,11 @@
 <script>
 	export let data;
+ 	import { _ } from "svelte-i18n";
 </script>
 
 <div class="gFormattingField">
 	<span>{data.segment_name} | </span> <b>{data.part_name}</b>
-	<span>| Dodano: {data.purchase_date}, {data.stock} sztuk, od {data.suppliers_name}</span>
+	<span>|	{$_('inventory.purchase_date')} : {data.purchase_date}, {$_('inventory.stock')}: {data.stock} , {$_('misc.from')}: {data.suppliers_name}</span>
 </div>
 
 <style>

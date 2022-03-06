@@ -64,7 +64,7 @@ on:click={() => setComputerSelection(computerInfo.computer_id)}
         update={(id, val) => sellFunc(chunkId, val, "sell_price")}
         required={true}
         multiplier={1.23}
-        multiText={"Wartość brutto: "}
+        multiText={$_('sell_modal.brutto_value')}
         error={sellData.error == 1 || undefined}
       />
     </div>

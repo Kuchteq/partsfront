@@ -239,6 +239,6 @@
     display: flex;
   }
   .bufferer {
-    height: 150vh;
+    height: 120vh;
   }
 </style>

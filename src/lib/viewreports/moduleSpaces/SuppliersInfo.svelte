@@ -19,53 +19,64 @@
     "#00bfff",
     "#4dd2ff"
   ];
-  const clientsName = data.map((sales) => sales.name);
-  const yItemsAmount = data.map((sales) => sales.items_amount);
-  const yItemsValue = data.map((sales) => sales.items_value);
-  const yProfitPercentage = data.map((sales) => sales.profit_percentage);
-  const yProfit = data.map((sales) => sales.profit);
+const dataBuy = data.buy
+  data = data.sales
+const yItemsAmount = data.sort((a,b)=>parseFloat(b.items_amount)-parseFloat(a.items_amount)).map(a=>a.items_amount)
+const xItemsAmountLabels =  data.sort((a,b)=>parseFloat(b.items_amount)-parseFloat(a.items_amount)).map(a=>a.name)
+const yItemsValue = data.sort((a,b)=>parseFloat(b.items_value)-parseFloat(a.items_value)).map(a=>a.items_value)
+const xItemsValueLabels =  data.sort((a,b)=>parseFloat(b.items_value)-parseFloat(a.items_value)).map(a=>a.name)
+const yProfitPercentage =  data.sort((a,b)=>parseFloat(b.profit_percentage)-parseFloat(a.profit_percentage)).map(a=>a.profit_percentage)
+const xProfitPercentageLabels =  data.sort((a,b)=>parseFloat(b.profit_percentage)-parseFloat(a.profit_percentage)).map(a=>a.name)
+const yProfit =  data.sort((a,b)=>parseFloat(b.profit)-parseFloat(a.profit)).map(a=>a.profit)
+const xProfitLabels =  data.sort((a,b)=>parseFloat(b.profit)-parseFloat(a.profit)).map(a=>a.name)
+
+const yItemsBuyAmount = dataBuy.sort((a,b)=>parseFloat(b.items_amount)-parseFloat(a.items_amount)).map(a=>a.items_amount)
+const xItemsBuyAmountLabels =  dataBuy.sort((a,b)=>parseFloat(b.items_amount)-parseFloat(a.items_amount)).map(a=>a.name)
+const yItemsBuyValue = dataBuy.sort((a,b)=>parseFloat(b.items_value)-parseFloat(a.items_value)).map(a=>a.items_value)
+const xItemsBuyValueLabels =  dataBuy.sort((a,b)=>parseFloat(b.items_value)-parseFloat(a.items_value)).map(a=>a.name)
 </script>
 
 <SectionWrap title={$_("on_suppliers.header_to_clients")} c="wrap4">
   <GraphSpace
     title={$_("on_suppliers.amount")}
-    x={clientsName}
+    x={xItemsAmountLabels}
     y={yItemsAmount}
     {elemColors}
   />
   <GraphSpace
     title={$_("on_suppliers.value")}
-    x={clientsName}
+    x={xItemsValueLabels}
     y={yItemsValue}
     {elemColors}
     suffix={" PLN"}
   />
   <GraphSpace
     title={$_("on_suppliers.profit_percentage")}
-    x={clientsName}
+    x={xProfitPercentageLabels}
     y={yProfitPercentage}
     {elemColors}
     suffix={"%"}
   />
   <GraphSpace
     title={$_("on_suppliers.profit")}
-    x={clientsName}
+    x={xProfitLabels}
     y={yProfit}
     {elemColors}
     suffix={" PLN"}
   />
 </SectionWrap>
+
 <SectionWrap title={$_("on_suppliers.header_to_suppliers")} c="wrap5">
   <GraphSpace
-    title={$_("on_suppliers.amount_bought")}
-    x={clientsName}
-    y={yItemsAmount}
-    elemColors={elemColorsBuy}
+    title={$_("on_suppliers.amount")}
+    x={xItemsBuyAmountLabels}
+    y={yItemsBuyAmount}
+    {elemColors}
   />
   <GraphSpace
-    title={$_("on_suppliers.value_bought")}
-    x={clientsName}
-    y={yItemsValue}
+    title={$_("on_suppliers.value")}
+    x={xItemsBuyValueLabels}
+    y={yItemsBuyValue}
     {elemColors}
     suffix={" PLN"}
   />
@@ -82,3 +93,4 @@
     margin-top: 0 !important;
   }
 </style>
+

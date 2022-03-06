@@ -11,37 +11,43 @@
     "#0059b3"
   ];
   import { _ } from "/config/i18n.js";
-  const segmentsName = data.map((sales) => sales.segment_name);
-  const yItemsAmount = data.map((sales) => sales.items_amount);
-  const yItemsValue = data.map((sales) => sales.items_value);
-  const yProfitPercentage = data.map((sales) => sales.profit_percentage);
-  const yProfit = data.map((sales) => sales.profit);
+
+console.log(data)
+const yItemsAmount = data.sort((a,b)=>parseFloat(b.items_amount)-parseFloat(a.items_amount)).map(a=>a.items_amount)
+const xItemsAmountLabels =  data.sort((a,b)=>parseFloat(b.items_amount)-parseFloat(a.items_amount)).map(a=>a.segment_name)
+const yItemsValue = data.sort((a,b)=>parseFloat(b.items_value)-parseFloat(a.items_value)).map(a=>a.items_value)
+const xItemsValueLabels =  data.sort((a,b)=>parseFloat(b.items_value)-parseFloat(a.items_value)).map(a=>a.segment_name)
+const yProfitPercentage =  data.sort((a,b)=>parseFloat(b.profit_percentage)-parseFloat(a.profit_percentage)).map(a=>a.profit_percentage)
+const xProfitPercentageLabels =  data.sort((a,b)=>parseFloat(b.profit_percentage)-parseFloat(a.profit_percentage)).map(a=>a.segment_name)
+const yProfit =  data.sort((a,b)=>parseFloat(b.profit)-parseFloat(a.profit)).map(a=>a.profit)
+const xProfitLabels =  data.sort((a,b)=>parseFloat(b.profit)-parseFloat(a.profit)).map(a=>a.segment_name)
+
 </script>
 
 <SectionWrap title={$_("on_segments.header")} c="wrap2">
   <GraphSpace
     title={$_("on_segments.amount")}
-    x={segmentsName}
+    x={xItemsAmountLabels}
     y={yItemsAmount}
     {elemColors}
   />
   <GraphSpace
     title={$_("on_segments.value")}
-    x={segmentsName}
+    x={xItemsValueLabels}
     y={yItemsValue}
     {elemColors}
     suffix={" PLN"}
   />
   <GraphSpace
     title={$_("on_segments.profit_percentage")}
-    x={segmentsName}
+    x={xProfitPercentageLabels}
     y={yProfitPercentage}
     {elemColors}
     suffix={"%"}
   />
   <GraphSpace
     title={$_("on_segments.profit")}
-    x={segmentsName}
+    x={xProfitLabels}
     y={yProfit}
     {elemColors}
     suffix={" PLN"}
@@ -55,3 +61,4 @@
     --hColor: var(--mBlue);
   }
 </style>
+

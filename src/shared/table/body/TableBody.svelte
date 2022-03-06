@@ -24,7 +24,7 @@
   let noLabels = false;
   let loading = false;
   let fetchTrigger;
-
+  let ready = false;
   $: {
     //check if there are any labels shown
     if (labels.findIndex((label) => label.shown == true) == -1) {
@@ -49,6 +49,7 @@
                 console.log(err);
                 loading = false;
                 initiallyLoaded = false;
+		ready = true;
               });
           }
         });
@@ -64,12 +65,14 @@
 
   //once the refetchStatus changes, run the reset function and refetch the data
   const unsubscribe = refetchStatus.subscribe(() => {
+    ready = false;
     resetFunc();
     currentPage = 1;
 
     fetcherFunc(currentPage, $sortQuery, $sQuery)
       .then(() => {
         initiallyLoaded = true;
+	ready = true;       
       })
       .catch((e) => {
         loading = false;
@@ -102,11 +105,12 @@
       <Loader />
     </div>
   {/if}
+<div class = '{ready ? '' : "bufferer"}'/>
   <div
     bind:this={fetchTrigger}
     class="fetchTrigger {loading ? 'visible' : ''} {initiallyLoaded
       ? 'initiallyLoaded'
-      : ''}"
+      : 'beDowner'}"
   >
     <Loader />
   </div>
@@ -126,19 +130,24 @@
     margin: auto;
     opacity: 1;
   }
-  .initiallyLoaded {
-    display: block;
-  }
-  .visible {
-    opacity: 1;
-  }
-  .noResultsLoadWrap {
-    h6 {
-      font-size: 18px;
-      margin-bottom: 25px;
-    }
-    :global(.uLoader) {
-      position: relative;
-    }
-  }
+.initiallyLoaded {
+display: block;
+}
+.bufferer
+{
+	height:120vh;
+}
+
+.visible {
+opacity: 1;
+}
+.noResultsLoadWrap {
+	h6 {
+		font-size: 18px;
+		margin-bottom: 25px;
+	}
+	:global(.uLoader) {
+position: relative;
+	}
+}
 </style>

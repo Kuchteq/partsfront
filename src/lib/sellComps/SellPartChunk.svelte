@@ -70,7 +70,7 @@
         update={(id, val) => sellFunc(chunkId, val, "sell_price")}
         required={true}
         multiplier={1.23}
-        multiText={"Wartość brutto: "}
+        multiText={$_('sell_modal.brutto_value')}
         error={part.error == 1 || undefined}
       />
       <IntegerField

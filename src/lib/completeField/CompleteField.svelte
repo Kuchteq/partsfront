@@ -15,7 +15,7 @@
     on:click={() => update(id, !initValue)}
   >
     {#if initValue !== undefined}
-      <span>{initValue ? "Zakończono" : "Nie zakończono"}</span>
+      <span>{initValue ? "Resolved" : "Not resolved"}</span>
     {/if}
   </button>
 </div>
